@@ -1,9 +1,9 @@
 <?php
 session_start();
-$page = $_GET['page'] ?? 'login';
-// if (!isset($_SESSION['user']) && $page !== 'login') {
-//     $page = 'login';
-// }
+$page = $_GET['page'] ?? 'dashboard';
+if (!isset($_SESSION['user'])) {
+    $page = 'login';
+}
 $page_file = __DIR__ . "/frontend/" . $page . '/' . $page . '.php';
 
 require 'backend/model/database.php';

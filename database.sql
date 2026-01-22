@@ -180,9 +180,9 @@ CREATE TABLE righe_consegna (
 );
 
 INSERT INTO utenti (email, password_hash, ruolo) VALUES
-('admin@magazzino.it', 'hash_admin', 'ADMIN'),
-('warehouse1@magazzino.it', 'hash_wh1', 'WAREHOUSE'),
-('warehouse2@magazzino.it', 'hash_wh2', 'WAREHOUSE');
+('admin@magazzino.it', '$2y$10$OqBkbLEnrVOq8q/Ts4tMZuG2iPwTudlKtevWcIYzr2yE.DsxVBPSe', 'ADMIN'),--admin
+('warehouse1@magazzino.it', '$2y$10$G2K33oWL57BzCb6S2qiTze4YODnpolcZP.UqEX/KBU8M..5NYBS.G', 'WAREHOUSE'),--wh1
+('warehouse2@magazzino.it', '$2y$10$IcoA4Qh89UMk0tjnkPE3VOwjk1RvAnK.huRWBQ9V9o/FkRPJg92hK', 'WAREHOUSE');--wh2
 
 INSERT INTO cliente (nome, cognome, email, numero) VALUES
 ('Mario', 'Rossi', 'mario.rossi@email.it', '3331112222'),

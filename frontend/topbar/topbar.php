@@ -12,7 +12,7 @@
             <div class="user-menu">
                 <img src="frontend/img/avatar.jpeg " class="avatar-logo">
                 <span class="username"><?= $_SESSION['user'] ?? 'Utente' ?></span>
-                <a href="backend/logout.php" style="color: red;">Logout</a>
+                <a href="backend/controller/logout.php" style="color: red;">Logout</a>
             </div>
         </div>
     </div>
