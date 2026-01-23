@@ -5,7 +5,8 @@ $menu = [
     'Magazzino'   => 'box-seam',
     'Ordini'      => 'receipt',
     'Consegne'    => 'truck',
-    'Assemblaggi' => 'tools'
+    'Assemblaggi' => 'tools',
+    'Movimenti'   => ''
 ];
 ?>
 

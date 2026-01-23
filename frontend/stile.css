@@ -227,6 +227,15 @@ body {
 
 .card.large { grid-row: span 2; }
 .card.full  { width: 100%; }
+.assembly-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+
+  border: 1px solid #dee2e6;   /* ← bordo grigio */
+  width: 100%;
+  max-width: 100%;             /* ← stessa larghezza delle altre */
+}
 
 /* ===============================
    SUPPORT TEXT
@@ -338,17 +347,6 @@ body {
 }
 
 /* ===============================
-   ACTION PILL – ASSEMBLA ORDINE (OUTLINE)
-================================ */
-.btn-outline-info {
-  --bs-btn-color: #0f766e;
-  --bs-btn-border-color: #99f6e4;
-  --bs-btn-hover-color: #0f766e;
-  --bs-btn-hover-bg: #ecfeff;
-  --bs-btn-hover-border-color: #5eead4;
-}
-
-/* ===============================
    STATUS BADGE
    =============================== */
 .status {
@@ -402,7 +400,6 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   width: 100%;
-  max-width: 1100px;   /* ← regola QUI la larghezza */
 }
 
 .assembly-actions {
@@ -487,3 +484,75 @@ body {
         height: 100%;
         object-fit: cover; /* Taglia l'immagine per riempire il div senza deformarsi */
     }
+
+    .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #ffffff;
+  background-color: #2563eb;          /* blu principale */
+  border: 1px solid #2563eb;
+  border-radius: 999px;               /* pill */
+
+  cursor: pointer;
+  transition: background-color 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+/* ===============================
+   BOTTONI
+   =============================== */
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+.btn-primary:active {
+  background-color: #1e40af;
+  border-color: #1e40af;
+}
+
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #374151;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease,
+              border-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.btn-secondary:active {
+  background-color: #f3f4f6;
+}

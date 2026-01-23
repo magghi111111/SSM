@@ -7,8 +7,6 @@
         </div>
 
         <div class="topbar-right">
-            <span class="bell">🔔</span>
-
             <div class="user-menu">
                 <img src="frontend/img/avatar.jpeg " class="avatar-logo">
                 <span class="username"><?= $_SESSION['user'] ?? 'Utente' ?></span>

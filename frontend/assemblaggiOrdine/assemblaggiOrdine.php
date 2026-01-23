@@ -11,7 +11,7 @@
 
   <main class="content">
 
-    <section class="assembly-card">
+    <section class="card assembly-card">
 
       <div class="order-info">
         <p><strong>Cliente:</strong> Mario Rossi</p>
