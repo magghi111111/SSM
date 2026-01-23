@@ -3,10 +3,11 @@
 $menu = [
     'Dashboard'   => 'speedometer2',
     'Magazzino'   => 'box-seam',
-    'Ordini'      => 'receipt',
+    'Ordini'      => 'bi bi-cart3',
     'Consegne'    => 'truck',
     'Assemblaggi' => 'tools',
-    'Movimenti'   => ''
+    'Movimenti'   => 'bi bi-terminal',
+    'Andamenti'   => 'bi bi-bar-chart'
 ];
 ?>
 

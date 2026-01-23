@@ -34,15 +34,15 @@ $movimenti_recenti = getUltimiMovimenti();
 
             <div class="kpi-card warning">
                 <div class="kpi-header">
-                    <h3>Prodotti sotto scorta</h3>
+                    <h3>Ordini ricevuti mensili</h3>
                     <i class="bi bi-box-seam kpi-icon"></i>
                 </div>
-                <p class="kpi-value">6</p>
+                <p class="kpi-value">60</p>
             </div>
 
             <div class="kpi-card success">
                 <div class="kpi-header">
-                    <h3>Flusso di cassa mensile</h3>
+                    <h3>Entrate mensili</h3>
                     <i class="bi bi-cash-stack kpi-icon"></i>
                 </div>
                 <p class="kpi-value">€ 5.230</p>
