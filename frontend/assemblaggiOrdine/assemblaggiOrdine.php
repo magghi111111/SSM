@@ -10,7 +10,6 @@
   <!-- HEADER / SIDEBAR già esistenti -->
 
   <main class="content">
-    <h1 class="page-heading">Assemblaggio Ordine #ORD-1024</h1>
 
     <section class="assembly-card">
 

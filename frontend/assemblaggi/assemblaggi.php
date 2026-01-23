@@ -10,7 +10,6 @@
   <!-- HEADER / SIDEBAR già esistenti -->
 
   <main class="content">
-    <h1 class="page-heading">Assemblaggio Libero</h1>
 
     <section class="assembly-card">
       <div class="assembly-actions">

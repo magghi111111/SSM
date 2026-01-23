@@ -2,7 +2,7 @@
 
 <?php
 
-require 'backend/ordini/ordini.php';
+require 'backend/query/ordini.php';
 $ordini = getAllOrdini();
 
 ?>

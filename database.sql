@@ -1,4 +1,4 @@
--- Active: 1768582530950@@127.0.0.1@3306@gestore_magazzino
+-- Active: 1764577806925@@127.0.0.1@3306@gestore_magazzino
 -- ====================================
 -- DATABASE MAGAZZINO - VERSIONE COMPLETA CON CASCADE E INT(10)
 -- ====================================
@@ -219,7 +219,7 @@ INSERT INTO righe_consegna (id_consegna, id_componente, qta_ordinata, qta_ricevu
 (1, 2, 150, 150),
 (2, 3, 100, 0);
 
-INSERT INTO ordini (id_shopify, stato, id_cliente) VALUES --inserire le date per le prossime volte
+INSERT INTO ordini (id_shopify, stato, id_cliente) VALUES 
 (10001, 'PENDING', 1),
 (10002, 'IN_PICK', 2),
 (10003, 'PREPARED', 3);
