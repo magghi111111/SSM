@@ -44,7 +44,9 @@ $ordini = getAllOrdini();
             <span class="status waiting">Attesa</span>
           </td>
           <td class="order-action text-center">
-              <button class="btn-primary" href="index.php?page=assemblaggiOrdine">Assembla ordine</button>
+              <button class="btn-primary">
+                <a href="index.php?page=assemblaggiOrdine" style="color: white; text-decoration: none;">Assembla ordine</a>
+              </button>
           </td>
         </tr>
       </tbody>
