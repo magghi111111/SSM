@@ -775,3 +775,33 @@ body {
   border: 1px solid #d1d5db;
   background: #ffffff;
 }
+
+.delivery-components {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.delivery-row {
+  display: grid;
+  grid-template-columns: 1fr 120px 40px;
+  gap: 8px;
+  align-items: center;
+}
+
+.delivery-row input,
+.delivery-row select {
+  width: 100%;
+}
+
+.btn-icon {
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-icon:hover {
+  background: #f3f3f3;
+}

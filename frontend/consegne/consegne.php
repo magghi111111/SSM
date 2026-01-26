@@ -12,6 +12,23 @@
       box.classList.add('hidden');
     }
   }
+
+  function addDeliveryRow() {
+    const container = document.getElementById('componenti-consegna');
+    const row = container.children[0].cloneNode(true);
+
+    row.querySelector('select').value = '';
+    row.querySelector('input').value = 1;
+
+    container.appendChild(row);
+  }
+
+  function removeRow(btn) {
+    const container = document.getElementById('componenti-consegna');
+    if (container.children.length > 1) {
+      btn.closest('.delivery-row').remove();
+    }
+  }
 </script>
 <body>
 <div class="main">
@@ -59,6 +76,30 @@
       <div class="form-group">
         <label for="data_ricezione">Data ricezione</label>
         <input type="datetime-local" name="data_ricezione" id="data_ricezione">
+      </div>
+
+      <div class="form-group full-width">
+        <label>Componenti ricevuti</label>
+
+        <div id="componenti-consegna" class="delivery-components">
+          
+          <!-- RIGA COMPONENTE -->
+          <div class="delivery-row">
+            <select name="componenti[id][]" required>
+              <option value="">Seleziona componente</option>
+              <!-- PHP: SOLO componenti ROW -->
+              <option value="1">Resistenza 10kΩ</option>
+              <option value="2">Condensatore 100nF</option>
+            </select>
+
+            <input type="number" name="componenti[qta][]" min="1" value="1" required>
+
+            <button type="button" class="btn-icon" onclick="removeRow(this)">✕</button>
+          </div>
+
+        </div>
+
+        <button type="button"class="btn-secondary"onclick="addDeliveryRow()"style="margin-top:8px">+ Aggiungi componente</button>
       </div>
 
       <div class="form-group full-width">
