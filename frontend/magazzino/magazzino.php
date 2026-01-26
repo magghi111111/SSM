@@ -12,6 +12,29 @@
       box.classList.add('hidden');
     }
   }
+  function toggleAssemblyBuilder() {
+    document
+      .getElementById('assembly-builder')
+      .classList.toggle('hidden');
+  }
+
+  function addAssemblyRow() {
+    const container = document.getElementById('assembly-rows');
+
+    const row = document.createElement('div');
+    row.className = 'assembly-row';
+
+    row.innerHTML = `
+      <select>
+        <option value="">Seleziona componente RAW</option>
+        <option value="1">RAW-RES-10K – Resistenza 10K</option>
+        <option value="2">RAW-CAP-100uF – Condensatore 100uF</option>
+      </select>
+      <input type="number" placeholder="Quantità" min="1">
+    `;
+
+    container.appendChild(row);
+  }
 </script>
 <body>
   <div class="main">
@@ -32,6 +55,10 @@
           </select>
         </div>
         <div id="nuovo-componente" class="form-group full-width hidden">
+          <div class="component-type-badge">
+            Creazione componente <strong>RAW</strong>
+          </div>
+
           <div class="form-grid nested">
 
             <div class="form-group">
@@ -50,8 +77,14 @@
             </div>
 
             <div class="form-group">
-              <label for="qrcode">QR Code</label>
-              <input type="text" name="qrcode" id="qrcode">
+              <label>QR Code</label>
+
+              <div class="qr-input-group">
+                <input type="text" name="qrcode" id="qrcode" placeholder="QR code letto" readonly>
+                <button type="button" class="btn-secondary">
+                  Scansiona QR
+                </button>
+              </div>
             </div>
           </div>
 
@@ -74,9 +107,71 @@
         <div class="form-actions">
           <button type="submit" class="btn-primary" style="color: white; text-decoration: none;">Registra movimento</button>
         </div>
-
       </form>
+    </div>
 
+    <div class="card full">
+      <button type="button" class="btn secondary" onclick="toggleAssemblyBuilder()">Crea nuovo assembly</button>
+    </div>
+    <div id="assembly-builder" class="card full hidden">
+
+      <h3 class="card-title">Creazione assembly</h3>
+
+      <div class="component-type-badge">
+        Componente di tipo <strong>ASSEMBLY</strong>
+      </div>
+
+      <form class="assembly-form">
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="assembly_sku">SKU assembly</label>
+            <input type="text" id="assembly_sku">
+          </div>
+
+          <div class="form-group">
+            <label for="assembly_nome">Nome assembly</label>
+            <input type="text" id="assembly_nome">
+          </div>
+
+          <div class="form-group">
+            <label for="assembly_unita">Unità di misura</label>
+            <input type="text" id="assembly_unita" value="pz">
+          </div>
+
+        </div>
+
+        <hr>
+
+        <h4>Componenti RAW</h4>
+
+        <div id="assembly-rows">
+
+          <div class="assembly-row">
+            <select>
+              <option value="">Seleziona componente RAW</option>
+              <option value="1">RAW-RES-10K – Resistenza 10K</option>
+              <option value="2">RAW-CAP-100uF – Condensatore 100uF</option>
+            </select>
+
+            <input type="number" placeholder="Quantità" min="1">
+          </div>
+
+        </div>
+
+        <button type="button"
+                class="btn small"
+                onclick="addAssemblyRow()">
+          + Aggiungi componente
+        </button>
+
+        <div class="form-actions">
+          <button type="submit" class="btn primary">
+            Crea assembly
+          </button>
+        </div>
+      </form>
     </div>
 
     <div class="card full">
