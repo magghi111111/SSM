@@ -1,9 +1,78 @@
 <!-- CONSEGNE: consegne.html -->
 <!DOCTYPE html>
 <html lang="it">
-<body>
+<script>
+  function toggleNuovoFornitore() {
+    const select = document.getElementById('fornitore');
+    const box = document.getElementById('nuovo-fornitore');
 
+    if (select.value === 'new') {
+      box.classList.remove('hidden');
+    } else {
+      box.classList.add('hidden');
+    }
+  }
+</script>
+<body>
 <div class="main">
+  <div class="card full">
+    <h3 class="card-title">Registra nuova consegna</h3>
+    <form class="form-grid" method="post" action="save_consegna.php">
+
+      <div class="form-group">
+        <label for="fornitore">Fornitore</label>
+        <select name="id_fornitore" id="fornitore" required onchange="toggleNuovoFornitore()">
+          <option value="">Seleziona fornitore</option>
+          <!-- PHP: fornitori esistenti -->
+          <option value="1">ElectroSupply SRL</option>
+          <option value="2">Componenti Italia</option>
+
+          <option value="new">Nuovo fornitore</option>
+        </select>
+      </div>
+      <div id="nuovo-fornitore" class="form-group full-width hidden">
+        <div class="form-grid nested">
+
+          <div class="form-group">
+            <label for="nome_fornitore">Nome fornitore</label>
+            <input type="text" name="nome_fornitore" id="nome_fornitore">
+          </div>
+
+          <div class="form-group">
+            <label for="email_fornitore">Email</label>
+            <input type="email" name="email_fornitore" id="email_fornitore">
+          </div>
+
+          <div class="form-group">
+            <label for="telefono_fornitore">Telefono</label>
+            <input type="text" name="telefono_fornitore" id="telefono_fornitore">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="data_ordine">Data ordine</label>
+        <input type="datetime-local" name="data_ordine" id="data_ordine" required>
+      </div>
+
+      <div class="form-group">
+        <label for="data_ricezione">Data ricezione</label>
+        <input type="datetime-local" name="data_ricezione" id="data_ricezione">
+      </div>
+
+      <div class="form-group full-width">
+        <label for="note">Note</label>
+        <textarea name="note" id="note" rows="3"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" style="color: white; text-decoration: none;">Salva consegna</button>
+      </div>
+
+    </form>
+
+  </div>
 
   <div class="card full">
     <table class="orders-table">

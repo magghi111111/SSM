@@ -63,7 +63,7 @@ $movimenti_recenti = getUltimiMovimenti();
         <section class="content-grid">
 
             <!-- PREVISIONI -->
-            <div class="card large">
+            <div class="card">
                 <h2>Previsioni Vendite</h2>
                 <p class="subtitle">
                     Stima basata sugli ordini passati e sull’andamento stagionale.
@@ -74,7 +74,7 @@ $movimenti_recenti = getUltimiMovimenti();
                 </div>
             </div>
 
-            <!-- PRODOTTI CRITICI -->
+            <!-- MOVIMENTI -->
             <div class="card">
                 <h2>Ultimi Movimenti</h2>
                 <ul class="list">
@@ -83,24 +83,11 @@ $movimenti_recenti = getUltimiMovimenti();
                             <strong><?= htmlspecialchars($movimento['note']) ?></strong> 
                             <div class="info-row">
                                 <span><strong>Tipo:</strong> <?= htmlspecialchars($movimento['tipo']) ?></span>
+                                <span><strong>Data:</strong> <?= htmlspecialchars($movimento['data_movimento']) ?></span>
                                 <span><strong>Delta:</strong> <?= htmlspecialchars($movimento['delta']) ?></span>
                             </div>
                         </li>
                     <?php endforeach; ?>
-                </ul>
-            </div>
-
-            <!-- AVVISI -->
-            <div class="card">
-                <h2>Avvisi e notifiche</h2>
-
-                <ul class="notifications">
-                    <li class="warning">
-                        Scorte minime in esaurimento
-                    </li>
-                    <li class="error">
-                        Ritardo consegna fornitore
-                    </li>
                 </ul>
             </div>
         </section>
@@ -117,6 +104,7 @@ $movimenti_recenti = getUltimiMovimenti();
                         <th>Cliente</th>
                         <th>Stato</th>
                         <th>Importo</th>
+                        <th>Assemblaggio</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -127,6 +115,11 @@ $movimenti_recenti = getUltimiMovimenti();
                             <td><?= $ordine['cognome']; ?> <?= $ordine['nome']; ?></td>
                             <td><span class="status <?= strtolower($ordine['stato']); ?>"><?= $ordine['stato']; ?></span></td>
                             <td>€ 250,00</td>
+                            <td class="order-action text-center">
+                                <button class="btn-primary">
+                                <a href="index.php?page=assemblaggiOrdine" style="color: white; text-decoration: none;">Assembla ordine</a>
+                                </button>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

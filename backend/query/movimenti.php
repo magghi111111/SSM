@@ -2,7 +2,7 @@
 
 function getUltimiMovimenti(){
     $pdo=connect();
-    $sql = "SELECT delta, tipo, note
+    $sql = "SELECT delta, data_movimento, tipo, note
         from movimenti
         ORDER BY data_movimento DESC
         LIMIT 3;";

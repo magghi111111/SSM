@@ -31,7 +31,7 @@ $ordini = getAllOrdini();
             <th>Data</th>
             <th>Stato</th>
             <th>Importo</th>
-            <th>Azioni</th>
+            <th>Assemblaggio</th>
           </tr>
         </thead>
         <tbody>
