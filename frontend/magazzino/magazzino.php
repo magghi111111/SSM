@@ -25,13 +25,13 @@
     row.className = 'assembly-row';
 
     row.innerHTML = `
-      <select>
-        <option value="">Seleziona componente RAW</option>
-        <option value="1">RAW-RES-10K – Resistenza 10K</option>
-        <option value="2">RAW-CAP-100uF – Condensatore 100uF</option>
-      </select>
-      <input type="number" placeholder="Quantità" min="1">
-    `;
+  <select>
+    <option value="">Seleziona componente RAW</option>
+    <option value="1">RAW-RES-10K – Resistenza 10K</option>
+    <option value="2">RAW-CAP-100uF – Condensatore 100uF</option>
+  </select>
+
+  <input type="number" placeholder="Quantità" min="1" value="1">`;
 
     container.appendChild(row);
   }
@@ -111,7 +111,7 @@
     </div>
 
     <div class="card full">
-      <button type="button" class="btn secondary" onclick="toggleAssemblyBuilder()">Crea nuovo assembly</button>
+      <button type="button" class="btn-secondary btn-assembly" onclick="toggleAssemblyBuilder()">➕ Crea nuovo assembly</button>
     </div>
     <div id="assembly-builder" class="card full hidden">
 
@@ -140,6 +140,16 @@
             <input type="text" id="assembly_unita" value="pz">
           </div>
 
+          <div class="assembly-section">
+            <div class="form-group">
+              <label>QR code assembly</label>
+
+              <div class="qr-input-group">
+                <input type="text" placeholder="QR code letto" disabled>
+                <button type="button" class="btn-secondary">Scansiona QR</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <hr>
@@ -154,22 +164,15 @@
               <option value="1">RAW-RES-10K – Resistenza 10K</option>
               <option value="2">RAW-CAP-100uF – Condensatore 100uF</option>
             </select>
-
-            <input type="number" placeholder="Quantità" min="1">
+              <input type="number" name="quantita_row_assembly" placeholder="Quantità" min="1" value="1">
           </div>
 
         </div>
 
-        <button type="button"
-                class="btn small"
-                onclick="addAssemblyRow()">
-          + Aggiungi componente
-        </button>
+        <button type="button" class="btn small" onclick="addAssemblyRow()">+ Aggiungi componente</button>
 
         <div class="form-actions">
-          <button type="submit" class="btn primary">
-            Crea assembly
-          </button>
+          <button type="submit" class="btn-primary">Crea assembly</button>
         </div>
       </form>
     </div>
