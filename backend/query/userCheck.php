@@ -1,6 +1,6 @@
 <?php
 
-require '../model/database.php';
+require_once '../model/database.php';
 
 function getUSer($user){
     $conn=connect();

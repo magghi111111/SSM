@@ -21,6 +21,31 @@ function getAllMovimenti(){
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function setMovimento($idComponente, $delta, $note){
+    $pdo=connect();
+    $sql = "INSERT INTO movimenti ( id_componente, delta, tipo, note) 
+            VALUES (:id_componente, :delta,'MANUAL', :note);";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':id_componente' => $idComponente,
+        ':delta'         => $delta,
+        ':note'          => $note
+    ]);
+    return $pdo->lastInsertId();
+}
+
+function setStock($idComponente, $delta){
+    $pdo=connect();
+    $sql = "UPDATE stock 
+            SET quantita = quantita + :qta 
+            WHERE id_componente = :id_componente;";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':id_componente' => $idComponente,
+        ':qta'           => $delta
+    ]);
+}
+
 
 
 ?>

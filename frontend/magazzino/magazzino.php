@@ -1,6 +1,14 @@
 <!-- MAGAZZINO: magazzino.html -->
-<!DOCTYPE html>
-<html lang="it">
+
+<?php
+
+require_once 'backend/query/componenti.php';
+$componentiRaw = getComponentiRaw();
+$componenti = getComponenti();
+
+?>
+
+
 <script>
   function toggleNuovoComponente() {
     const select = document.getElementById('componente');
@@ -12,6 +20,7 @@
       box.classList.add('hidden');
     }
   }
+
   function toggleAssemblyBuilder() {
     document
       .getElementById('assembly-builder')
@@ -20,37 +29,45 @@
 
   function addAssemblyRow() {
     const container = document.getElementById('assembly-rows');
+    const row = container.children[0].cloneNode(true);
 
-    const row = document.createElement('div');
-    row.className = 'assembly-row';
-
-    row.innerHTML = `
-  <select>
-    <option value="">Seleziona componente RAW</option>
-    <option value="1">RAW-RES-10K – Resistenza 10K</option>
-    <option value="2">RAW-CAP-100uF – Condensatore 100uF</option>
-  </select>
-
-  <input type="number" placeholder="Quantità" min="1" value="1">`;
+    row.querySelector('select').value = '';
+    row.querySelector('input').value = 1;
 
     container.appendChild(row);
   }
+
+  function removeRow(btn) {
+    const container = document.getElementById('assembly-rows');
+    if (container.children.length > 1) {
+      btn.closest('.assembly-row').remove();
+    }
+  }
 </script>
+
 <body>
   <div class="main">
     <div class="card full">
       <h3 class="card-title">Aggiunta manuale a magazzino</h3>
 
-      <form class="form-grid" method="post" action="save_movimento_manual.php">
+    <?php if (isset($_GET['aggiunta'])): ?>
+      <?php if ($_GET['aggiunta'] == 'success'): ?>
+        <div style="color:green;">Movimento registrato con successo!</div>
+      <?php elseif ($_GET['aggiunta'] == 'error'): ?>
+        <div style="color:red;">Errore durante la registrazione del movimento.</div>
+      <?php endif; ?>
+    <?php endif; ?>
+
+      <form class="form-grid" method="post" action="backend/controller/movimentoCntrl.php">
 
         <div class="form-group">
           <label for="componente">Componente</label>
           <select name="id_componente" id="componente" required onchange="toggleNuovoComponente()">
             <option value="">Seleziona componente</option>
             <!-- PHP: componenti esistenti -->
-            <option value="1">RAW-RES-10K – Resistenza 10K</option>
-            <option value="2">RAW-CAP-100uF – Condensatore 100uF</option>
-
+            <?php foreach($componenti as $componente): ?>
+              <option value="<?= $componente['id']; ?>"><?= $componente['nome']; ?></option>
+            <?php endforeach; ?>
             <option value="new">Nuovo componente</option>
           </select>
         </div>
@@ -121,23 +138,30 @@
         Componente di tipo <strong>ASSEMBLY</strong>
       </div>
 
-      <form class="assembly-form">
+      <?php if (isset($_GET['assembly'])): ?>
+      <?php if ($_GET['assembly'] == 'success'): ?>
+        <div style="color:green;">Assembly creato con successo!</div>
+      <?php elseif ($_GET['assembly'] == 'error'): ?>
+        <div style="color:red;">Errore durante la creazione dell'assembly.</div>
+      <?php endif; ?>
+    <?php endif; ?>
 
+      <form class="assembly-form" method="post" action="backend/controller/assemblyCntrl.php">
         <div class="form-grid">
 
           <div class="form-group">
             <label for="assembly_sku">SKU assembly</label>
-            <input type="text" id="assembly_sku">
+            <input type="text" id="assembly_sku" name="assembly_sku">
           </div>
 
           <div class="form-group">
             <label for="assembly_nome">Nome assembly</label>
-            <input type="text" id="assembly_nome">
+            <input type="text" id="assembly_nome" name="assembly_nome">
           </div>
 
           <div class="form-group">
             <label for="assembly_unita">Unità di misura</label>
-            <input type="text" id="assembly_unita" value="pz">
+            <input type="text" id="assembly_unita" name="assembly_unita" value="pz">
           </div>
 
           <div class="assembly-section">
@@ -145,7 +169,7 @@
               <label>QR code assembly</label>
 
               <div class="qr-input-group">
-                <input type="text" placeholder="QR code letto" disabled>
+                <input type="text" placeholder="QR code letto" id="assembly_qrcode" name="assembly_qrcode" value="" disabled>
                 <button type="button" class="btn-secondary">Scansiona QR</button>
               </div>
             </div>
@@ -159,14 +183,19 @@
         <div id="assembly-rows">
 
           <div class="assembly-row">
-            <select>
-              <option value="">Seleziona componente RAW</option>
-              <option value="1">RAW-RES-10K – Resistenza 10K</option>
-              <option value="2">RAW-CAP-100uF – Condensatore 100uF</option>
+            <select name="componenti[id][]" required>
+              <option value="">Seleziona componente</option>
+              <!-- PHP: SOLO componenti ROW -->
+              <?php foreach ($componentiRaw as $raw): ?>
+                <option value="<?= $raw['id']; ?>"><?= $raw['nome']; ?></option>
+              <?php endforeach; ?>
             </select>
-              <input type="number" name="quantita_row_assembly" placeholder="Quantità" min="1" value="1">
-          </div>
 
+            <input type="number" name="componenti[qta][]" min="1" value="1" required>
+
+            <button type="button" class="btn-icon" onclick="removeRow(this)">✕</button>
+
+          </div>
         </div>
 
         <button type="button" class="btn small" onclick="addAssemblyRow()">+ Aggiungi componente</button>
