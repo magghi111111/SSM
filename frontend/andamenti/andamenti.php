@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Andamento</title>
-  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/SSM-1/frontend/andamenti/grafici.js"></script>
 </head>
 <body>
 
@@ -11,37 +12,17 @@
 
   <main class="content">
 
-    <!-- KPI rapidi -->
-    <section class="kpi-grid">
-      <div class="kpi-card">
-        <span class="kpi-title">Ordini Oggi</span>
-        <span class="kpi-value">128</span>
-      </div>
-      <div class="kpi-card">
-        <span class="kpi-title">In Preparazione</span>
-        <span class="kpi-value">42</span>
-      </div>
-      <div class="kpi-card">
-        <span class="kpi-title">Tempo Medio</span>
-        <span class="kpi-value">18 min</span>
-      </div>
-      <div class="kpi-card">
-        <span class="kpi-title">Errori</span>
-        <span class="kpi-value">3</span>
-      </div>
-    </section>
-
     <!-- Grafici principali -->
     <section class="charts-grid">
 
-      <div class="chart-card">
-        <h3>Ordini nel tempo</h3>
-        <div id="ordersTrendChart" class="chart-placeholder"></div>
+      <div class="card andamento-ordini">
+        <h3>Andamento ordini</h3>
+        <canvas id="graficoOrdini"></canvas>
       </div>
 
       <div class="chart-card">
-        <h3>Stato ordini</h3>
-        <div id="ordersStatusChart" class="chart-placeholder"></div>
+        <h3>Consegne annuali</h3>
+        <canvas id="graficoConsegne"></canvas>
       </div>
 
       <div class="chart-card">

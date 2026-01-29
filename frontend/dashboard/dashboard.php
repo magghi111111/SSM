@@ -42,18 +42,20 @@ $movimenti_recenti = getUltimiMovimenti();
 
             <div class="kpi-card success">
                 <div class="kpi-header">
-                    <h3>Entrate mensili</h3>
+                    <h3>Profitto mensile</h3>
                     <i class="bi bi-cash-stack kpi-icon"></i>
                 </div>
                 <p class="kpi-value">€ 5.230</p>
             </div>
 
             <div class="kpi-card alert">
+                <a href="index.php?page=avvisi" style="text-decoration: none; color: inherit;">
                 <div class="kpi-header">
                     <h3>Avvisi</h3>
                     <i class="bi bi-exclamation-triangle kpi-icon"></i>
                 </div>
                 <p class="kpi-value">2</p>
+                </a>
             </div>
 
         </section>

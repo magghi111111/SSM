@@ -805,3 +805,57 @@ body {
 .btn-icon:hover {
   background: #f3f3f3;
 }
+
+/* ===============================
+   GRAFICO
+   =============================== */
+
+.andamento-ordini {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.andamento-ordini canvas {
+  width: 100% !important;
+  height: 300px !important;
+}
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+.card h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937; /* grigio scuro elegante */
+}
+.andamento-ordini {
+  height: 320px;
+}
+
+.andamento-ordini canvas {
+  flex: 1;
+}
+.chart-placeholder {
+  flex: 1;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
