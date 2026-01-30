@@ -1,49 +1,37 @@
-<!-- CONSEGNE: consegne.html -->
-<!DOCTYPE html>
-<html lang="it">
-<script>
-  function toggleNuovoFornitore() {
-    const select = document.getElementById('fornitore');
-    const box = document.getElementById('nuovo-fornitore');
+<?php
 
-    if (select.value === 'new') {
-      box.classList.remove('hidden');
-    } else {
-      box.classList.add('hidden');
-    }
-  }
+require_once 'backend/query/fornitori.php';
+require_once 'backend/query/componenti.php';
 
-  function addDeliveryRow() {
-    const container = document.getElementById('componenti-consegna');
-    const row = container.children[0].cloneNode(true);
+$fornitori = getFornitori();
+$componenti = getComponentiRaw();
 
-    row.querySelector('select').value = '';
-    row.querySelector('input').value = 1;
-
-    container.appendChild(row);
-  }
-
-  function removeRow(btn) {
-    const container = document.getElementById('componenti-consegna');
-    if (container.children.length > 1) {
-      btn.closest('.delivery-row').remove();
-    }
-  }
-</script>
+?>
+<script src="frontend/consegne/consegne.js"></script>
 <body>
 <div class="main">
   <div class="card full">
     <h3 class="card-title">Registra nuova consegna</h3>
-    <form class="form-grid" method="post" action="save_consegna.php">
+
+    <?php if (isset($_GET['status'])): ?>
+      <?php if ($_GET['status'] == 'success'): ?>
+        <div style="color:green;">Consegna registrata con successo!</div>
+      <?php elseif ($_GET['status'] == 'error'): ?>
+        <div style="color:red;">Errore durante la registrazione della consegna.</div>
+      <?php endif; ?>
+    <?php endif; ?>
+
+    <form class="form-grid" method="post" action="backend/controller/consegnaCntrl.php">
 
       <div class="form-group">
         <label for="fornitore">Fornitore</label>
         <select name="id_fornitore" id="fornitore" required onchange="toggleNuovoFornitore()">
           <option value="">Seleziona fornitore</option>
           <!-- PHP: fornitori esistenti -->
-          <option value="1">ElectroSupply SRL</option>
-          <option value="2">Componenti Italia</option>
 
+          <?php foreach($fornitori as $fornitore): ?>
+            <option value="<?= $fornitore['id']; ?>"><?= $fornitore['nome']; ?></option>
+          <?php endforeach; ?>
           <option value="new">Nuovo fornitore</option>
         </select>
       </div>
@@ -88,8 +76,9 @@
             <select name="componenti[id][]" required>
               <option value="">Seleziona componente</option>
               <!-- PHP: SOLO componenti ROW -->
-              <option value="1">Resistenza 10kΩ</option>
-              <option value="2">Condensatore 100nF</option>
+              <?php foreach($componenti as $componente): ?>
+                <option value="<?= $componente['id']; ?>"><?= $componente['nome']; ?></option>
+              <?php endforeach; ?>
             </select>
 
             <input type="number" name="componenti[qta][]" min="1" value="1" required>
