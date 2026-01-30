@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Andamento</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="/SSM-1/frontend/andamenti/grafici.js"></script>
+  <script src="frontend/andamenti/grafici.js"></script>
 </head>
 <body>
 

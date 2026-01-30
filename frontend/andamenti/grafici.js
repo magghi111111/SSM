@@ -14,7 +14,7 @@ function formattaMese(yyyyMm) {
 }
 
 function caricaGrafico(tipo, canvasId, label) {
-  fetch(`/SSM-1/frontend/andamenti/api.php?tipo=${tipo}`)
+  fetch(`frontend/andamenti/api.php?tipo=${tipo}`)
     .then(r => {
       if (!r.ok) throw new Error(`Errore API ${tipo}`);
       return r.json();

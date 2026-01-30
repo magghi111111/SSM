@@ -22,6 +22,8 @@ $componenti = getComponenti();
   }
 
   function toggleAssemblyBuilder() {
+    console.log('Toggling assembly builder');
+    console.log(document.getElementById('assembly-builder'));
     document
       .getElementById('assembly-builder')
       .classList.toggle('hidden');
@@ -43,6 +45,27 @@ $componenti = getComponenti();
       btn.closest('.assembly-row').remove();
     }
   }
+
+  document.addEventListener("DOMContentLoaded", function() {
+
+    document.querySelectorAll(".assembly_component").forEach(row => {
+
+      row.addEventListener("click", function() {
+
+        const details = this.nextElementSibling;
+
+        if (!details || !details.classList.contains("assembly-details")) {
+          return;
+        }
+
+        details.classList.toggle("hidden");
+        this.classList.toggle("open");
+
+      });
+
+    });
+
+  });
 </script>
 
 <body>
@@ -50,13 +73,13 @@ $componenti = getComponenti();
     <div class="card full">
       <h3 class="card-title">Aggiunta manuale a magazzino</h3>
 
-    <?php if (isset($_GET['aggiunta'])): ?>
-      <?php if ($_GET['aggiunta'] == 'success'): ?>
-        <div style="color:green;">Movimento registrato con successo!</div>
-      <?php elseif ($_GET['aggiunta'] == 'error'): ?>
-        <div style="color:red;">Errore durante la registrazione del movimento.</div>
+      <?php if (isset($_GET['aggiunta'])): ?>
+        <?php if ($_GET['aggiunta'] == 'success'): ?>
+          <div style="color:green;">Movimento registrato con successo!</div>
+        <?php elseif ($_GET['aggiunta'] == 'error'): ?>
+          <div style="color:red;">Errore durante la registrazione del movimento.</div>
+        <?php endif; ?>
       <?php endif; ?>
-    <?php endif; ?>
 
       <form class="form-grid" method="post" action="backend/controller/movimentoCntrl.php">
 
@@ -65,7 +88,7 @@ $componenti = getComponenti();
           <select name="id_componente" id="componente" required onchange="toggleNuovoComponente()">
             <option value="">Seleziona componente</option>
             <!-- PHP: componenti esistenti -->
-            <?php foreach($componenti as $componente): ?>
+            <?php foreach ($componenti as $componente): ?>
               <option value="<?= $componente['id']; ?>"><?= $componente['nome']; ?></option>
             <?php endforeach; ?>
             <option value="new">Nuovo componente</option>
@@ -139,12 +162,12 @@ $componenti = getComponenti();
       </div>
 
       <?php if (isset($_GET['assembly'])): ?>
-      <?php if ($_GET['assembly'] == 'success'): ?>
-        <div style="color:green;">Assembly creato con successo!</div>
-      <?php elseif ($_GET['assembly'] == 'error'): ?>
-        <div style="color:red;">Errore durante la creazione dell'assembly.</div>
+        <?php if ($_GET['assembly'] == 'success'): ?>
+          <div style="color:green;">Assembly creato con successo!</div>
+        <?php elseif ($_GET['assembly'] == 'error'): ?>
+          <div style="color:red;">Errore durante la creazione dell'assembly.</div>
+        <?php endif; ?>
       <?php endif; ?>
-    <?php endif; ?>
 
       <form class="assembly-form" method="post" action="backend/controller/assemblyCntrl.php">
         <div class="form-grid">
@@ -206,26 +229,11 @@ $componenti = getComponenti();
       </form>
     </div>
 
-    <div class="card full">
-      <table class="orders-table">
-        <thead>
-          <tr>
-            <th>Codice</th>
-            <th>Descrizione</th>
-            <th>Quantità</th>
-            <th>Posizione</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>RES-001</td>
-            <td>Resistenza 10kΩ</td>
-            <td>250</td>
-            <td>Scaffale A1</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <?php
+
+    include 'frontend/magazzino/showStock.php';
+
+    ?>
   </div>
 </body>
 

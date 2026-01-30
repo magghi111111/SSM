@@ -38,6 +38,11 @@ CREATE TABLE componenti (
     tipo ENUM('RAW', 'ASSEMBLY') NOT NULL
 );
 
+SELECT c.*, p.quantita
+    FROM parti_componente p
+    join componenti c on p.id_raw = c.id
+    WHERE id_assembly = :id_assembly;
+
 -- ====================================
 -- TABELLA STOCK
 -- ====================================

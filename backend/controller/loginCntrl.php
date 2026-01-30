@@ -2,7 +2,7 @@
 
 session_start();
 
-require '../query/userCheck.php';
+require '../query/utenti.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['login_user'];
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: ../../index.php');
         exit();
     } else {
-        header('Location: ../../index.php?message=invalid_credentials&password='.$utente['password_hash']);
+        header('Location: ../../index.php?message=invalid_credentials');
     }
 }
 
