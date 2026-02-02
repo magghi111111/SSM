@@ -3,60 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Assemblaggio Libero</title>
-  <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  let qrScanner = null;
-
-  function initScanner() {
-    if (!qrScanner) {
-      qrScanner = new Html5Qrcode("qr-reader");
-    }
-  }
-
-  async function stopScanner() {
-    if (qrScanner) {
-      await qrScanner.stop();
-      document.getElementById("scannerBox").style.display = "none";
-    }
-  }
-
-  const openBtn = document.getElementById("openScanner");
-  const closeBtn = document.getElementById("closeScanner");
-
-  if (!openBtn || !closeBtn) {
-    console.error("Pulsanti scanner non trovati nel DOM");
-    return;
-  }
-
-  openBtn.addEventListener("click", async () => {
-    document.getElementById("scannerBox").style.display = "block";
-    initScanner();
-
-    try {
-      await qrScanner.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
-        onQrSuccess,
-        () => {}
-      );
-    } catch (err) {
-      alert("Errore accesso alla fotocamera");
-      console.error(err);
-    }
-  });
-
-  closeBtn.addEventListener("click", stopScanner);
-
-  function onQrSuccess(text) {
-    console.log("QR letto:", text);
-    stopScanner();
-  }
-
-});
-</script>
 <body>
 
   <!-- HEADER / SIDEBAR già esistenti -->
@@ -68,13 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
         <button class="btn-primary" id="openScanner">Avvia Scanner QR</button>
       </div>
 
-      <div class="camera-box" id="scannerBox" style="display:none">
+      <div class="camera-box hidden" id="scannerBox">
+        <button id="closeScanner" class="close-btn">✕</button>
         <div id="qr-reader"></div>
-
-        <div class="scanner-actions">
-          <button class="btn-secondary" id="closeScanner">Chiudi scanner</button>
-        </div>
       </div>
+      
+      <div id="scanMessage" class="scan-message hidden"></div>
 
       <h2 class="section-title">Componenti prelevati</h2>
 
@@ -105,7 +51,13 @@ document.addEventListener("DOMContentLoaded", () => {
     </section>
   </main>
 
-  <!-- FOOTER già esistente -->
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="frontend/js_assemblaggi/scanner.js"></script>
 
+  <script>
+    function handleQr(qrText) {
+      console.log("QR scansionato (libero):", qrText);
+    }
+  </script>
 </body>
 </html>

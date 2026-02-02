@@ -46,6 +46,4 @@ function setStock($idComponente, $delta){
     ]);
 }
 
-
-
 ?>

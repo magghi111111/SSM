@@ -1,4 +1,4 @@
--- Active: 1769622808934@@127.0.0.1@3306@gestore_magazzino
+-- Active: 1764577806925@@127.0.0.1@3306@gestore_magazzino
 -- ====================================
 -- DATABASE MAGAZZINO - VERSIONE COMPLETA CON CASCADE E INT(10)
 -- ====================================

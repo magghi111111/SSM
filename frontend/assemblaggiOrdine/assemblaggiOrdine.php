@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Assemblaggio Ordine</title>
-  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -19,12 +18,15 @@
       </div>
 
       <div class="assembly-actions">
-        <button class="btn-primary">Scansiona componente</button>
+        <button class="btn-primary" id="openScanner">Scansiona componente</button>
       </div>
 
-      <div class="camera-box">
-        <p>Area fotocamera (scanner QR)</p>
+      <div class="camera-box hidden" id="scannerBox">
+        <button id="closeScanner" class="close-btn">✕</button>
+        <div id="qr-reader"></div>
       </div>
+      
+      <div id="scanMessage" class="scan-message hidden"></div>
 
       <h2 class="section-title">Componenti richiesti</h2>
 
@@ -60,6 +62,17 @@
 
     </section>
   </main>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="frontend/js_assemblaggi/scanner.js"></script>
+  <script>
+    function handleQr(qrText) {
+      console.log("QR scansionato (ordine):", qrText);
 
+      // prossimo step:
+      // 1. verifica DB
+      // 2. confronto con componenti richiesti
+      // 3. aggiorna stato riga
+    }
+  </script>
 </body>
 </html>
