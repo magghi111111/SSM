@@ -1,0 +1,56 @@
+/* ================================================= =
+   DARK THEME - VARIABILI COLORI
+   ================================================= */
+
+:root {
+    /* --- Colori Principali --- */
+    --primary-color: #166A7B;        /* Petrolio: Navbar, Bordi, Active */
+    --secondary-color: #F19B23;      /* Arancio: Warning, Call to action */
+    --highlight-color: #82C0CC;      /* Ciano: Titoli, Focus, Icone */
+    --highlight-hover: #6BA8B5;      /* Hover bottoni */
+    
+    /* --- Sfondi (Dark Theme) --- */
+    --background-color: #16191E;     /* Body principale (molto scuro) */
+    --background-alt: #1E222A;       /* Sidebar, Page Heading */
+    --background-section: #1F232A;   /* Card, Tabelle, Sezioni */
+    --background-thead: #20242B;     /* Header Tabelle */
+    --background-hover: #2A2F38;     /* Hover righe/elementi */
+    
+    /* --- Testi --- */
+    --text-light: #FBFCFF;           /* Bianco sporco (leggibilità) */
+    --text-grey: #EDE7E3;            /* Grigio caldo */
+    --text-muted: #8A9BA8;           /* Placeholder, hint */
+    --text-admin: #B4DCE8;           /* Titoli tecnici */
+
+    /* --- Stati Funzionali --- */
+    --error-color: #FF6B6B;          
+    --success-color: #90EE90;      
+    --warning-color: #F19B23;    
+    --info-color: #1f6feb;
+
+    /* --- Bordi e Ombre --- */
+    --border-color: #2A2F38;         /* Sostituisce i vecchi #ddd/#eee */
+    --shadow-light: rgba(130,192,204,0.1);
+    --shadow-strong: rgba(0, 0, 0, 0.4);
+
+    /*LOGIN*/
+
+    /* Colori principali */
+    --bg-body: #16191F;
+    --bg-card: #1E222A;
+    --bg-input: #16191E;
+    --border-input: #82C0CC;
+    --border-input-focus: #479EB4;
+    --btn-bg: #479EB4;
+    --btn-bg-hover: #166A7B;
+
+    /* Testi */
+    --text-primary: #FBFCFF;
+    --text-placeholder: #c9d6dc;
+    --text-error: #FF6B6B;
+    --text-error-alt: red;
+
+    /* Shadow */
+    --shadow-card: rgba(0, 0, 0, 0.3);
+    --shadow-input-focus: rgba(71, 158, 180, 0.25);
+}

@@ -1,0 +1,72 @@
+/* ================================================= =
+   LIGHT THEME - VARIABILI COLORI (OPTIMIZED)
+   ================================================= */
+
+:root {
+
+    /* --- Colori Principali --- */
+    --primary-color: #f1f5f9;
+    /* Header / Sidebar (grigio freddo chiaro) */
+    --secondary-color: #f59e0b;
+    /* Arancio caldo CTA */
+    --highlight-color: #2563eb;
+    /* Blu principale */
+    --highlight-hover: #1e40af;
+    /* Blu hover */
+
+    /* --- Sfondi --- */
+    --background-color: #ffffff;
+    /* Body */
+    --background-alt: #f8fafc;
+    /* Sidebar / Heading */
+    --background-section: #ffffff;
+    /* Card */
+    --background-thead: #f1f5f9;
+    /* Table head */
+    --background-hover: #e5e7eb;
+    /* Hover */
+
+    /* --- Testi --- */
+    --text-light: #0f172a;
+    /* Titoli */
+    --text-grey: #334155;
+    /* Testo normale */
+    --text-muted: #64748b;
+    /* Hint */
+    --text-admin: #1e40af;
+    /* Label */
+
+    /* --- Stati --- */
+    --error-color: #dc2626;
+    --success-color: #16a34a;
+    --warning-color: #f59e0b;
+    --info-color: #2563eb;
+
+    /* --- Bordi e Ombre --- */
+    --border-color: #e2e8f0;
+
+    --shadow-light: rgba(15, 23, 42, 0.08);
+    --shadow-strong: rgba(15, 23, 42, 0.15);
+
+    /*LOGIN - LIGHT THEME*/
+
+    /* Colori principali */
+    --bg-body: var(--background-color);
+    --bg-card: var(--background-section);
+    --bg-input: #f1f5f9;
+    --border-input: #e2e8f0;
+    --border-input-focus: var(--highlight-color);
+    --btn-bg: var(--secondary-color);
+    --btn-bg-hover: #d97706;
+
+    /* Testi */
+    --text-primary: var(--text-light);
+    --text-placeholder: #94a3b8;
+    --text-error: var(--error-color);
+    --text-error-alt: #b91c1c;
+
+    /* Shadow */
+    --shadow-card: var(--shadow-light);
+    --shadow-input-focus: rgba(37, 99, 235, 0.25);
+
+}
