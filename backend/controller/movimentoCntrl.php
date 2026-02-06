@@ -1,13 +1,15 @@
 <?php
-
+session_start();
 require_once '../model/database.php';
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     $id_componente   = $_POST['id_componente'] ?? null;
     if($id_componente === 'new'){
         require_once '../query/componenti.php';
+        if(checkComponenteExists($_POST['sku'], $_POST['nome_componente'], $_POST['qrcode'])){
+            setcookie('aggiunta_componente', 'exists', time() + 20, "/");
+            header("Location: ../../index.php?page=magazzino");
+            exit;
+        }
         $id_componente = setComponente(
             $_POST['sku'] ?? '',
             $_POST['nome_componente'] ?? '',
@@ -25,9 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     setStock($id_componente, $_POST['delta']);
 
     if($idMovimento){
-        header("Location: ../../index.php?page=magazzino&aggiunta=success");
+        setcookie('aggiunta_componente', 'success', time() + 20, "/");
+        header("Location: ../../index.php?page=magazzinos");
     } else {
-        header("Location: ../../index.php?page=magazzino&aggiunta=error");
+        setcookie('aggiunta_componente', 'error', time() + 20, "/");
+        header("Location: ../../index.php?page=magazzino");
     }
 }
 

@@ -13,9 +13,10 @@ function getUltimiMovimenti(){
 
 function getAllMovimenti(){
     $pdo=connect();
-    $sql = "SELECT delta, tipo, note, data_movimento
-        from movimenti
-        ORDER BY data_movimento DESC;";
+    $sql = "SELECT c.nome, m.delta, m.tipo, m.note, m.data_movimento,m.id_consegna, m.id_ordine
+            FROM movimenti m
+            left JOIN componenti c ON m.id_componente = c.id
+            ORDER BY m.data_movimento DESC;";
 
     $stmt = $pdo->query($sql);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

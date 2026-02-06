@@ -6,6 +6,8 @@ if (!isset($_SESSION['user'])) {
 }
 $page_file = __DIR__ . "/frontend/" . $page . '/' . $page . '.php';
 
+define('TITLE', 'SSM | ' . ucfirst($page));
+
 require 'backend/model/database.php';
 
 ?>

@@ -24,12 +24,14 @@ function applyTheme(theme) {
     const lightLink = document.getElementById('theme-light');
     const darkLink = document.getElementById('theme-dark');
     const themeIcon = document.getElementById('theme-icon');
+    const logo = document.getElementById('sidebar-logo');
 
     if (!lightLink || !darkLink) return;
 
     if (theme === 'dark') {
         lightLink.disabled = true;
         darkLink.disabled = false;
+        logo.src = 'frontend/img/logoblu.png'; // Cambia logo per tema scuro
         if (themeIcon) {
             themeIcon.classList.remove('bi-sun-fill');
             themeIcon.classList.add('bi-moon-stars-fill');
@@ -37,6 +39,7 @@ function applyTheme(theme) {
     } else {
         lightLink.disabled = false;
         darkLink.disabled = true;
+        logo.src = 'frontend/img/logonero.png'; // Cambia logo per tema chiaro
         if (themeIcon) {
             themeIcon.classList.remove('bi-moon-stars-fill');
             themeIcon.classList.add('bi-sun-fill');

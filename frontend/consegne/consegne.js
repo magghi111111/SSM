@@ -25,3 +25,26 @@
       btn.closest('.delivery-row').remove();
     }
   }
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+    document.querySelectorAll(".assembly_component").forEach(row => {
+
+      row.addEventListener("click", function() {
+
+        console.log("Row clicked");
+
+        const details = this.nextElementSibling;
+
+        if (!details || !details.classList.contains("assembly-details")) {
+          return;
+        }
+
+        details.classList.toggle("hidden");
+        this.classList.toggle("open");
+
+      });
+
+    });
+
+  });

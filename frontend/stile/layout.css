@@ -73,7 +73,7 @@ body {
 }
 
 /* Loghi */
-.sidebar-logo {
+#sidebar-logo {
     width: 60px;
     height: auto;
     margin: 1rem auto;
@@ -412,12 +412,21 @@ body {
     border-top: 1px dashed var(--border-color); /* Dashed scuro */
 }
 
-.form-group { display: flex; flex-direction: column; }
+.form-group {
+     display: flex; flex-direction: column; 
+    }
 .form-group.full-width { grid-column: span 2; }
 .form-actions {
     grid-column: span 2;
     display: flex;
     justify-content: flex-end;
+}
+
+input:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px var(--bg-input) inset !important;
+    -webkit-box-shadow: 0 0 0px 1000px var(--bg-input) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+    transition: background-color 0s 600000s, color 0s 600000s;
 }
 
 .form-group label, .assembly-row label {
@@ -577,26 +586,23 @@ input:focus, select:focus, textarea:focus {
 }
 .assembly_component:hover { background: var(--background-hover); }
 
-.assembly_component::after {
-    content: "▸";
-    float: right;
-    transition: transform 0.2s;
-    color: var(--highlight-color);
-}
-.assembly_component.open::after { transform: rotate(90deg); }
-
 .assembly-details { background: var(--background-alt); }
 
 .sub-table {
     width: 100%;
-    border-collapse: collapse;
     margin: 10px 0;
 }
 .sub-table th, .sub-table td {
     padding: 6px 10px;
-    border: 1px solid var(--border-color);
+    /* border: 1px solid var(--border-color); */
     font-size: 13px;
     color: var(--text-grey);
+}
+
+.sub-table th {
+    background: var(--background-thead);
+    color: var(--highlight-color);
+    font-weight: 600;
 }
 
 .component-type-badge {

@@ -1,9 +1,14 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <title>Assemblaggio Ordine</title>
-</head>
+<?php
+
+require_once 'backend/query/ordini.php';
+if(isset($_GET['id_ordine'])){
+    $id_ordine = $_GET['id_ordine'];
+    $dettagli = getDettagliOrdine($id_ordine);
+    $ordine = getOrdineById($id_ordine);
+}
+?>
+
+
 <body>
 
   <!-- HEADER / SIDEBAR già esistenti -->
@@ -13,8 +18,8 @@
     <section class="card assembly-card">
 
       <div class="order-info">
-        <p><strong>Cliente:</strong> Mario Rossi</p>
-        <p><strong>Data ordine:</strong> 12/01/2026</p>
+        <p><strong>Cliente:</strong> <?= $ordine['nome']; ?> <?= $ordine['cognome']; ?></p>
+        <p><strong>Data ordine:</strong> <?= $ordine['data_creazione']; ?></p>
       </div>
 
       <div class="assembly-actions">
@@ -33,25 +38,19 @@
       <table class="assembly-table">
         <thead>
           <tr>
-            <th>Codice richiesto</th>
-            <th>Descrizione</th>
+            <th>Componente</th>
             <th>Quantità</th>
             <th>Stato</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>COMP-001</td>
-            <td>Centralina</td>
-            <td>1</td>
-            <td class="status-ok">Verificato</td>
-          </tr>
-          <tr>
-            <td>COMP-014</td>
-            <td>Cavo sensore</td>
-            <td>2</td>
-            <td class="status-error">Errato / non scansionato</td>
-          </tr>
+          <?php foreach ($dettagli as $componente): ?>
+            <tr>
+              <td><?= $componente['nome']; ?></td>
+              <td><?= $componente['quantita']; ?> <?= $componente['unita_misura']; ?></td>
+              <td><span class="status pending">In attesa</span></td>
+            </tr>
+          <?php endforeach; ?>
         </tbody>
       </table>
 

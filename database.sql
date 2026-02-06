@@ -1,4 +1,4 @@
--- Active: 1764577806925@@127.0.0.1@3306@gestore_magazzino
+-- Active: 1769622808934@@127.0.0.1@3306@gestore_magazzino
 -- ====================================
 -- DATABASE MAGAZZINO - VERSIONE COMPLETA CON CASCADE E INT(10)
 -- ====================================
@@ -108,6 +108,12 @@ CREATE TABLE movimenti (
     foreign key (id_assemblaggio) references assemblaggi(id)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+SELECT c.nome, m.delta, m.tipo, m.note, m.data_movimento
+FROM movimenti m
+left JOIN componenti c ON m.id_componente = c.id
+left JOIN consegna d ON m.id_consegna = d.id
+left JOIN ordini o ON m.id_ordine = o.id;
 
 alter table movimenti
 add COLUMN id_componente INT(5) null REFERENCES componenti(id) AFTER id;

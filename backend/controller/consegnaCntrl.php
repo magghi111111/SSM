@@ -1,14 +1,19 @@
 <?php
 
 require_once '../model/database.php';
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+require_once '../query/consegna.php';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
+
     $idFornitore = $_POST['id_fornitore'] ?? null;
     if($idFornitore === 'new'){
         require_once '../query/fornitori.php';
+        if(checkFornitoreExists($_POST['email_fornitore'], $_POST['telefono_fornitore'])){
+            setcookie('consegna', 'fornitore_exists', time() + 20, "/");
+            header("Location: ../../index.php?page=consegne");
+            exit;
+        }
         $idFornitore = setFornitore(
             $_POST['nome_fornitore'] ?? '',
             $_POST['email_fornitore'] ?? '',
@@ -19,6 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $dataOrdine    = $_POST['data_ordine'] ?? null;
     $dataRicezione = $_POST['data_ricezione'] ?? null;
+
+    if($dataOrdine>$dataRicezione){
+        setcookie('consegna', 'date_error', time() + 20, "/");
+        header("Location: ../../index.php?page=consegne");
+        exit;
+    }
 
     $note = $_POST['note'] ?? 'Nessuna nota';
 
@@ -35,14 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    require_once '../query/consegna.php';
-
     $idConsegna = setConsegna($idFornitore, $dataOrdine, $dataRicezione, $note, $componenti);
 
     if($idConsegna){
-        header("Location: ../../index.php?page=consegne&status=success");
+        setcookie('consegna', 'success', time() + 20, "/");
+        header("Location: ../../index.php?page=consegne");
     } else {
-        header("Location: ../../index.php?page=consegne&status=error");
+        setcookie('consegna', 'error', time() + 20, "/");
+        header("Location: ../../index.php?page=consegne");
     }
 
 }

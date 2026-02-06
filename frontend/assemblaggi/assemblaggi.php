@@ -1,9 +1,11 @@
+<?php
+require_once 'backend/query/assemblaggi.php';
+$assemblaggi = getAssemblaggi();
+?>
+
 <!DOCTYPE html>
 <html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <title>Assemblaggio Libero</title>
-</head>
+
 <body>
 
   <!-- HEADER / SIDEBAR già esistenti -->
@@ -27,25 +29,23 @@
       <table class="assembly-table">
         <thead>
           <tr>
-            <th>Codice</th>
-            <th>Descrizione</th>
+            <th>SKU</th>
+            <th>Nome</th>
             <th>Quantità</th>
-            <th>Stato</th>
+            <th>Note</th>
+            <th>Operatore</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>COMP-001</td>
-            <td>Centralina</td>
-            <td>1</td>
-            <td class="status-ok">OK</td>
-          </tr>
-          <tr>
-            <td>COMP-014</td>
-            <td>Cavo sensore</td>
-            <td>2</td>
-            <td class="status-pending">In attesa</td>
-          </tr>
+          <?php foreach ($assemblaggi as $assemblaggio): ?>
+            <tr>
+              <td><?= htmlspecialchars($assemblaggio['sku']); ?></td>
+              <td><?= htmlspecialchars($assemblaggio['nome']); ?></td>
+              <td><?= htmlspecialchars($assemblaggio['quantita']).' '.htmlspecialchars($assemblaggio['unita_misura']); ?></td>
+              <td><?= htmlspecialchars($assemblaggio['note']); ?></td>
+              <td><?= htmlspecialchars($assemblaggio['email']); ?></td>
+            </tr>
+          <?php endforeach; ?>
         </tbody>
       </table>
     </section>

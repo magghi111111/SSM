@@ -9,6 +9,20 @@ function getComponentiRaw(){
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function checkComponenteExists($sku, $nome, $qrcode){
+    $pdo=connect();
+    $sql = "SELECT COUNT(*) as count FROM componenti 
+            WHERE sku = :sku OR nome = :nome OR qrcode = :qrcode;";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':sku'     => $sku,
+        ':nome'    => $nome,
+        ':qrcode'  => $qrcode
+    ]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['count'] > 0;
+}
+
 function getComponenti(){
     $pdo=connect();
     $sql = "SELECT * 
