@@ -127,7 +127,7 @@ $movimenti_recenti = getUltimiMovimenti();
                             <td>€ 250,00</td>
                             <td class="order-action text-center">
                                 <button class="btn-primary">
-                                <a href="index.php?page=assemblaggiOrdine" style="color: white; text-decoration: none;">Assembla ordine</a>
+                                <a href="index.php?page=assemblaggiOrdine&id_ordine=<?= $ordine['id'] ?>" style="color: white; text-decoration: none;">Assembla ordine</a>
                                 </button>
                             </td>
                         </tr>

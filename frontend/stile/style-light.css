@@ -6,35 +6,22 @@
 
     /* --- Colori Principali --- */
     --primary-color: #f1f5f9;
-    /* Header / Sidebar (grigio freddo chiaro) */
     --secondary-color: #f59e0b;
-    /* Arancio caldo CTA */
     --highlight-color: #2563eb;
-    /* Blu principale */
     --highlight-hover: #1e40af;
-    /* Blu hover */
 
     /* --- Sfondi --- */
     --background-color: #ffffff;
-    /* Body */
     --background-alt: #f8fafc;
-    /* Sidebar / Heading */
     --background-section: #ffffff;
-    /* Card */
     --background-thead: #f1f5f9;
-    /* Table head */
     --background-hover: #e5e7eb;
-    /* Hover */
 
     /* --- Testi --- */
     --text-light: #0f172a;
-    /* Titoli */
     --text-grey: #334155;
-    /* Testo normale */
     --text-muted: #64748b;
-    /* Hint */
     --text-admin: #1e40af;
-    /* Label */
 
     /* --- Stati --- */
     --error-color: #dc2626;
@@ -48,9 +35,7 @@
     --shadow-light: rgba(15, 23, 42, 0.08);
     --shadow-strong: rgba(15, 23, 42, 0.15);
 
-    /*LOGIN - LIGHT THEME*/
-
-    /* Colori principali */
+    /* --- LOGIN --- */
     --bg-body: var(--background-color);
     --bg-card: var(--background-section);
     --bg-input: #f1f5f9;
@@ -59,14 +44,30 @@
     --btn-bg: var(--secondary-color);
     --btn-bg-hover: #d97706;
 
-    /* Testi */
     --text-primary: var(--text-light);
     --text-placeholder: #94a3b8;
     --text-error: var(--error-color);
     --text-error-alt: #b91c1c;
 
-    /* Shadow */
     --shadow-card: var(--shadow-light);
     --shadow-input-focus: rgba(37, 99, 235, 0.25);
 
+    /* =================================================
+       QR MODAL - LIGHT THEME
+       ================================================= */
+
+    --qr-overlay-bg: rgba(15, 23, 42, 0.45);
+
+    --qr-modal-bg: #ffffff;
+    --qr-modal-text: #0f172a;
+
+    --qr-shadow: rgba(15, 23, 42, 0.15);
+
+    --qr-canvas-bg: #f8fafc;
+
+    --qr-code-bg: #ffffff;
+    --qr-code-text: #0f172a;
+
+    --qr-close-color: #64748b;
+    --qr-close-hover: #1e40af;
 }

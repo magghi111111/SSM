@@ -2,7 +2,8 @@
 -- ====================================
 -- DATABASE MAGAZZINO - VERSIONE COMPLETA CON CASCADE E INT(10)
 -- ====================================
-CREATE DATABASE gestore_magazzino;
+-- CREATE DATABASE gestore_magazzino;
+
 USE gestore_magazzino;
 
 -- ====================================
@@ -11,7 +12,7 @@ USE gestore_magazzino;
 CREATE TABLE utenti (
     id INT(5) AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(30) UNIQUE NOT NULL,
-    password_hash VARCHAR(20) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
     ruolo ENUM('WAREHOUSE', 'ADMIN') NOT NULL DEFAULT 'WAREHOUSE'
 );
 
@@ -37,11 +38,6 @@ CREATE TABLE componenti (
     unita_misura VARCHAR(10),
     tipo ENUM('RAW', 'ASSEMBLY') NOT NULL
 );
-
-SELECT c.*, p.quantita
-    FROM parti_componente p
-    join componenti c on p.id_raw = c.id
-    WHERE id_assembly = :id_assembly;
 
 -- ====================================
 -- TABELLA STOCK
@@ -69,10 +65,6 @@ CREATE TABLE ordini (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-SELECT o.id_shopify, o.data_creazione,o.stato, c.nome, c.cognome
-FROM ordini o
-JOIN cliente c ON o.id_cliente = c.codice
-WHERE o.data_creazione >= DATE_SUB(CURDATE(), INTERVAL 7 DAY);
 
 -- ====================================
 -- TABELLA RIGHE ORDINE
@@ -99,6 +91,7 @@ CREATE TABLE movimenti (
     id_ordine INT(5) NULL,
     id_consegna INT(5) NULL,
     id_assemblaggio INT(5) NULL,
+    id_componente INT(5) NULL,
     data_movimento DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     note text,
     foreign key (id_ordine) references ordini(id)
@@ -106,22 +99,11 @@ CREATE TABLE movimenti (
     foreign key (id_consegna) references consegna(id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     foreign key (id_assemblaggio) references assemblaggi(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    foreign key (id_componente) references componenti(id)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-SELECT c.nome, m.delta, m.tipo, m.note, m.data_movimento
-FROM movimenti m
-left JOIN componenti c ON m.id_componente = c.id
-left JOIN consegna d ON m.id_consegna = d.id
-left JOIN ordini o ON m.id_ordine = o.id;
-
-alter table movimenti
-add COLUMN id_componente INT(5) null REFERENCES componenti(id) AFTER id;
-
-SELECT delta, tipo, note
-from movimenti
-ORDER BY data_movimento
-LIMIT 10;
 
 -- ====================================
 -- TABELLA PARTI COMPONENTE
@@ -194,9 +176,9 @@ CREATE TABLE righe_consegna (
 );
 
 INSERT INTO utenti (email, password_hash, ruolo) VALUES
-('admin@magazzino.it', '$2y$10$OqBkbLEnrVOq8q/Ts4tMZuG2iPwTudlKtevWcIYzr2yE.DsxVBPSe', 'ADMIN'),--admin
-('warehouse1@magazzino.it', '$2y$10$G2K33oWL57BzCb6S2qiTze4YODnpolcZP.UqEX/KBU8M..5NYBS.G', 'WAREHOUSE'),--wh1
-('warehouse2@magazzino.it', '$2y$10$IcoA4Qh89UMk0tjnkPE3VOwjk1RvAnK.huRWBQ9V9o/FkRPJg92hK', 'WAREHOUSE');--wh2
+('admin@magazzino.it', '$2y$10$OqBkbLEnrVOq8q/Ts4tMZuG2iPwTudlKtevWcIYzr2yE.DsxVBPSe', 'ADMIN'),
+('warehouse1@magazzino.it', '$2y$10$G2K33oWL57BzCb6S2qiTze4YODnpolcZP.UqEX/KBU8M..5NYBS.G', 'WAREHOUSE'),
+('warehouse2@magazzino.it', '$2y$10$IcoA4Qh89UMk0tjnkPE3VOwjk1RvAnK.huRWBQ9V9o/FkRPJg92hK', 'WAREHOUSE');
 
 INSERT INTO cliente (nome, cognome, email, numero) VALUES
 ('Mario', 'Rossi', 'mario.rossi@email.it', '3331112222'),
@@ -248,8 +230,8 @@ INSERT INTO assemblaggi (id_componente, id_utente, quantita, note) VALUES
 (4, 2, 10, 'Assemblaggio lotto gennaio'),
 (4, 3, 5, 'Assemblaggio urgente');
 
-INSERT INTO movimenti (delta, tipo, id_ordine,id_consegna,id_assemblaggio, note) VALUES
-(-2, 'ORDER', 1, NULL, NULL, 'Ordine cliente 10001'),
-(200,  'DELIVERY', NULL, 1, NULL, 'Carico da fornitore'),
-(-20, 'ASSEMBLY', NULL, NULL, 1, 'Usate per assemblaggio'),
-(10, 'ASSEMBLY', NULL, NULL, 1, 'Assemblati moduli');
+INSERT INTO movimenti (delta, tipo, id_ordine,id_consegna,id_assemblaggio,id_componente, note) VALUES
+(-2, 'ORDER', 1, NULL, NULL, NULL, 'Ordine cliente 10001'),
+(200,  'DELIVERY', NULL, 1, NULL, NULL, 'Carico da fornitore'),
+(-20, 'ASSEMBLY', NULL, NULL, 1, 4, 'Usate per assemblaggio'),
+(10, 'ASSEMBLY', NULL, NULL, 1, 4, 'Assemblati moduli');
