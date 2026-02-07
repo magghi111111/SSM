@@ -20,7 +20,7 @@
         <canvas id="graficoOrdini"></canvas>
       </div>
 
-      <div class="chart-card">
+      <div class="card andamento-ordini">
         <h3>Consegne annuali</h3>
         <canvas id="graficoConsegne"></canvas>
       </div>

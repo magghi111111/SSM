@@ -14,7 +14,7 @@ function formattaMese(yyyyMm) {
 }
 
 function caricaGrafico(tipo, canvasId, label) {
-  fetch(`frontend/andamenti/api.php?tipo=${tipo}`)
+  fetch(`backend/api/api_grafici.php?tipo=${tipo}`)
     .then(r => {
       if (!r.ok) throw new Error(`Errore API ${tipo}`);
       return r.json();

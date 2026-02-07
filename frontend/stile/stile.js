@@ -9,14 +9,26 @@
             : 'light';
     }
 
-    // Scrive subito i link abilitando solo il giusto
+    const head = document.head;
+
+    const light = document.createElement('link');
+    light.rel = 'stylesheet';
+    light.href = 'frontend/stile/style-light.css';
+    light.id = 'theme-light';
+
+    const dark = document.createElement('link');
+    dark.rel = 'stylesheet';
+    dark.href = 'frontend/stile/style-dark.css';
+    dark.id = 'theme-dark';
+
     if (theme === 'dark') {
-        document.write('<link id="theme-dark" rel="stylesheet" href="frontend/stile/style-dark.css">');
-        document.write('<link id="theme-light" rel="stylesheet" href="frontend/stile/style-light.css" disabled>');
+        light.disabled = true;
     } else {
-        document.write('<link id="theme-light" rel="stylesheet" href="frontend/stile/style-light.css">');
-        document.write('<link id="theme-dark" rel="stylesheet" href="frontend/stile/style-dark.css" disabled>');
+        dark.disabled = true;
     }
+
+    head.appendChild(light);
+    head.appendChild(dark);
 })();
 
 // Funzione per cambiare tema al volo

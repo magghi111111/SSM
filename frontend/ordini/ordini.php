@@ -52,8 +52,8 @@ $ordini = getAllOrdini();
         <thead>
           <tr>
             <th>ID</th>
-            <th>Cliente</th>
             <th>Data</th>
+            <th>Cliente</th>
             <th>Stato</th>
             <th>Importo</th>
             <th>Assemblaggio</th>

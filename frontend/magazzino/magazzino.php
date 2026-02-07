@@ -8,8 +8,9 @@ $componenti = getComponenti();
 
 ?>
 
-
 <script>
+  let currentQrValue = null;
+  let currentQrTargetInput = null;
   function toggleNuovoComponente() {
     const select = document.getElementById('componente');
     const box = document.getElementById('nuovo-componente');
@@ -66,6 +67,111 @@ $componenti = getComponenti();
     });
 
   });
+
+  function openQrModal(tipo, targetInputId) {
+    currentQrTargetInput = targetInputId;
+
+    document.getElementById('qr-modal').classList.remove('hidden');
+
+    // reset
+    const canvas = document.getElementById('qr-canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    document.getElementById('qr-value-text').textContent = 'Generazione in corso…';
+    const url = `/SSM-1/backend/api/genera_qr.php?tipo=${encodeURIComponent(tipo)}`;
+    fetch(url)
+    .then(async response => {
+      const text = await response.text();
+
+      try {
+        return JSON.parse(text);
+      } catch (e) {
+        console.error("Risposta NON JSON dal server:", text);
+        throw new Error("Risposta server non valida");
+      }
+    })
+    .then(data => {
+      if (!data.success) {
+        throw new Error("QR non generato");
+      }
+
+      gestisciQR(data.qr);
+    })
+    .catch(err => {
+      console.error(err);
+      mostraErroreQR();
+    });
+  }
+
+  function confirmQr() {
+    if (!currentQrValue || !currentQrTargetInput) return;
+
+    const input = document.getElementById(currentQrTargetInput);
+    if (!input) return;
+
+    input.value = currentQrValue;
+    closeQrModal();
+  }
+
+  function downloadQr() {
+    if (!currentQrValue) return;
+
+    const canvas = document.getElementById('qr-canvas');
+    const link = document.createElement('a');
+    link.download = `${currentQrValue}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }
+
+  function printQr() {
+  if (!currentQrValue) return;
+
+    const canvas = document.getElementById('qr-canvas');
+    const dataUrl = canvas.toDataURL('image/png');
+
+    const win = window.open('', '_blank');
+    win.document.write(`
+      <html>
+        <head>
+          <title>${currentQrValue}</title>
+        </head>
+        <body style="display:flex;justify-content:center;align-items:center;height:100vh;">
+          <img src="${dataUrl}" />
+          <script>
+            window.print();
+            window.onafterprint = window.close;
+          <\/script>
+        </body>
+      </html>
+    `);
+    win.document.close();
+  }
+
+  function gestisciQR(qrValue) {
+    currentQrValue = qrValue;
+
+    const canvas = document.getElementById('qr-canvas');
+    const text = document.getElementById('qr-value-text');
+
+    text.textContent = qrValue;
+
+    QRCode.toCanvas(canvas, qrValue, {
+      width: 220,
+      margin: 2
+    });
+  }
+
+  function closeQrModal() {
+    document.getElementById('qr-modal').classList.add('hidden');
+    currentQrValue = null;
+    currentQrTargetInput = null;
+  }
+
+  function mostraErroreQR(msg = "Errore durante la generazione del QR") {
+    const text = document.getElementById('qr-value-text');
+    text.textContent = msg;
+  }
 </script>
 
 <body>
@@ -119,13 +225,11 @@ $componenti = getComponenti();
             </div>
 
             <div class="form-group">
-              <label>QR Code</label>
+              <label>QR Code Raw</label>
 
               <div class="qr-input-group">
-                <input type="text" name="qrcode" id="qrcode" placeholder="QR code letto" readonly>
-                <button type="button" class="btn-secondary">
-                  Scansiona QR
-                </button>
+                <input type="text" name="qrcode" id="qrcode" placeholder="QR Code assegnato" readonly>
+                <button type="button"class="btn-secondary"onclick="openQrModal('RAW', 'qrcode')">Genera QR</button>
               </div>
             </div>
           </div>
@@ -193,11 +297,11 @@ $componenti = getComponenti();
 
           <div class="assembly-section">
             <div class="form-group">
-              <label>QR code assembly</label>
+              <label>QR Code Assembly</label>
 
               <div class="qr-input-group">
-                <input type="text" placeholder="QR code letto" id="assembly_qrcode" name="assembly_qrcode" value="" disabled>
-                <button type="button" class="btn-secondary">Scansiona QR</button>
+                <input type="text" placeholder="QR Code assegnato" id="assembly_qrcode" name="assembly_qrcode" value="" disabled>
+                <button type="button"class="btn-secondary"onclick="openQrModal('ASSEMBLY', 'assembly_qrcode')">Genera QR</button>
               </div>
             </div>
           </div>
@@ -239,6 +343,34 @@ $componenti = getComponenti();
 
     ?>
   </div>
-</body>
 
+  <!-- MODALE GENERAZIONE QR -->
+  <div id="qr-modal" class="qr-modal hidden">
+
+    <div class="qr-modal-overlay" onclick="closeQrModal()"></div>
+
+    <div class="qr-modal-content">
+      <h3>QR Code generato</h3>
+
+      <div class="qr-preview">
+        <!-- qui andrà il QR -->
+        <canvas id="qr-canvas"></canvas>
+      </div>
+
+      <div class="qr-value">
+        <code id="qr-value-text">—</code>
+      </div>
+
+      <div class="qr-actions">
+        <button class="btn-secondary" onclick="downloadQr()">Scarica</button>
+        <button class="btn-secondary" onclick="printQr()">Stampa</button>
+        <button class="btn-primary" onclick="confirmQr()">Usa questo QR</button>
+      </div>
+
+      <button class="qr-close" onclick="closeQrModal()">✕</button>
+    </div>
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+</body>
 </html>

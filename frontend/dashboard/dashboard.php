@@ -24,28 +24,34 @@ $movimenti_recenti = getUltimiMovimenti();
         <!-- KPI -->
         <section class="kpi-section">
 
-            <div class="kpi-card">
-                <div class="kpi-header">
-                    <h3>Ordini da evadere</h3>
-                    <i class="bi bi-receipt kpi-icon"></i>
-                </div>
-                <p class="kpi-value">12</p>
+            <div class="kpi-card info">
+                <a href="index.php?page=ordini" style="text-decoration: none; color: inherit;">
+                    <div class="kpi-header">
+                        <h3>Ordini da evadere</h3>
+                        <i class="bi bi-receipt kpi-icon"></i>
+                    </div>
+                    <p class="kpi-value">12</p>
+                </a>
             </div>
 
             <div class="kpi-card warning">
-                <div class="kpi-header">
-                    <h3>Ordini ricevuti mensili</h3>
-                    <i class="bi bi-box-seam kpi-icon"></i>
-                </div>
-                <p class="kpi-value">60</p>
+                <a href="index.php?page=andamenti" style="text-decoration: none; color: inherit;">
+                    <div class="kpi-header">
+                        <h3>Ordini ricevuti mensili</h3>
+                        <i class="bi bi-box-seam kpi-icon"></i>
+                    </div>
+                    <p class="kpi-value">60</p>
+                </a>
             </div>
 
             <div class="kpi-card success">
-                <div class="kpi-header">
-                    <h3>Profitto mensile</h3>
-                    <i class="bi bi-cash-stack kpi-icon"></i>
-                </div>
-                <p class="kpi-value">€ 5.230</p>
+                <a href="index.php?page=andamenti" style="text-decoration: none; color: inherit;">
+                    <div class="kpi-header">
+                        <h3>Profitto mensile</h3>
+                        <i class="bi bi-cash-stack kpi-icon"></i>
+                    </div>
+                    <p class="kpi-value">€ 5.230</p>
+                </a>
             </div>
 
             <div class="kpi-card alert">
@@ -78,19 +84,21 @@ $movimenti_recenti = getUltimiMovimenti();
 
             <!-- MOVIMENTI -->
             <div class="card">
-                <h2>Ultimi Movimenti</h2>
-                <ul class="list">
-                    <?php foreach ($movimenti_recenti as $movimento): ?>
-                        <li>
-                            <strong><?= htmlspecialchars($movimento['note']) ?></strong> 
-                            <div class="info-row">
-                                <span><strong>Tipo:</strong> <?= htmlspecialchars($movimento['tipo']) ?></span>
-                                <span><strong>Data:</strong> <?= htmlspecialchars($movimento['data_movimento']) ?></span>
-                                <span><strong>Delta:</strong> <?= htmlspecialchars($movimento['delta']) ?></span>
-                            </div>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
+                <a href="index.php?page=movimenti" style="text-decoration: none; color: inherit;">
+                    <h2>Ultimi Movimenti</h2>
+                    <ul class="list">
+                        <?php foreach ($movimenti_recenti as $movimento): ?>
+                            <li>
+                                <strong><?= htmlspecialchars($movimento['note']) ?></strong> 
+                                <div class="info-row">
+                                    <span><strong>Tipo:</strong> <?= htmlspecialchars($movimento['tipo']) ?></span>
+                                    <span><strong>Data:</strong> <?= htmlspecialchars($movimento['data_movimento']) ?></span>
+                                    <span><strong>Delta:</strong> <?= htmlspecialchars($movimento['delta']) ?></span>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </a>
             </div>
         </section>
 
