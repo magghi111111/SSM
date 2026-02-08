@@ -69,13 +69,13 @@ $consegne = getConsegne();
 
       <?php if (isset($_COOKIE['consegna'])): ?>
         <?php if ($_COOKIE['consegna'] == 'success'): ?>
-          <div style="color:green;">Consegna registrata con successo!</div>
+          <div class="auto-hide" style="color:green;">Consegna registrata con successo!</div>
         <?php elseif ($_COOKIE['consegna'] == 'error'): ?>
-          <div style="color:red;">Errore durante la registrazione della consegna.</div>
+          <div class="auto-hide" style="color:red;">Errore durante la registrazione della consegna.</div>
         <?php elseif ($_COOKIE['consegna'] == 'fornitore_exists'): ?>
-          <div style="color:red;">Fornitore già esistente.</div>
+          <div class="auto-hide" style="color:red;">Fornitore già esistente.</div>
         <?php elseif ($_COOKIE['consegna'] == 'date_error'): ?>
-          <div style="color:red;">La data di ricezione non può essere precedente alla data di ordine.</div></form>
+          <div class="auto-hide" style="color:red;">La data di ricezione non può essere precedente alla data di ordine.</div></form>
         <?php endif; ?>
       <?php endif; ?>
 

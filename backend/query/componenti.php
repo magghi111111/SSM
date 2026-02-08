@@ -23,6 +23,66 @@ function checkComponenteExists($sku, $nome, $qrcode){
     return $result['count'] > 0;
 }
 
+function getComponenteByQR($qrcode){
+    $pdo=connect();
+    $sql = "SELECT id FROM componenti WHERE qrcode = :qrcode and tipo='ASSEMBLY';";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':qrcode' => $qrcode]);
+    $id=$stmt->fetchColumn();
+    if(!$id) return null;
+    return $id;
+}
+
+
+function updateStockAssemblaggio($id_componente, $delta){
+    $pdo = connect();
+    $pdo->beginTransaction();//necessario per evitare di lasciare stock incoerenti in caso di errore
+
+    try {
+        $sql = "UPDATE stock s
+                JOIN parti_componente pc ON s.id_componente = pc.id_raw
+                SET s.quantita = s.quantita - (pc.quantita * :delta)
+                WHERE pc.id_assembly = :id_componente;";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':delta' => $delta,
+            ':id_componente' => $id_componente
+        ]);
+
+        $sql = "UPDATE stock SET quantita = quantita + :delta WHERE id_componente = :id_componente;";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':delta' => $delta,
+            ':id_componente' => $id_componente
+        ]);
+
+        $pdo->commit();//se tutto va bene, conferma le modifiche
+        return true;
+
+    } catch (Exception $e) {
+        $pdo->rollBack();//se c'è un errore, annulla tutte le modifiche
+        return false;
+    }
+}
+
+
+function checkStocks($id_assembly,$qta){
+    $pdo=connect();
+    $sql = "SELECT *
+    FROM parti_componente pc
+    JOIN stock s ON s.id_componente = pc.id_raw
+    WHERE pc.id_assembly = :idAssembly
+      AND s.quantita < pc.quantita * :qty
+    LIMIT 1;";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':idAssembly' => $id_assembly,
+        ':qty' => $qta
+    ]);
+    $row_count = $stmt->rowCount();
+    return $row_count > 0;
+}
+
 function getComponenti(){
     $pdo=connect();
     $sql = "SELECT * 

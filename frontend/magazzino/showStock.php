@@ -4,6 +4,7 @@
             <tr>
                 <th>Codice</th>
                 <th>Descrizione</th>
+                <th>QR-Code</th>
                 <th>Quantità</th>
                 <th>Ultima Modifica</th>
             </tr>
@@ -13,6 +14,7 @@
                 <tr <?= $componente['tipo'] == 'ASSEMBLY' ? 'class="assembly_component"' : '' ?>>
                     <td><?= htmlspecialchars($componente['sku']); ?></td>
                     <td><?= htmlspecialchars($componente['nome']); ?></td>
+                    <td><a  class="qr-download" download href="qr/<?= htmlspecialchars($componente['qrcode']); ?>.png"><?= htmlspecialchars($componente['qrcode']); ?></a></td>
                     <td><?= htmlspecialchars($componente['quantita']); ?> <?= htmlspecialchars($componente['unita_misura']); ?></td>
                     <td><?= htmlspecialchars($componente['ultima_modifica']); ?></td>
                 </tr>

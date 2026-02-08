@@ -12,5 +12,18 @@ function getAssemblaggi(){
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function setAssemblaggio($id_componente, $quantita, $id_utente, $note){
+    $pdo=connect();
+    $sql = "INSERT INTO assemblaggi (id_componente, quantita, id_utente, note) 
+            VALUES (:id_componente, :quantita, :id_utente, :note);";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':id_componente' => $id_componente,
+        ':quantita' => $quantita,
+        ':id_utente' => $id_utente,
+        ':note' => $note
+    ]);
+    return $pdo->lastInsertId();
+}
 
 ?>

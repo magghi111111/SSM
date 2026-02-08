@@ -22,14 +22,15 @@ function getAllMovimenti(){
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function setMovimento($idComponente, $delta, $note){
+function setMovimento($idComponente, $delta, $tipo, $note){
     $pdo=connect();
     $sql = "INSERT INTO movimenti ( id_componente, delta, tipo, note) 
-            VALUES (:id_componente, :delta,'MANUAL', :note);";
+            VALUES (:id_componente, :delta,:tipo, :note);";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ':id_componente' => $idComponente,
         ':delta'         => $delta,
+        ':tipo'          => $tipo,
         ':note'          => $note
     ]);
     return $pdo->lastInsertId();

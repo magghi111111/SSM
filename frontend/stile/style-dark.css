@@ -69,13 +69,14 @@
     --shadow-input-focus: rgba(71, 158, 180, 0.25);
 
     /*QR MODAL*/
-    --qr-overlay-bg: rgba(255, 255, 255, 0.95); /* quasi bianco pieno */
-    --qr-modal-bg: #ffffff;                     /* bianco pieno */
-    --qr-modal-text: #0f172a;                   /* testo scuro */
-    --qr-shadow: rgba(0, 0, 0, 0.15);           /* ombra leggera */
-    --qr-canvas-bg: #ffffff;                    /* canvas bianco */
-    --qr-code-bg: #000000;                      /* codice QR nero su bianco */
+    --qr-overlay-bg: rgba(0, 0, 0, 0.7);
+    --qr-modal-bg: #1e222a;
+    --qr-modal-text: #ffffff;
+    --qr-preview-bg: #ffffff;
+    --qr-code-bg: #111111;
     --qr-code-text: #ffffff;
-    --qr-close-color: #64748b;
-    --qr-close-hover: #1e40af;
+    --qr-close-color: #aaaaaa;
+    --qr-close-hover: #ffffff;
+    --qr-shadow: rgba(0, 0, 0, 0.6);
+
 }

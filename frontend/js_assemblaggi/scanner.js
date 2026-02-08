@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
   openBtn.addEventListener("click", async () => {
     scannerBox.classList.remove("hidden");
 
-    if (!initScanner()) return;   // 🔒 GARANZIA
+    if (!initScanner()) return;
 
     try {
       scanning = true;

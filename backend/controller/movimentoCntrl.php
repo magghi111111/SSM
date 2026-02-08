@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     require_once '../query/movimenti.php';
 
-    $idMovimento = setMovimento($id_componente, $_POST['delta'], $_POST['note']);
+    $idMovimento = setMovimento($id_componente, $_POST['delta'],'MANUAL',$_POST['note']);
     setStock($id_componente, $_POST['delta']);
 
     if($idMovimento){

@@ -219,11 +219,11 @@ $componenti = getComponenti();
 
       <?php if (isset($_COOKIE['aggiunta_componente'])): ?>
         <?php if ($_COOKIE['aggiunta_componente'] == 'success'): ?>
-          <div style="color:green;">Movimento registrato con successo!</div>
+          <div class="auto-hide" style="color:green;">Movimento registrato con successo!</div>
         <?php elseif ($_COOKIE['aggiunta_componente'] == 'error'): ?>
-          <div style="color:red;">Errore durante la registrazione del movimento.</div>
+          <div class="auto-hide" style="color:red;">Errore durante la registrazione del movimento.</div>
         <?php elseif ($_COOKIE['aggiunta_componente'] == 'exists'): ?>
-          <div style="color:red;">Componente già esistente!</div>
+          <div class="auto-hide" style="color:red;">Componente già esistente!</div>
         <?php endif; ?>
       <?php endif; ?>
 
@@ -307,11 +307,11 @@ $componenti = getComponenti();
 
       <?php if (isset($_COOKIE['assembly'])): ?>
         <?php if ($_COOKIE['assembly'] == 'success'): ?>
-          <div style="color:green;">Assembly creato con successo!</div>
+          <div class="auto-hide" style="color:green;">Assembly creato con successo!</div>
         <?php elseif ($_COOKIE['assembly'] == 'error'): ?>
-          <div style="color:red;">Errore durante la creazione dell'assembly.</div>
+          <div class="auto-hide" style="color:red;">Errore durante la creazione dell'assembly.</div>
         <?php elseif ($_COOKIE['assembly'] == 'exists'): ?>
-          <div style="color:red;">Assembly già esistente!</div>
+          <div class="auto-hide" style="color:red;">Assembly già esistente!</div>
         <?php endif; ?>
       <?php endif; ?>
 
