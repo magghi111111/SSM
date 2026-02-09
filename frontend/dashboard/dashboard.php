@@ -4,6 +4,8 @@ require 'backend/query/ordini.php';
 require 'backend/query/movimenti.php';
 $ordini_recenti = getOrdiniRecenti();
 $movimenti_recenti = getUltimiMovimenti();
+$ordini_mese = getOrdiniMese();
+$ordidni_da_evadere = getOrdiniDaProcessare();
 
 ?>
 
@@ -30,7 +32,7 @@ $movimenti_recenti = getUltimiMovimenti();
                         <h3>Ordini da evadere</h3>
                         <i class="bi bi-receipt kpi-icon"></i>
                     </div>
-                    <p class="kpi-value">12</p>
+                    <p class="kpi-value"><?= $ordidni_da_evadere ?></p>
                 </a>
             </div>
 
@@ -40,7 +42,7 @@ $movimenti_recenti = getUltimiMovimenti();
                         <h3>Ordini ricevuti mensili</h3>
                         <i class="bi bi-box-seam kpi-icon"></i>
                     </div>
-                    <p class="kpi-value">60</p>
+                    <p class="kpi-value"><?= $ordini_mese ?></p>
                 </a>
             </div>
 

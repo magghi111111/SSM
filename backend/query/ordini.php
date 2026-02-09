@@ -47,6 +47,27 @@ function getOrdineById($id){
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function getOrdiniMese(){
+    $pdo=connect();
+    $sql = "SELECT COUNT(*) AS totale
+    FROM ordini
+    WHERE month(data_creazione) = month(CURDATE()) AND year(data_creazione) = year(CURDATE());";
+
+    $stmt = $pdo->query($sql);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['totale'];
+}
+
+function getOrdiniDaProcessare(){
+    $pdo=connect();
+    $sql = "SELECT count(*) AS totale
+    FROM ordini o
+    WHERE o.stato <> 'PREPARED';";
+    $stmt = $pdo->query($sql);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['totale'];
+}   
+
 
 
 ?>

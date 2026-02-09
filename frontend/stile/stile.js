@@ -1,14 +1,22 @@
-// Applica subito il tema (PRIMA del render)
-(function () {
+
+/* =========================================================
+   THEME INIT — eseguito PRIMA del render
+   ========================================================= */
+
+window.__initialTheme = (function () {
+
+    // 1. Tema da cookie
     const match = document.cookie.match(/theme=([^;]+)/);
     let theme = match ? match[1] : null;
 
+    // 2. Se non c'è cookie → preferenza browser
     if (!theme) {
         theme = window.matchMedia('(prefers-color-scheme: dark)').matches
             ? 'dark'
             : 'light';
     }
 
+    // 3. Caricamento CSS
     const head = document.head;
 
     const light = document.createElement('link');
@@ -29,48 +37,77 @@
 
     head.appendChild(light);
     head.appendChild(dark);
+
+    return theme;
+
 })();
 
-// Funzione per cambiare tema al volo
+
+/* =========================================================
+   APPLY THEME — applica UI (logo + icona)
+   ========================================================= */
+
 function applyTheme(theme) {
+
     const lightLink = document.getElementById('theme-light');
-    const darkLink = document.getElementById('theme-dark');
+    const darkLink  = document.getElementById('theme-dark');
     const themeIcon = document.getElementById('theme-icon');
-    const logo = document.getElementById('sidebar-logo');
+    const logo      = document.getElementById('sidebar-logo');
 
     if (!lightLink || !darkLink) return;
 
     if (theme === 'dark') {
+
         lightLink.disabled = true;
-        darkLink.disabled = false;
-        logo.src = 'frontend/img/logoblu.png'; // Cambia logo per tema scuro
+        darkLink.disabled  = false;
+
+        if (logo) {
+            logo.src = 'frontend/img/logoblu.png';
+        }
+
         if (themeIcon) {
             themeIcon.classList.remove('bi-sun-fill');
             themeIcon.classList.add('bi-moon-stars-fill');
         }
+
     } else {
+
         lightLink.disabled = false;
-        darkLink.disabled = true;
-        logo.src = 'frontend/img/logonero.png'; // Cambia logo per tema chiaro
+        darkLink.disabled  = true;
+
+        if (logo) {
+            logo.src = 'frontend/img/logonero.png';
+        }
+
         if (themeIcon) {
             themeIcon.classList.remove('bi-moon-stars-fill');
             themeIcon.classList.add('bi-sun-fill');
         }
     }
 
+    // Persistenza
     document.cookie = "theme=" + theme + "; path=/; max-age=31536000";
 }
 
-// Toggle bottone
+
+/* =========================================================
+   TOGGLE BUTTON
+   ========================================================= */
+
 function toggleTheme() {
+
     const lightLink = document.getElementById('theme-light');
+    if (!lightLink) return;
+
     const newTheme = lightLink.disabled ? 'light' : 'dark';
     applyTheme(newTheme);
 }
 
-// Dopo il load possiamo aggiornare solo l'icona
+
+/* =========================================================
+   DOM READY — sincronizza UI al primo caricamento
+   ========================================================= */
+
 document.addEventListener('DOMContentLoaded', () => {
-    const match = document.cookie.match(/theme=([^;]+)/);
-    const theme = match ? match[1] : null;
-    if (theme) applyTheme(theme);
+    applyTheme(window.__initialTheme);
 });

@@ -4,7 +4,7 @@
             <tr>
                 <th>Codice</th>
                 <th>Descrizione</th>
-                <th>QR-Code</th>
+                <th>QR-Code (click per scaricare)</th>
                 <th>Quantità</th>
                 <th>Ultima Modifica</th>
             </tr>

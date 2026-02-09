@@ -66,8 +66,16 @@ $componenti = getComponenti();
       });
 
     });
+    
+    document.querySelectorAll(".qr-download").forEach(link => {
+      link.addEventListener("click", function(e) {
+        e.stopPropagation();
+      });
+    });
 
   });
+
+  
 
   function openQrModal(tipo, targetInputId) {
     currentQrTargetInput = targetInputId;

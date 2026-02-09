@@ -69,7 +69,7 @@ $ordini = getAllOrdini();
               <td>€ 250,00</td>
               <td class="order-action text-center">
                 <button class="btn-primary">
-                  <a href="index.php?page=assemblaggiOrdine&id_ordine=<?= $ordine['id']; ?>" style="color: white; text-decoration: none;">Assembla ordine</a>
+                  <a <?= $ordine['stato'] != 'PREPARED' ? 'href="index.php?page=assemblaggiOrdine&id_ordine=' . $ordine['id'] . '" style="color: white; text-decoration: none;"' : 'style="color: gray; text-decoration: none; cursor: default;" disabled' ?>>Assembla ordine</a>
                 </button>
               </td>
             </tr>

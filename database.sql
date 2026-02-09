@@ -186,10 +186,10 @@ INSERT INTO cliente (nome, cognome, email, numero) VALUES
 ('Anna', 'Verdi', 'anna.verdi@email.it', '3334445555');
 
 INSERT INTO componenti (sku, nome, qrcode, unita_misura, tipo) VALUES
-('RAW-RES-10K', 'Resistenza 10K', 'QR-RAW-10K', 'pz', 'RAW'),
-('RAW-CAP-100uF', 'Condensatore 100uF', 'QR-RAW-100uF', 'pz', 'RAW'),
-('RAW-IC-555', 'Timer NE555', 'QR-RAW-555', 'pz', 'RAW'),
-('ASM-MOD-001', 'Modulo Timer', 'QR-ASM-001', 'pz', 'ASSEMBLY');
+('RAW-RES-10K', 'Resistenza 10K', 'RAW-ae01dd61-abd2-4f70-ac61-59d876f64727', 'pz', 'RAW'),
+('RAW-CAP-100uF', 'Condensatore 100uF', 'RAW-c717c533-d27b-41b0-8918-10c0a3aad3e1', 'pz', 'RAW'),
+('RAW-IC-555', 'Timer NE555', 'RAW-88c1bc69-8381-4704-909b-31aa63350d14', 'pz', 'RAW'),
+('ASM-MOD-001', 'Modulo Timer', 'ASSEMBLY-02c9a9cc-a8bd-4caa-831d-afb6ff9894f7', 'pz', 'ASSEMBLY');
 
 INSERT INTO stock (id_componente, quantita) VALUES
 (1, 500),
