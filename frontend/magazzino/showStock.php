@@ -21,7 +21,7 @@
 
                 <?php if ($componente['tipo'] == 'ASSEMBLY'): ?>
                     <tr class="assembly-details hidden">
-                        <td colspan="4">
+                        <td colspan="100%">
                             <table class="sub-table">
                                 <thead>
                                     <tr>
