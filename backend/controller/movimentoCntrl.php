@@ -23,12 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     require_once '../query/movimenti.php';
 
-    $idMovimento = setMovimento($id_componente, $_POST['delta'],'MANUAL',$_POST['note']);
+    $idMovimento = setMovimento(null,$id_componente, $_POST['delta'],'MANUAL',$_POST['note']);
     setStock($id_componente, $_POST['delta']);
 
     if($idMovimento){
         setcookie('aggiunta_componente', 'success', time() + 20, "/");
-        header("Location: ../../index.php?page=magazzinos");
+        header("Location: ../../index.php?page=magazzino");
     } else {
         setcookie('aggiunta_componente', 'error', time() + 20, "/");
         header("Location: ../../index.php?page=magazzino");

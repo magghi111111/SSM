@@ -1,37 +1,19 @@
 <?php
 
 require_once 'backend/query/movimenti.php';
-require_once 'frontend/consegne/consegneSubTable.php';
-require_once 'frontend/ordini/ordiniSubTable.php';
-require_once 'backend/query/ordini.php';
-require_once 'backend/query/consegna.php';
-$movimenti = getAllMovimenti();
+
+$filters = [
+    'tipo'        => $_GET['tipo'] ?? [],
+    'componenti'  => $_GET['componenti'] ?? [],
+    'order'       => $_GET['order'] ?? null
+];
+
+$movimenti = getAllMovimenti($filters);
+$componenti = getDistinctComponenti();
+
 
 ?>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-
-    document.querySelectorAll(".assembly_component").forEach(row => {
-
-      row.addEventListener("click", function() {
-
-
-        const details = this.nextElementSibling;
-
-        if (!details || !details.classList.contains("assembly-details")) {
-          return;
-        }
-
-        details.classList.toggle("hidden");
-        this.classList.toggle("open");
-
-      });
-
-    });
-
-  });
-</script>
 <!DOCTYPE html>
 <html lang="it">
 
@@ -39,6 +21,54 @@ $movimenti = getAllMovimenti();
 <body>
   <div class="main">
     <div class="card full">
+      <form method="GET" class="filters" action="">
+
+        <input type="hidden" name="page" value="movimenti">
+        <!-- ORDINAMENTO -->
+        <label>Ordina per</label>
+        <select name="order">
+          <option value="">Data (default)</option>
+          <option value="tipo" <?= ($_GET['order'] ?? '') === 'tipo' ? 'selected' : '' ?>>Tipo</option>
+          <option value="data_movimento" <?= ($_GET['order'] ?? '') === 'data_movimento' ? 'selected' : '' ?>>Data</option>
+          <option value="nome" <?= ($_GET['order'] ?? '') === 'nome' ? 'selected' : '' ?>>Componente</option>
+        </select>
+
+        <!-- FILTRO TIPO -->
+        <label>Tipo</label>
+        <div class="checkbox-group">
+          <?php foreach (['MANUAL', 'ASSEMBLY', 'ORDER', 'DELIVERY'] as $t): ?>
+            <label class="checkbox-item">
+              <input
+                type="checkbox"
+                name="tipo[]"
+                value="<?= $t ?>"
+                <?= in_array($t, $_GET['tipo'] ?? []) ? 'checked' : '' ?>>
+              <?= $t ?>
+            </label>
+          <?php endforeach; ?>
+        </div>
+
+
+        <!-- FILTRO COMPONENTI -->
+        <label>Componente</label>
+        <div class="checkbox-group">
+          <?php foreach ($componenti as $c): ?>
+            <label class="checkbox-item">
+              <input
+                type="checkbox"
+                name="componenti[]"
+                value="<?= $c['id'] ?>"
+                <?= in_array($c['id'], $_GET['componenti'] ?? []) ? 'checked' : '' ?>>
+              <?= htmlspecialchars($c['nome']) ?>
+            </label>
+          <?php endforeach; ?>
+        </div>
+
+        <button type="submit">Applica</button>
+        <a href="index.php?page=movimenti">Reset</a>
+
+      </form>
+
       <table class="orders-table">
         <thead>
           <tr>
@@ -51,17 +81,13 @@ $movimenti = getAllMovimenti();
         </thead>
         <tbody>
           <?php foreach ($movimenti as $movimento): ?>
-            <tr <?= $movimento['tipo'] == 'ORDER' || $movimento['tipo'] == 'DELIVERY' ? 'class="assembly_component"' : '' ?>>
+            <tr>
               <td><?= htmlspecialchars($movimento['tipo']) ?></td>
               <td><?= htmlspecialchars($movimento['delta']) ?></td>
               <td><?= htmlspecialchars($movimento['data_movimento']) ?></td>
               <td><?= htmlspecialchars($movimento['nome']) ?></td>
               <td><?= htmlspecialchars($movimento['note']) ?></td>
             </tr>
-            <?php if ($movimento['tipo'] == 'DELIVERY')
-               righeConsegna($movimento['id_consegna']); 
-              elseif($movimento['tipo'] == 'ORDER') 
-               righeOrdini($movimento['id_ordine']);?>
           <?php endforeach; ?>
         </tbody>
       </table>
