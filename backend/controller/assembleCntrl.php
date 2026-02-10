@@ -27,8 +27,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $idAssemblaggio = setAssemblaggio($id_componente, $qty, $user_id, $note);
     if($idAssemblaggio){
         if(updateStockAssemblaggio($id_componente, $qty)){
-            $idMovimento = setMovimento($id_componente, $qty, 'ASSEMBLY',$note);
-            if($idMovimento){
+            if(setMovimento($idAssemblaggio,$id_componente, $qty, 'ASSEMBLY',$note)){
                 setcookie('assemblaggio', 'success', time() + 20, "/");
                 header("Location: ../../index.php?page=assemblaggi");
             } else {

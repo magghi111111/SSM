@@ -2,6 +2,8 @@
 
 require_once '../model/database.php';
 require_once '../query/consegna.php';
+require_once '../query/movimenti.php';
+require_once '../query/componenti.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
@@ -49,11 +51,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $idConsegna = setConsegna($idFornitore, $dataOrdine, $dataRicezione, $note, $componenti);
 
     if($idConsegna){
+        if(setMovimentiMultipli($idConsegna,$componenti,$note)){
         setcookie('consegna', 'success', time() + 20, "/");
         header("Location: ../../index.php?page=consegne");
+        }
     } else {
         setcookie('consegna', 'error', time() + 20, "/");
         header("Location: ../../index.php?page=consegne");
     }
 
+}
+
+function setMovimentiMultipli($id,$componenti,$note){
+    foreach($componenti as $componente){
+        if(
+            !setMovimentoConsegna($id,$componente['id'],$componente['qta'],'DELIVERY',$note)
+            || 
+            !updateStockAssemblaggio($componente['id'],$componente['qta'])
+        ){
+            return false;
+        }
+    }
+    return true;
 }

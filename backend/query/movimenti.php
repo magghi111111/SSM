@@ -11,29 +11,99 @@ function getUltimiMovimenti(){
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getAllMovimenti(){
+function getAllMovimenti($filters = []) {
+    $pdo = connect();
+
+    $where = [];
+    $params = [];
+
+    /* ===== FILTRO TIPO ===== */
+    if (!empty($filters['tipo'])) {
+        $placeholders = implode(',', array_fill(0, count($filters['tipo']), '?'));
+        $where[] = "m.tipo IN ($placeholders)";
+        $params = array_merge($params, $filters['tipo']);
+    }
+
+    /* ===== FILTRO COMPONENTI ===== */
+    if (!empty($filters['componenti'])) {
+        $placeholders = implode(',', array_fill(0, count($filters['componenti']), '?'));
+        $where[] = "m.id_componente IN ($placeholders)";
+        $params = array_merge($params, $filters['componenti']);
+    }
+
+    $sql = "
+        SELECT
+            m.tipo,
+            m.delta,
+            m.data_movimento,
+            m.note,
+            c.nome
+        FROM movimenti m
+        left JOIN componenti c ON c.id = m.id_componente
+    ";
+
+    if ($where) {
+        $sql .= " WHERE " . implode(' AND ', $where);
+    }
+
+    /* ===== ORDINAMENTO ===== */
+    $allowedOrder = [
+        'tipo' => 'm.tipo',
+        'data' => 'm.data_movimento',
+        'componente' => 'c.nome'
+    ];
+
+    if (!empty($filters['order']) && isset($allowedOrder[$filters['order']])) {
+        $sql .= " ORDER BY " . $allowedOrder[$filters['order']].", m.data_movimento DESC";
+    } else {
+        $sql .= " ORDER BY m.data_movimento DESC";
+    }
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+function getDistinctComponenti() {
     $pdo=connect();
-    $sql = "SELECT c.nome, m.delta, m.tipo, m.note, m.data_movimento,m.id_consegna, m.id_ordine
+    $sql = "SELECT distinct c.id,c.nome
             FROM movimenti m
             left JOIN componenti c ON m.id_componente = c.id
-            ORDER BY m.data_movimento DESC;";
+            ORDER BY c.nome DESC;";
 
     $stmt = $pdo->query($sql);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function setMovimento($idComponente, $delta, $tipo, $note){
+function setMovimento($idAssemblaggio,$idComponente, $delta, $tipo, $note){
     $pdo=connect();
-    $sql = "INSERT INTO movimenti ( id_componente, delta, tipo, note) 
-            VALUES (:id_componente, :delta,:tipo, :note);";
+    $sql = "INSERT INTO movimenti ( id_assemblaggio,id_componente, delta, tipo, note) 
+            VALUES (:id_assemblaggio,:id_componente, :delta,:tipo, :note);";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([
+    return $stmt->execute([
+        ':id_assemblaggio'=> $idAssemblaggio,
         ':id_componente' => $idComponente,
         ':delta'         => $delta,
         ':tipo'          => $tipo,
         ':note'          => $note
     ]);
-    return $pdo->lastInsertId();
+}
+
+
+function setMovimentoConsegna($idConsegna,$idComponente, $delta, $tipo, $note){
+    $pdo=connect();
+    $sql = "INSERT INTO movimenti ( id_consegna,id_componente, delta, tipo, note) 
+            VALUES (:id_consegna,:id_componente, :delta,:tipo, :note);";
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([
+        ':id_consegna'   => $idConsegna,  
+        ':id_componente' => $idComponente,
+        ':delta'         => $delta,
+        ':tipo'          => $tipo,
+        ':note'          => $note
+    ]);
 }
 
 function setStock($idComponente, $delta){
