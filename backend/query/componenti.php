@@ -117,7 +117,13 @@ function setComponente($sku, $nome, $unita_misura, $qrcode, $tipo){
         ':qrcode'      => $qrcode,
         ':tipo'         => $tipo
     ]);
-    return $pdo->lastInsertId();
+    $id=$pdo->lastInsertId();
+
+    $sql = 'INSERT INTO stock (id_componente) values (:id_componente);';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':id_componente'=>$id]);
+    
+    return $id;
 }
 
 function setAssemblyComponente($idAssembly, $idRaw, $quantita){

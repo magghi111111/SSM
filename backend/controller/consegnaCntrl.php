@@ -6,7 +6,6 @@ require_once '../query/movimenti.php';
 require_once '../query/componenti.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
 
     $idFornitore = $_POST['id_fornitore'] ?? null;
     if($idFornitore === 'new'){
