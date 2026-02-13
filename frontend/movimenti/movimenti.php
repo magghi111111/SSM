@@ -22,50 +22,58 @@ $componenti = getDistinctComponenti();
   <div class="main">
     <div class="card full">
       <form method="GET" class="filters" action="">
-
         <input type="hidden" name="page" value="movimenti">
+
         <!-- ORDINAMENTO -->
-        <label>Ordina per</label>
-        <select name="order">
-          <option value="">Data (default)</option>
-          <option value="tipo" <?= ($_GET['order'] ?? '') === 'tipo' ? 'selected' : '' ?>>Tipo</option>
-          <option value="data_movimento" <?= ($_GET['order'] ?? '') === 'data_movimento' ? 'selected' : '' ?>>Data</option>
-          <option value="nome" <?= ($_GET['order'] ?? '') === 'nome' ? 'selected' : '' ?>>Componente</option>
-        </select>
+        <div class="filter-block">
+          <label>Ordina per</label>
+          <select name="order">
+            <option value="">Data (default)</option>
+            <option value="tipo" <?= ($_GET['order'] ?? '') === 'tipo' ? 'selected' : '' ?>>Tipo</option>
+            <option value="data_movimento" <?= ($_GET['order'] ?? '') === 'data_movimento' ? 'selected' : '' ?>>Data</option>
+            <option value="nome" <?= ($_GET['order'] ?? '') === 'nome' ? 'selected' : '' ?>>Componente</option>
+          </select>
+        </div>
 
         <!-- FILTRO TIPO -->
-        <label>Tipo</label>
-        <div class="checkbox-group">
-          <?php foreach (['MANUAL', 'ASSEMBLY', 'ORDER', 'DELIVERY'] as $t): ?>
-            <label class="checkbox-item">
-              <input
-                type="checkbox"
-                name="tipo[]"
-                value="<?= $t ?>"
-                <?= in_array($t, $_GET['tipo'] ?? []) ? 'checked' : '' ?>>
-              <?= $t ?>
-            </label>
-          <?php endforeach; ?>
+        <div class="filter-block">
+          <label>Tipo</label>
+          <div class="checkbox-group">
+            <?php foreach (['MANUAL', 'ASSEMBLY', 'ORDER', 'DELIVERY'] as $t): ?>
+              <label class="checkbox-item">
+                <input
+                  type="checkbox"
+                  name="tipo[]"
+                  value="<?= $t ?>"
+                  <?= in_array($t, $_GET['tipo'] ?? []) ? 'checked' : '' ?>>
+                <?= $t ?>
+              </label>
+            <?php endforeach; ?>
+          </div>
         </div>
-
 
         <!-- FILTRO COMPONENTI -->
-        <label>Componente</label>
-        <div class="checkbox-group">
-          <?php foreach ($componenti as $c): ?>
-            <label class="checkbox-item">
-              <input
-                type="checkbox"
-                name="componenti[]"
-                value="<?= $c['id'] ?>"
-                <?= in_array($c['id'], $_GET['componenti'] ?? []) ? 'checked' : '' ?>>
-              <?= htmlspecialchars($c['nome']) ?>
-            </label>
-          <?php endforeach; ?>
+        <div class="filter-block">
+          <label>Componente</label>
+          <div class="checkbox-group">
+            <?php foreach ($componenti as $c): ?>
+              <label class="checkbox-item">
+                <input
+                  type="checkbox"
+                  name="componenti[]"
+                  value="<?= $c['id'] ?>"
+                  <?= in_array($c['id'], $_GET['componenti'] ?? []) ? 'checked' : '' ?>>
+                <?= htmlspecialchars($c['nome']) ?>
+              </label>
+            <?php endforeach; ?>
+          </div>
         </div>
 
-        <button type="submit">Applica</button>
-        <a href="index.php?page=movimenti">Reset</a>
+        <!-- BOTTONI -->
+        <div class="filter-actions">
+          <button type="submit" class="btn-primary">Applica</button>
+          <a href="index.php?page=movimenti" class="btn-secondary">Reset</a>
+        </div>
 
       </form>
 

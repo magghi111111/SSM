@@ -903,28 +903,71 @@ input:focus, select:focus, textarea:focus {
     flex: 0 0 auto;
 }
 
-
 /* ===============================
-   17. FILTRI MOVIMENTI
+   MOVIMENTI - FILTRI COMPACT GRID
    =============================== */
 
 .filters {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-end;
-  margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px 40px;
+    align-items: start;
+    margin-bottom: 25px;
 }
 
+/* blocchi interni */
+.filter-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Titoli */
+.filter-block > label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--highlight-color);
+}
+
+/* Ordinamento occupa solo prima colonna */
+.filter-block:first-child {
+    grid-column: 1 / 2;
+}
+
+/* Tipo e Componente affiancati */
+.filter-block:nth-child(2),
+.filter-block:nth-child(3) {
+    grid-column: span 1;
+}
+
+/* Checkbox compatte */
 .checkbox-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 1.5rem;
-  margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
 }
 
+/* Singola checkbox */
 .checkbox-item {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-grey);
+}
+
+.checkbox-item input {
+    accent-color: var(--highlight-color);
+}
+
+/* Bottoni allineati a destra */
+.filter-actions {
+    grid-column: 2 / 3;
+    align-self: start;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-top: 22px;
 }
