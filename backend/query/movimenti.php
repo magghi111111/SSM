@@ -50,7 +50,7 @@ function getAllMovimenti($filters = []) {
     $allowedOrder = [
         'tipo' => 'm.tipo',
         'data' => 'm.data_movimento',
-        'componente' => 'c.nome'
+        'nome' => 'c.nome'
     ];
 
     if (!empty($filters['order']) && isset($allowedOrder[$filters['order']])) {
@@ -70,7 +70,7 @@ function getDistinctComponenti() {
     $pdo=connect();
     $sql = "SELECT distinct c.id,c.nome
             FROM movimenti m
-            left JOIN componenti c ON m.id_componente = c.id
+            JOIN componenti c ON m.id_componente = c.id
             ORDER BY c.nome DESC;";
 
     $stmt = $pdo->query($sql);
@@ -117,5 +117,6 @@ function setStock($idComponente, $delta){
         ':qta'           => $delta
     ]);
 }
+
 
 ?>
