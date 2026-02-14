@@ -972,3 +972,138 @@ input:focus, select:focus, textarea:focus {
     margin-top: 22px;
 }
 
+/* ===============================
+   USER CREATE FORM
+   =============================== */
+
+/* Card contenitore */
+.user-create-card {
+    max-width: 50%;              /* metà spazio disponibile */
+    min-width: 480px;            /* evita che diventi troppo stretto */
+    margin: 0;                   /* allineato a sinistra */
+    padding: 28px;
+
+    background: var(--background-section);
+    border: 1px solid var(--background-hover);
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+/* Titolo */
+.user-create-card h2 {
+    text-align: left;
+    margin-bottom: 22px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--highlight-color);
+}
+
+/* Griglia form */
+.user-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 20px;              /* meno verticale, più respiro orizzontale */
+}
+
+/* Gruppi input */
+.user-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Campo a tutta larghezza */
+.user-form .full-width {
+    grid-column: span 2;
+}
+
+/* Label */
+.user-form .form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-admin);
+    margin-bottom: 4px;
+    letter-spacing: 0.2px;
+}
+
+/* Input */
+.user-form input {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 13.5px;
+    border-radius: 6px;
+    border: 1px solid var(--background-hover);
+    background-color: var(--background-color);
+    color: var(--text-light);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Focus input */
+.user-form input:focus {
+    outline: none;
+    border-color: var(--highlight-color);
+    box-shadow: 0 0 0 2px var(--shadow-light);
+}
+
+/* Placeholder */
+.user-form input::placeholder {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+/* Azioni form */
+.user-form .form-actions {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+/* Bottone submit */
+.user-form button {
+    padding: 10px 26px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Messaggi di feedback */
+.form-message {
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+}
+
+/* Successo */
+.form-message.success {
+    background: rgba(144, 238, 144, 0.1);
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+/* Errore */
+.form-message.error {
+    background: rgba(255, 107, 107, 0.1);
+    color: var(--error-color);
+    border: 1px solid var(--error-color);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .user-create-card {
+        max-width: 100%;
+        min-width: unset;
+    }
+}
+
+@media (max-width: 600px) {
+    .user-form {
+        grid-template-columns: 1fr;
+    }
+
+    .user-form .full-width,
+    .user-form .form-actions {
+        grid-column: span 1;
+    }
+}

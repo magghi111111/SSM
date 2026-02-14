@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password_confirm = $_POST['signup_pass_confirm'];
 
     if ($password !== $password_confirm) {
-        $_SESSION['error'] = 'Le password non coincidono';
+        setcookie("signup_error", "Le password non coincidono", time() + 20, "/");
         header('Location: ../../index.php?page=impostazioni');
         exit();
     }
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/";
 
     if (!preg_match($pattern, $password)) {
-        $_SESSION['error'] = "La password deve contenere almeno 8 caratteri, una maiuscola, una minuscola, un numero e un simbolo.";
+        setcookie("signup_error", "La password deve contenere almeno 8 caratteri, una maiuscola, una minuscola, un numero e un simbolo.", time() + 20, "/");
         header('Location: ../../index.php?page=impostazioni');
         exit();
     }
@@ -26,24 +26,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pattern_email = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
 
     if (!preg_match($pattern_email, $email)) {
-        $_SESSION['error'] = "Formato email non valido";
+        setcookie("signup_error", "Formato email non valido", time() + 20, "/");
         header('Location: ../../index.php?page=impostazioni');
         exit();
     }
 
     if (getUSer($email)) {
-        $_SESSION['error'] = 'Utente già esistente';
+        setcookie("signup_error", "Utente già esistente", time() + 20, "/");
         header('Location: ../../index.php?page=impostazioni');
         exit();
     }
 
     $password_hashed = password_hash($password, PASSWORD_BCRYPT);
     if (setUser($email, $password_hashed)) {
-        $_SESSION['success'] = 'Utente creato con successo';
+        setcookie("signup_success", "Utente creato con successo", time() + 20, "/");
         header('Location: ../../index.php?page=impostazioni');
         exit();
     } else {
-        $_SESSION['error'] = 'Errore durante la creazione dell\'utente';
+        setcookie("signup_error", "Errore durante la creazione dell'utente", time() + 20, "/");
         header('Location: ../../index.php?page=impostazioni');
         exit();
     }

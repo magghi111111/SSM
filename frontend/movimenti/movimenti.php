@@ -85,6 +85,7 @@ $componenti = getDistinctComponenti();
             <th>Data</th>
             <th>Componente</th>
             <th>Note</th>
+            <th>Operatore</th>
           </tr>
         </thead>
         <tbody>
@@ -95,6 +96,7 @@ $componenti = getDistinctComponenti();
               <td><?= htmlspecialchars($movimento['data_movimento']) ?></td>
               <td><?= htmlspecialchars($movimento['nome']) ?></td>
               <td><?= htmlspecialchars($movimento['note']) ?></td>
+              <td><?= htmlspecialchars($movimento['email']) ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>

@@ -37,9 +37,12 @@ function getAllMovimenti($filters = []) {
             m.delta,
             m.data_movimento,
             m.note,
-            c.nome
+            c.nome,
+            u.email
         FROM movimenti m
         left JOIN componenti c ON c.id = m.id_componente
+        left join assemblaggi a ON a.id = m.id_assemblaggio
+        left join utenti u ON u.id = a.id_utente
     ";
 
     if ($where) {
