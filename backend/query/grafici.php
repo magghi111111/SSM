@@ -33,6 +33,20 @@ switch ($tipo) {
         ";
         break;
 
+    case 'tempo_assemblaggio':
+        $sql = "
+            SELECT 
+                c.nome AS prodotto,
+                AVG(TIMESTAMPDIFF(MINUTE, a.data_inizio, a.data_fine)) AS tempo_medio
+            FROM assemblaggi a
+            JOIN componenti c ON c.id = a.id_componente
+            WHERE a.data_fine IS NOT NULL
+            AND YEAR(a.data_inizio) = :anno
+            GROUP BY c.nome
+            ORDER BY tempo_medio DESC
+        ";
+        break;
+
     default:
         http_response_code(400);
         echo json_encode(["error" => "Tipo grafico non valido"]);

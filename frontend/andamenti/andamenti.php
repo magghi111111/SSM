@@ -27,7 +27,7 @@
 
       <div class="chart-card">
         <h3>Tempo di preparazione</h3>
-        <div id="prepTimeChart" class="chart-placeholder"></div>
+        <canvas id="graficoPrepTime"></canvas>
       </div>
 
       <div class="chart-card">

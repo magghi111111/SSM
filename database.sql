@@ -1,4 +1,4 @@
--- Active: 1769622808934@@127.0.0.1@3306@gestore_magazzino
+-- Active: 1764577806925@@127.0.0.1@3306@gestore_magazzino
 -- ====================================
 -- DATABASE MAGAZZINO - VERSIONE COMPLETA CON CASCADE E INT(10)
 -- ====================================
@@ -235,3 +235,7 @@ INSERT INTO movimenti (delta, tipo, id_ordine,id_consegna,id_assemblaggio,id_com
 (200,  'DELIVERY', NULL, 1, NULL, NULL, 'Carico da fornitore'),
 (-20, 'ASSEMBLY', NULL, NULL, 1, 4, 'Usate per assemblaggio'),
 (10, 'ASSEMBLY', NULL, NULL, 1, 4, 'Assemblati moduli');
+
+ALTER TABLE assemblaggi
+ADD data_inizio DATETIME NOT NULL,
+ADD data_fine DATETIME NULL;
