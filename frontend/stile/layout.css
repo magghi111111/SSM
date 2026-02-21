@@ -1107,3 +1107,39 @@ input:focus, select:focus, textarea:focus {
         grid-column: span 1;
     }
 }
+
+/* ===============================
+    ASSEMBLY SELECTOR
+   =============================== */
+
+.assembly-selector {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.assembly-option {
+  position: relative;
+  cursor: pointer;
+}
+
+.assembly-option input {
+  display: none;
+}
+
+.assembly-option span {
+  display: inline-block;
+  padding: 20px 30px;
+  border: 2px solid #166A7B;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: 0.3s;
+  background: #f4f6f8;
+}
+
+.assembly-option input:checked + span {
+  background: #166A7B;
+  color: white;
+  box-shadow: 0 0 10px rgba(22,106,123,0.4);
+}

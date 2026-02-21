@@ -58,6 +58,29 @@ $assemblaggi = getAssemblaggi();
 
       <?php include 'frontend/assemblaggi/messaggi.php';  ?>
 
+      <h2 class="section-title">Seleziona Assembly</h2>
+        <div class="assembly-selector">
+          <label class="assembly-option">
+            <input type="radio" name="assembly_type" value="cambio" required>
+            <span>Cambio Elettronico</span>
+          </label>
+
+          <label class="assembly-option">
+            <input type="radio" name="assembly_type" value="pedalina">
+            <span>Pedalina</span>
+          </label>
+
+          <label class="assembly-option">
+            <input type="radio" name="assembly_type" value="centralina">
+            <span>Centralina</span>
+          </label>
+        </div>
+
+        <div id="requiredComponents" class="required-components hidden">
+          <h3>Componenti necessari</h3>
+          <ul id="componentList"></ul>
+        </div>
+
       <h2 class="section-title">Componenti prelevati</h2>
 
       <table class="assembly-table">
@@ -87,7 +110,7 @@ $assemblaggi = getAssemblaggi();
 
   <script src="https://unpkg.com/html5-qrcode"></script>
   <script src="frontend/js_assemblaggi/scanner.js"></script>
-
+  <script src="frontend/js_assemblaggi/assembly.js"></script>
   <script>
     function handleQr(qrText) {
 
