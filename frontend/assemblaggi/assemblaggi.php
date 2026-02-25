@@ -1,6 +1,8 @@
 <?php
 require_once 'backend/query/assemblaggi.php';
+require_once 'backend/query/componenti.php';
 $assemblaggi = getAssemblaggi();
+$componentiAssembly = getComponentiAssembly();
 
 ?>
 
@@ -14,72 +16,69 @@ $assemblaggi = getAssemblaggi();
   <main class="content">
 
     <section class="assembly-card">
+
       <form id="formAssemblaggio" method="post" action="backend/controller/assembleCntrl.php">
 
-        <div class="assembly-actions">
-          <button type="button" class="btn-primary" id="openScanner">
-            Avvia Scanner QR
-          </button>
-        </div>
+        <h2 class="section-title">Seleziona componente da assemblare</h2>
 
+        <?php include 'frontend/assemblaggi/messaggi.php';  ?>
         <!-- Scanner -->
         <div class="camera-box hidden" id="scannerBox">
           <button type="button" id="closeScanner" class="close-btn">✕</button>
           <div id="qr-reader"></div>
         </div>
 
-        <!-- Messaggi -->
-        <div id="scanMessage" class="scan-message hidden"></div>
+        <input type="hidden" name="user_id" value="<?= htmlspecialchars($_SESSION['user_id']); ?>">
 
-        <!-- Input QR -->
-        <div class="form-group qr-input-group">
-          <label for="assembly_qr">Componente (QR)</label>
-          <input type="text" id="assembly_qr" name="assembly_qr" readonly required placeholder="Scansiona un QR">
+        <!-- Selezione assembly -->
+        <div class="assembly-selector">
+          <?php foreach ($componentiAssembly as $assembly): ?>
+            <label class="assembly-option">
+              <input type="radio" name="assembly_type" value="<?= $assembly['id']; ?>" required>
+              <span><?= htmlspecialchars($assembly['nome']); ?></span>
+            </label>
+          <?php endforeach; ?>
         </div>
 
-        <!-- Quantità -->
-        <div class="form-group">
-          <label for="qty">Quantità assemblata</label>
-          <input type="number" id="qty" name="qty" min="1" required>
+        <!-- Componenti dei vari assembly -->
+        <div class="assembly-components-wrapper">
+          <?php foreach ($componentiAssembly as $assembly): ?>
+            <div class="required-components hidden" data-assembly-id="<?= $assembly['id']; ?>">
+              <ul class="required-components-list">
+                <?php foreach (getPartiComponente($assembly['id']) as $componente): ?>
+                  <li class="required-component">
+                    <span class="component-name">
+                      <?= htmlspecialchars($componente['nome']); ?> (<?= $componente['quantita'] . ' ' . $componente['unita_misura']; ?>)
+                    </span>
+                    <input type="text"
+                      class="component-qr"
+                      name="componenti_qr[<?= $componente['id']; ?>]"
+                      data-componente-id="<?= $componente['id']; ?>"
+                      readonly
+                      disabled
+                      placeholder="Non scannerizzato">
+
+                  </li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
+          <?php endforeach; ?>
         </div>
+
+        <div id="scannerError" class="hidden" style="color:red;"></div>
+
+        <button type="button" id="openScanner" class="btn-primary">
+          <i class="bi bi-qr-code-scan"></i> Scansiona componente
+        </button>
+
 
         <div class="form-group">
           <label for="note">Note</label>
-          <input type="text" id="note" name="note" required>
+          <input type="text" id="note" name="note" placeholder="Eventuali note">
         </div>
 
-        <input type="hidden" name="user_id" value="<?= htmlspecialchars($_SESSION['user_id']); ?>">
-
-        <button type="submit" class="btn-primary">
-          Registra assemblaggio
-        </button>
-
+        <button type="submit" class="btn-primary">Registra assemblaggio</button>
       </form>
-
-      <?php include 'frontend/assemblaggi/messaggi.php';  ?>
-
-      <h2 class="section-title">Seleziona Assembly</h2>
-        <div class="assembly-selector">
-          <label class="assembly-option">
-            <input type="radio" name="assembly_type" value="cambio" required>
-            <span>Cambio Elettronico</span>
-          </label>
-
-          <label class="assembly-option">
-            <input type="radio" name="assembly_type" value="pedalina">
-            <span>Pedalina</span>
-          </label>
-
-          <label class="assembly-option">
-            <input type="radio" name="assembly_type" value="centralina">
-            <span>Centralina</span>
-          </label>
-        </div>
-
-        <div id="requiredComponents" class="required-components hidden">
-          <h3>Componenti necessari</h3>
-          <ul id="componentList"></ul>
-        </div>
 
       <h2 class="section-title">Componenti prelevati</h2>
 
@@ -111,24 +110,6 @@ $assemblaggi = getAssemblaggi();
   <script src="https://unpkg.com/html5-qrcode"></script>
   <script src="frontend/js_assemblaggi/scanner.js"></script>
   <script src="frontend/js_assemblaggi/assembly.js"></script>
-  <script>
-    function handleQr(qrText) {
-
-      console.log("QR scansionato:", qrText);
-
-      // scrive il valore nel campo input
-      const input = document.getElementById('assembly_qr');
-      input.value = qrText;
-
-      // messaggio visivo
-      const msg = document.getElementById('scanMessage');
-      msg.textContent = "QR acquisito correttamente";
-      msg.classList.remove('hidden');
-
-      // chiudi scanner
-      document.getElementById('scannerBox').classList.add('hidden');
-    }
-  </script>
 </body>
 
 </html>

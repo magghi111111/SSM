@@ -1,15 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const openBtn = document.getElementById("openScanner");
+  const openBtn = document.getElementById("openScanner"); // solo un pulsante
   const closeBtn = document.getElementById("closeScanner");
   const scannerBox = document.getElementById("scannerBox");
+  const qrReaderDiv = document.getElementById("qr-reader");
 
-  if (!openBtn || !closeBtn || !scannerBox) {
+  if (!openBtn || !closeBtn || !scannerBox || !qrReaderDiv) {
     console.warn("Scanner: elementi DOM mancanti");
     return;
   }
 
-  let qrScanner;
+  let qrScanner = null;
   let scanning = false;
 
   function initScanner() {
@@ -31,6 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  closeBtn.addEventListener("click", stopScanner);
+
+  // APRI SCANNER (un solo pulsante)
   openBtn.addEventListener("click", async () => {
     scannerBox.classList.remove("hidden");
 
@@ -41,11 +45,11 @@ document.addEventListener("DOMContentLoaded", () => {
       await qrScanner.start(
         { facingMode: "environment" },
         {
-            fps: 10,
-            qrbox: (viewfinderWidth, viewfinderHeight) => {
-                const size = Math.min(viewfinderWidth, viewfinderHeight) * 0.6;
-                return { width: size, height: size };
-            }
+          fps: 10,
+          qrbox: (vw, vh) => {
+            const size = Math.min(vw, vh) * 0.6;
+            return { width: size, height: size };
+          }
         },
         onQrSuccess,
         () => {}
@@ -56,25 +60,49 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  closeBtn.addEventListener("click", stopScanner);
-
-  async function onQrSuccess(text) {
-    console.log("QR letto:", text);
-
+  // QR SCANNED
+  async function onQrSuccess(qrText) {
     await stopScanner();
 
-    const msgBox = document.getElementById("scanMessage");
-    if (msgBox) {
-        msgBox.textContent = "Componente scannerizzato";
-        msgBox.classList.remove("hidden", "error");
+    // invia al backend per sapere a quale componente appartiene
+    fetch('backend/api/checkComponent.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ qr: qrText })
+    })
+    .then(res => res.json())
+    .then(data => {
 
-        // sparisce dopo 3 secondi (opzionale)
-        setTimeout(() => {
-        msgBox.classList.add("hidden");
-        }, 3000);
-    }
+      document.getElementById("scannerError").classList.add("hidden");
 
-    handleQr(text);
-    }
+      if (!data.success) {
+        document.getElementById("scannerError").classList.remove("hidden");
+        document.getElementById("scannerError").textContent = 'QR non valido';
+        return;
+      }
+
+      const componentId = data.component_id;
+
+      // seleziona l'input corretto tra quelli attivi (assembly selezionato)
+      const input = document.querySelector(
+        `.component-qr[data-componente-id="${componentId}"]:not(:disabled)`
+      );
+
+      if (!input) {
+        document.getElementById("scannerError").classList.remove("hidden");
+        document.getElementById("scannerError").textContent = 'Componente non richiesto per questo assembly';
+        return;
+      }
+
+      input.value = qrText;
+      input.classList.add('filled', 'success');
+
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById("scannerError").classList.remove("hidden");
+      document.getElementById("scannerError").textContent = 'Errore durante la validazione del QR';
+    });
+  }
 
 });

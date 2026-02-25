@@ -1,9 +1,16 @@
 <?php
 
-
 function getComponentiRaw(){
     $pdo=connect();
     $sql = "SELECT * FROM componenti WHERE tipo = 'RAW';";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getComponentiAssembly(){
+    $pdo=connect();
+    $sql = "SELECT * FROM componenti WHERE tipo = 'ASSEMBLY';";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -25,7 +32,7 @@ function checkComponenteExists($sku, $nome, $qrcode){
 
 function getComponenteByQR($qrcode){
     $pdo=connect();
-    $sql = "SELECT id FROM componenti WHERE qrcode = :qrcode and tipo='ASSEMBLY';";
+    $sql = "SELECT id FROM componenti WHERE qrcode = :qrcode;";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':qrcode' => $qrcode]);
     $id=$stmt->fetchColumn();
@@ -66,21 +73,35 @@ function updateStockAssemblaggio($id_componente, $delta){
 }
 
 
-function checkStocks($id_assembly,$qta){
+function checkStocks($id_componente,$qta){
     $pdo=connect();
     $sql = "SELECT *
-    FROM parti_componente pc
-    JOIN stock s ON s.id_componente = pc.id_raw
-    WHERE pc.id_assembly = :idAssembly
-      AND s.quantita < pc.quantita * :qty
-    LIMIT 1;";
+    FROM componenti c
+    JOIN stock s ON s.id_componente = c.id
+    WHERE c.id = :id_componente
+      AND s.quantita < :qty;";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
-        ':idAssembly' => $id_assembly,
+        ':id_componente' => $id_componente,
         ':qty' => $qta
     ]);
     $row_count = $stmt->rowCount();
     return $row_count > 0;
+}
+
+function checkAssembly($id_assembly, $id_componente){
+    $pdo=connect();
+    $sql = "SELECT *
+    FROM parti_componente
+    WHERE id_assembly = :id_assembly
+      AND id_raw = :id_componente;";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':id_assembly' => $id_assembly,
+        ':id_componente' => $id_componente
+    ]);
+    $row_count = $stmt->rowCount();
+    return $row_count == 0;
 }
 
 function getComponenti(){
