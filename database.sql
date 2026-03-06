@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2026 at 04:05 PM
+-- Generation Time: Feb 26, 2026 at 03:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -48,7 +48,13 @@ INSERT INTO `assemblaggi` (`id`, `id_componente`, `id_utente`, `quantita`, `data
 (4, 8, 2, 15, '2026-02-09 17:03:45', 'Produzione moduli LED', '2026-02-23 16:30:46'),
 (5, 4, 2, 8, '2026-02-09 17:03:45', 'Assemblaggio extra febbraio', '2026-02-23 16:30:46'),
 (6, 4, 1, 20, '2026-02-14 17:10:53', 'Assemblaggio 14 febbraio', '2026-02-23 16:30:46'),
-(7, 4, 1, 5, '2026-02-20 16:09:06', 'festa', '2026-02-23 16:30:46');
+(7, 4, 1, 5, '2026-02-20 16:09:06', 'festa', '2026-02-23 16:30:46'),
+(8, 4, 1, 1, '2026-02-25 16:00:38', '', NULL),
+(9, 4, 1, 1, '2026-02-25 16:01:39', '', NULL),
+(10, 4, 1, 1, '2026-02-25 16:06:18', 'Assemblaggio effettuato il 2026-02-25 16:06:18', NULL),
+(11, 4, 1, 1, '2026-02-25 16:08:40', 'Assemblaggio effettuato il 2026-02-25 16:08:40', NULL),
+(12, 4, 1, 1, '2026-02-25 16:11:19', 'Assemblaggio effettuato il 2026-02-25 16:11:19', NULL),
+(13, 4, 1, 1, '2026-02-25 17:05:41', 'Assemblaggio effettuato il 2026-02-25 17:05:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -96,19 +102,22 @@ CREATE TABLE `componenti` (
 --
 
 INSERT INTO `componenti` (`id`, `sku`, `nome`, `qrcode`, `unita_misura`, `tipo`) VALUES
-(1, 'CE-CTR-PCB-V1', 'PCB', 'RAW-ae01dd61-abd2-4f70-ac61-59d876f64727', 'pz', 'RAW'),
-(2, 'CE-CTR-CASE-V1', 'Case ', 'RAW-c717c533-d27b-41b0-8918-10c0a3aad3e1', 'pz', 'RAW'),
-(3, 'CE-CBL-V1', 'Cablaggio', 'RAW-88c1bc69-8381-4704-909b-31aa63350d14', 'pz', 'RAW'),
-(4, 'CE-CTR-V1', 'Centralina', 'ASSEMBLY-02c9a9cc-a8bd-4caa-831d-afb6ff9894f7', 'pz', 'ASSEMBLY'),
-(5, 'CE-INT-V1', 'Interruttore', 'RAW-97cbac6c-397d-431f-82c0-88521e3b9760', 'pz', 'RAW'),
-(6, 'CE-PED-SCO-V1', 'Scocca', 'RAW-52356207-755d-4390-b816-cdd2f7c9af7b', 'pz', 'RAW'),
-(7, 'CE-PED-PUL-V1', 'Pulsante', 'RAW-8b83b328-d6de-475f-9ee3-310b389ff4dd', 'pz', 'RAW'),
-(8, 'CE-PED-V1', 'Pedalina', 'ASSEMBLY-89975a2b-ecb3-4911-8bd7-70f228f7e298', 'pz', 'ASSEMBLY'),
-(14, 'CE-PED-MOL-V1', 'Molla', 'RAW-24622795-471c-4167-bb9c-12b2ce086b05', 'pz', 'RAW'),
-(15, 'CE-PED-REED-V1', 'Ampolla Reed', 'RAW-a289153d-a306-477e-a281-da1b884e564a', 'pz', 'RAW'),
-(16, 'CE-PED-PER-V1', 'Perno', 'RAW-e18bb0bf-d07e-4859-b724-eccea3025716', 'pz', 'RAW'),
-(17, 'CE-PED-MAG-V1', 'Magnete', 'RAW-ae5a4e84-23da-4e0e-a481-65e08909ce8b', 'pz', 'RAW'),
-(18, 'CE-ASM-V1', 'Cambio Elettronico', 'ASSEMBLY-e83ec0d7-100b-4e88-bf9d-8fdc59fd82c1', 'pz', 'ASSEMBLY');
+(1, 'CE-CTR-PCB', 'PCB', 'RAW-ae01dd61-abd2-4f70-ac61-59d876f64727', 'pz', 'RAW'),
+(2, 'CE-CTR-CASE', 'Case ', 'RAW-c717c533-d27b-41b0-8918-10c0a3aad3e1', 'pz', 'RAW'),
+(3, 'CE-CBL', 'Cablaggio', 'RAW-88c1bc69-8381-4704-909b-31aa63350d14', 'pz', 'ASSEMBLY'),
+(4, 'CE-CTR', 'Centralina', 'ASSEMBLY-02c9a9cc-a8bd-4caa-831d-afb6ff9894f7', 'pz', 'ASSEMBLY'),
+(5, 'CE-CLB-INT', 'Interruttore', 'RAW-97cbac6c-397d-431f-82c0-88521e3b9760', 'pz', 'ASSEMBLY'),
+(6, 'CE-PED-SCO', 'Scocca', 'RAW-52356207-755d-4390-b816-cdd2f7c9af7b', 'pz', 'RAW'),
+(7, 'CE-PED-PUL', 'Pulsante', 'RAW-8b83b328-d6de-475f-9ee3-310b389ff4dd', 'pz', 'RAW'),
+(8, 'CE-PED', 'Pedalina', 'ASSEMBLY-89975a2b-ecb3-4911-8bd7-70f228f7e298', 'pz', 'ASSEMBLY'),
+(14, 'CE-PED-MOL', 'Molla', 'RAW-24622795-471c-4167-bb9c-12b2ce086b05', 'pz', 'RAW'),
+(15, 'CE-PED-REED', 'Ampolla Reed', 'RAW-a289153d-a306-477e-a281-da1b884e564a', 'pz', 'RAW'),
+(16, 'CE-PED-PER', 'Perno', 'RAW-e18bb0bf-d07e-4859-b724-eccea3025716', 'pz', 'RAW'),
+(17, 'CE-PED-MAG', 'Magnete', 'RAW-ae5a4e84-23da-4e0e-a481-65e08909ce8b', 'pz', 'RAW'),
+(18, 'CE-ASM', 'Cambio Elettronico', 'ASSEMBLY-e83ec0d7-100b-4e88-bf9d-8fdc59fd82c1', 'pz', 'ASSEMBLY'),
+(19, 'CE-CLB-CCLB', 'Corpo Cablaggio', 'RAW-c19a2a20-b42c-4963-b9c0-e4aeae51bab5', 'pz', 'RAW'),
+(20, 'CE-CLB-INT-STA', 'Staffa', 'RAW-568130d0-e608-4893-96a9-870fe11c359b', 'pz', 'RAW'),
+(21, 'CE-CBL-CLG', 'Collegamento Batteria', 'RAW-604e9ba8-b31f-4ee8-b060-b23ba156387c', 'pz', 'RAW');
 
 -- --------------------------------------------------------
 
@@ -206,7 +215,16 @@ INSERT INTO `movimenti` (`id`, `delta`, `tipo`, `id_ordine`, `id_consegna`, `id_
 (23, 0, 'MANUAL', NULL, NULL, NULL, 14, '2026-02-23 16:39:32', 'Nuovo componente'),
 (24, 0, 'MANUAL', NULL, NULL, NULL, 15, '2026-02-23 16:40:30', 'aggiunta\r\n'),
 (25, 0, 'MANUAL', NULL, NULL, NULL, 16, '2026-02-23 16:40:57', 'aggiunta'),
-(26, 0, 'MANUAL', NULL, NULL, NULL, 17, '2026-02-23 16:42:01', 'festa\r\n');
+(26, 0, 'MANUAL', NULL, NULL, NULL, 17, '2026-02-23 16:42:01', 'festa\r\n'),
+(27, 1, 'ASSEMBLY', NULL, NULL, 8, 1, '2026-02-25 16:00:38', ''),
+(28, 1, 'ASSEMBLY', NULL, NULL, 9, 4, '2026-02-25 16:01:39', ''),
+(29, 1, 'ASSEMBLY', NULL, NULL, 10, 4, '2026-02-25 16:06:18', 'Assemblaggio effettuato il 2026-02-25 16:06:18'),
+(30, 1, 'ASSEMBLY', NULL, NULL, 11, 4, '2026-02-25 16:08:40', 'Assemblaggio effettuato il 2026-02-25 16:08:40'),
+(31, 1, 'ASSEMBLY', NULL, NULL, 12, 4, '2026-02-25 16:11:19', 'Assemblaggio effettuato il 2026-02-25 16:11:19'),
+(32, 1, 'ASSEMBLY', NULL, NULL, 13, 4, '2026-02-25 17:05:41', 'Assemblaggio effettuato il 2026-02-25 17:05:41'),
+(33, 10, 'MANUAL', NULL, NULL, NULL, 19, '2026-02-26 15:32:44', 'Aggiunta componente'),
+(34, 10, 'MANUAL', NULL, NULL, NULL, 20, '2026-02-26 15:34:10', 'Aggiunta componente'),
+(35, 10, 'MANUAL', NULL, NULL, NULL, 21, '2026-02-26 15:39:34', 'Aggiunta componente');
 
 -- --------------------------------------------------------
 
@@ -259,12 +277,16 @@ INSERT INTO `parti_componente` (`id_assembly`, `id_raw`, `quantita`) VALUES
 (8, 15, 1),
 (8, 16, 1),
 (8, 17, 1),
+(18, 3, 1),
 (18, 4, 1),
 (18, 8, 1);
 
-INSERT into `parti_componente` (`id_assembly`, `id_raw`, `quantita`) VALUES
-(18, 3, 1),
-(18, 5, 1);
+insert into parti_componente (id_assembly, id_raw, quantita) values
+(5, 20, 1),
+(5, 7, 1),
+(3, 19, 1),
+(3, 5, 1),
+(3, 21, 1);
 
 -- --------------------------------------------------------
 
@@ -315,12 +337,12 @@ CREATE TABLE `righe_ordini` (
 INSERT INTO `righe_ordini` (`id_ordine`, `id_componente`, `quantita`) VALUES
 (1, 4, 2),
 (2, 4, 1),
-(3, 1, 10),
-(3, 2, 5),
+(3, 18, 10),
+(3, 3, 5),
 (4, 8, 3),
-(5, 4, 2),
-(6, 1, 20),
-(6, 2, 10);
+(5, 18, 2),
+(6, 18, 20),
+(6, 5, 10);
 
 -- --------------------------------------------------------
 
@@ -339,10 +361,10 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`id_componente`, `quantita`, `ultima_modifica`) VALUES
-(1, 498, '2026-02-20 16:09:06'),
-(2, 374, '2026-02-20 16:50:04'),
+(1, 494, '2026-02-25 17:05:41'),
+(2, 369, '2026-02-25 17:05:41'),
 (3, 174, '2026-02-20 16:09:06'),
-(4, 51, '2026-02-20 16:09:06'),
+(4, 56, '2026-02-25 17:05:41'),
 (5, 800, '2026-02-09 17:03:45'),
 (6, 500, '2026-02-09 17:03:45'),
 (7, 450, '2026-02-09 17:03:45'),
@@ -351,7 +373,10 @@ INSERT INTO `stock` (`id_componente`, `quantita`, `ultima_modifica`) VALUES
 (15, 0, '2026-02-23 16:40:30'),
 (16, 0, '2026-02-23 16:40:57'),
 (17, 0, '2026-02-23 16:42:01'),
-(18, 20, '2026-02-23 16:47:07');
+(18, 20, '2026-02-23 16:47:07'),
+(19, 10, '2026-02-26 15:32:44'),
+(20, 10, '2026-02-26 15:34:10'),
+(21, 10, '2026-02-26 15:39:34');
 
 -- --------------------------------------------------------
 
@@ -477,7 +502,7 @@ ALTER TABLE `utenti`
 -- AUTO_INCREMENT for table `assemblaggi`
 --
 ALTER TABLE `assemblaggi`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `cliente`
@@ -489,7 +514,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT for table `componenti`
 --
 ALTER TABLE `componenti`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `consegna`
@@ -507,7 +532,7 @@ ALTER TABLE `fornitore`
 -- AUTO_INCREMENT for table `movimenti`
 --
 ALTER TABLE `movimenti`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `ordini`

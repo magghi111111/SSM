@@ -67,17 +67,22 @@ $componentiAssembly = getComponentiAssembly();
 
         <div id="scannerError" class="hidden" style="color:red;"></div>
 
-        <button type="button" id="openScanner" class="btn-primary">
-          <i class="bi bi-qr-code-scan"></i> Scansiona componente
-        </button>
+        <div id="assemblyActions" class="hidden">
 
+          <button type="button" id="openScanner" class="btn-primary">
+            <i class="bi bi-qr-code-scan"></i> Scansiona componente
+          </button>
 
-        <div class="form-group">
-          <label for="note">Note</label>
-          <input type="text" id="note" name="note" placeholder="Eventuali note">
+          <div class="form-group">
+            <label for="note">Note</label>
+            <textarea id="note" name="note" placeholder="Eventuali note"></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary">
+            Registra assemblaggio
+          </button>
+
         </div>
-
-        <button type="submit" class="btn-primary">Registra assemblaggio</button>
       </form>
 
       <h2 class="section-title">Componenti prelevati</h2>

@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     } catch (err) {
       console.error("Errore avvio scanner:", err);
-      alert("Impossibile avviare la fotocamera");
     }
   });
 
@@ -84,16 +83,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const componentId = data.component_id;
 
       // seleziona l'input corretto tra quelli attivi (assembly selezionato)
-      const input = document.querySelector(
-        `.component-qr[data-componente-id="${componentId}"]:not(:disabled)`
-      );
+      // const input = document.querySelector(
+      //   `.component-qr[data-componente-id="${componentId}"]:not(:disabled)`
+      // );
+
+      const inputs = document.querySelectorAll(`.component-qr[data-componente-id="${componentId}"]:not(:disabled)`);
+      const input = Array.from(inputs).find(inp => inp.value === "");
 
       if (!input) {
+        console.log("Componente non richiesto per questo assembly:", componentId);
         document.getElementById("scannerError").classList.remove("hidden");
         document.getElementById("scannerError").textContent = 'Componente non richiesto per questo assembly';
         return;
       }
 
+      console.log("Componente scansionato:", input);
       input.value = qrText;
       input.classList.add('filled', 'success');
 

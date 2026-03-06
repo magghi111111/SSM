@@ -35,9 +35,8 @@ function getComponenteByQR($qrcode){
     $sql = "SELECT id FROM componenti WHERE qrcode = :qrcode;";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':qrcode' => $qrcode]);
-    $id=$stmt->fetchColumn();
-    if(!$id) return null;
-    return $id;
+    $componente = $stmt->fetchColumn();
+    return $componente ?? null;
 }
 
 
@@ -109,7 +108,7 @@ function getComponenti(){
     $sql = "SELECT * 
     FROM componenti c
     JOIN stock s ON c.id = s.id_componente
-    ORDER BY c.tipo;";
+    ORDER BY c.sku;";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -158,6 +157,14 @@ function setAssemblyComponente($idAssembly, $idRaw, $quantita){
         ':quantita'             => $quantita
     ]);
     return $pdo->lastInsertId();
+}
+
+function getStock($id_componente){
+    $pdo=connect();
+    $sql = "SELECT quantita FROM stock WHERE id_componente = :id_componente;";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':id_componente' => $id_componente]);
+    return $stmt->fetchColumn();
 }
 
 

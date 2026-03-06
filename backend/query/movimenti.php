@@ -109,6 +109,18 @@ function setMovimentoConsegna($idConsegna,$idComponente, $delta, $tipo, $note){
     ]);
 }
 
+function setMovimentoOrdine($id_ordine,$note){
+    $pdo=connect();
+    $sql = "INSERT INTO movimenti ( id_ordine, tipo, note) 
+            VALUES (:id_ordine,:tipo, :note);";
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([
+        ':id_ordine'     => $id_ordine,  
+        ':tipo'          => 'ORDER',
+        ':note'          => $note
+    ]);
+}
+
 function setStock($idComponente, $delta){
     $pdo=connect();
     $sql = "UPDATE stock 

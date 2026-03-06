@@ -25,7 +25,7 @@ function getAllOrdini(){
 
 function getDettagliOrdine($id){
     $pdo=connect();
-    $sql = "SELECT c.nome,r.quantita, c.unita_misura
+    $sql = "SELECT c.nome,r.quantita, c.unita_misura,r.id_componente
             FROM ordini o
             JOIN righe_ordini r ON o.id = r.id_ordine
             JOIN componenti c ON r.id_componente = c.id
@@ -40,7 +40,7 @@ function getOrdineById($id){
     $sql = "SELECT o.id_shopify, DATE_FORMAT(o.data_creazione, '%d/%m/%Y') AS data_creazione,o.stato, c.nome, c.cognome
     FROM ordini o
     JOIN cliente c ON o.id_cliente = c.codice
-    WHERE o.id = :id;";
+    WHERE o.id = :id and o.stato <> 'PREPARED';";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':id' => $id]);
@@ -67,6 +67,13 @@ function getOrdiniDaProcessare(){
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result['totale'];
 }   
+
+function setOrdinePreparato($id_ordine){
+    $pdo=connect();
+    $sql = "UPDATE ordini SET stato = 'PREPARED' WHERE id = :id;";
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([':id' => $id_ordine]);
+}
 
 
 

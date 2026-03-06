@@ -1,21 +1,26 @@
+const actionsBox = document.getElementById('assemblyActions');
+
 document.querySelectorAll('input[name="assembly_type"]').forEach(radio => {
-    radio.addEventListener('change', () => {
+  radio.addEventListener('change', () => {
 
-        const selectedId = radio.value;
+    const selectedId = radio.value;
 
-        document.querySelectorAll('.required-components').forEach(block => {
-            const isActive = block.dataset.assemblyId === selectedId;
+    // mostra i controlli
+    actionsBox.classList.remove('hidden');
 
-            block.classList.toggle('hidden', !isActive);
+    document.querySelectorAll('.required-components').forEach(block => {
+      const isActive = block.dataset.assemblyId === selectedId;
 
-            block.querySelectorAll('.component-qr').forEach(input => {
-                input.disabled = !isActive;
+      block.classList.toggle('hidden', !isActive);
 
-                if (!isActive) {
-                    input.value = '';
-                    input.classList.remove('filled', 'success', 'error');
-                }
-            });
-        });
+      block.querySelectorAll('.component-qr').forEach(input => {
+        input.disabled = !isActive;
+
+        if (!isActive) {
+          input.value = '';
+          input.classList.remove('filled', 'success', 'error');
+        }
+      });
     });
+  });
 });

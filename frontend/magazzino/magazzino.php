@@ -3,7 +3,6 @@
 <?php
 
 require_once 'backend/query/componenti.php';
-$componentiRaw = getComponentiRaw();
 $componenti = getComponenti();
 
 ?>
@@ -363,7 +362,7 @@ $componenti = getComponenti();
             <select name="componenti[id][]" required>
               <option value="">Seleziona componente</option>
               <!-- PHP: SOLO componenti ROW -->
-              <?php foreach ($componentiRaw as $raw): ?>
+              <?php foreach ($componenti as $raw): ?>
                 <option value="<?= $raw['id']; ?>"><?= $raw['nome']; ?></option>
               <?php endforeach; ?>
             </select>

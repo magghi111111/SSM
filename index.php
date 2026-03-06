@@ -10,6 +10,14 @@ define('TITLE', 'SSM | ' . ucfirst($page));
 
 require 'backend/model/database.php';
 
+if ($page === 'assemblaggiOrdine') {
+    require_once 'backend/query/ordini.php';
+    if (empty($_GET['id_ordine']) || !getOrdineById($_GET['id_ordine'])) {
+        header("Location: index.php?page=ordini");
+        exit();
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="it">

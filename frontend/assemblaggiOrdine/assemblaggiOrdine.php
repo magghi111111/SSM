@@ -1,77 +1,72 @@
 <?php
-
 require_once 'backend/query/ordini.php';
-if(isset($_GET['id_ordine'])){
-    $id_ordine = $_GET['id_ordine'];
-    $dettagli = getDettagliOrdine($id_ordine);
-    $ordine = getOrdineById($id_ordine);
+require_once 'backend/query/componenti.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id_ordine'])) {
+  $id_ordine = (int)$_GET['id_ordine'];
+  $ordine    = getOrdineById($id_ordine);
+  $dettagli  = getDettagliOrdine($id_ordine);
 }
+
+require_once 'frontend/assemblaggiOrdine/tabellaOrdine.php';
+
 ?>
 
 
-<body>
+<main class="content">
 
-  <!-- HEADER / SIDEBAR già esistenti -->
+  <section class="assembly-card">
 
-  <main class="content">
+    <h2 class="section-title">Assemblaggio ordine</h2>
 
-    <section class="card assembly-card">
+    <div class="order-info">
+      <p><strong>Cliente:</strong> <?= htmlspecialchars($ordine['nome'] . ' ' . $ordine['cognome']) ?></p>
+      <p><strong>Data ordine:</strong> <?= htmlspecialchars($ordine['data_creazione']) ?></p>
+    </div>
 
-      <div class="order-info">
-        <p><strong>Cliente:</strong> <?= $ordine['nome']; ?> <?= $ordine['cognome']; ?></p>
-        <p><strong>Data ordine:</strong> <?= $ordine['data_creazione']; ?></p>
-      </div>
+    <div id="scannerError" class="hidden error-box"></div>
 
-      <div class="assembly-actions">
-        <button class="btn-primary" id="openScanner">Scansiona componente</button>
-      </div>
+    <div id="scannerBox" class="camera-box hidden">
+      <button type="button" id="closeScanner" class="close-btn">✕</button>
+      <div id="qr-reader"></div>
+    </div>
 
-      <div class="camera-box hidden" id="scannerBox">
-        <button id="closeScanner" class="close-btn">✕</button>
-        <div id="qr-reader"></div>
-      </div>
-      
-      <div id="scanMessage" class="scan-message hidden"></div>
+    <form id="assemblaggioOrdineForm" method="POST" action="backend/controller/assemblaggiOrdineCntrl.php">
+      <input type="hidden" name="id_ordine" value="<?= $id_ordine ?>">
 
-      <h2 class="section-title">Componenti richiesti</h2>
+      <h3 class="section-subtitle">Componenti ordine</h3>
 
       <table class="assembly-table">
         <thead>
           <tr>
             <th>Componente</th>
             <th>Quantità</th>
+            <th>QR</th>
             <th>Stato</th>
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($dettagli as $componente): ?>
-            <tr>
-              <td><?= $componente['nome']; ?></td>
-              <td><?= $componente['quantita']; ?> <?= $componente['unita_misura']; ?></td>
-              <td><span class="status pending">In attesa</span></td>
-            </tr>
+          <?php foreach ($dettagli as $componenteOrdine): ?>
+            <?php renderComponenteOrdine($componenteOrdine); ?>
           <?php endforeach; ?>
         </tbody>
       </table>
 
+      <?php include 'frontend/assemblaggiOrdine/messaggi.php'; ?>
+
+      <button type="button" id="openScanner" class="btn-primary">
+        <i class="bi bi-qr-code-scan"></i> Scansiona componente
+      </button>
+
       <div class="assembly-footer">
-        <button class="btn-secondary">Annulla</button>
-        <button class="btn-primary">Completa Assemblaggio</button>
+        <button type="submit" class="btn-primary">Completa ordine</button>
       </div>
 
-    </section>
-  </main>
-  <script src="https://unpkg.com/html5-qrcode"></script>
-  <script src="frontend/js_assemblaggi/scanner.js"></script>
-  <script>
-    function handleQr(qrText) {
-      console.log("QR scansionato (ordine):", qrText);
+    </form>
 
-      // prossimo step:
-      // 1. verifica DB
-      // 2. confronto con componenti richiesti
-      // 3. aggiorna stato riga
-    }
-  </script>
-</body>
-</html>
+  </section>
+</main>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script src="frontend/js_assemblaggi/scanner.js"></script>
+<script src="frontend/js_assemblaggi/assemblaggiOrdine.js"></script>
