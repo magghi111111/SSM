@@ -389,7 +389,7 @@ body {
 
 /* Uso RGBA per effetto trasparenza su sfondo scuro */
 .status.pending  { background: rgba(241, 155, 35, 0.2); color: var(--secondary-color); }
-.status.in_pick  { background: rgba(130, 192, 204, 0.2); color: var(--highlight-color); }
+.status.out_of_stock  { background: rgba(224, 81, 37, 0.2); color: red; }
 .status.prepared { background: rgba(144, 238, 144, 0.2); color: var(--success-color); }
 
 .status-ok       { color: var(--success-color); font-weight: 600; }

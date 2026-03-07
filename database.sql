@@ -27,6 +27,8 @@ SET time_zone = "+00:00";
 -- Table structure for table `assemblaggi`
 --
 
+use gestore_magazzino;
+
 CREATE TABLE `assemblaggi` (
   `id` int(5) NOT NULL,
   `id_componente` int(5) NOT NULL,
@@ -236,7 +238,7 @@ CREATE TABLE `ordini` (
   `id` int(5) NOT NULL,
   `id_shopify` int(5) NOT NULL,
   `data_creazione` datetime NOT NULL DEFAULT current_timestamp(),
-  `stato` enum('PENDING','IN_PICK','PREPARED') NOT NULL DEFAULT 'PENDING',
+  `stato` enum('PENDING','OUT_OF_STOCK','PREPARED') NOT NULL DEFAULT 'PENDING',
   `id_cliente` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -246,10 +248,10 @@ CREATE TABLE `ordini` (
 
 INSERT INTO `ordini` (`id`, `id_shopify`, `data_creazione`, `stato`, `id_cliente`) VALUES
 (1, 10001, '2026-02-07 18:53:44', 'PENDING', 1),
-(2, 10002, '2026-02-07 18:53:44', 'IN_PICK', 2),
+(2, 10002, '2026-02-07 18:53:44', 'PENDING', 2),
 (3, 10003, '2026-01-07 18:53:44', 'PREPARED', 3),
 (4, 10004, '2026-01-09 17:03:45', 'PENDING', 4),
-(5, 10005, '2026-02-09 17:03:45', 'IN_PICK', 5),
+(5, 10005, '2026-02-09 17:03:45', 'PENDING', 5),
 (6, 10006, '2026-02-09 17:03:45', 'PENDING', 6);
 
 -- --------------------------------------------------------

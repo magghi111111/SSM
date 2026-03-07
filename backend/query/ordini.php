@@ -68,13 +68,46 @@ function getOrdiniDaProcessare(){
     return $result['totale'];
 }   
 
-function setOrdinePreparato($id_ordine){
+function setStatoOrdine($id_ordine,$stato){
     $pdo=connect();
-    $sql = "UPDATE ordini SET stato = 'PREPARED' WHERE id = :id;";
+    $sql = "UPDATE ordini SET stato =:stato WHERE id = :id;";
     $stmt = $pdo->prepare($sql);
-    return $stmt->execute([':id' => $id_ordine]);
+    return $stmt->execute([':id' => $id_ordine, ':stato' => $stato]);
 }
 
+function checkDisponibilitaComponenti($id_ordine){
+    $dettagli = getDettagliOrdine($id_ordine);
+    $stock = [];
+    foreach ($dettagli as $componente){
+        for($i = 0; $i < $componente['quantita']; $i++){
+            if(!verificaComponente($componente['id_componente'], $stock)){
+                return false;
+            }
+        }
+    }
+    return true;
+}
 
+function verificaComponente($id_componente,&$stock){
+    if(!isset($stock[$id_componente])){
+        $stock[$id_componente] = getStock($id_componente);
+    }
+    if($stock[$id_componente] > 0){
+        $stock[$id_componente]--;
+        return true;
+    }
+    $children = getPartiComponente($id_componente);
+    if(empty($children)){
+        return false;
+    }
+    foreach($children as $child){
+        for($i = 0; $i < $child['quantita']; $i++){
+            if(!verificaComponente($child['id'], $stock)){
+                return false;
+            }
+        }
+    }
+    return true;
+}
 
 ?>
