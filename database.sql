@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2026 at 03:41 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Creato il: Mar 09, 2026 alle 08:23
+-- Versione del server: 10.4.28-MariaDB
+-- Versione PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,10 +24,8 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `assemblaggi`
+-- Struttura della tabella `assemblaggi`
 --
-
-use gestore_magazzino;
 
 CREATE TABLE `assemblaggi` (
   `id` int(5) NOT NULL,
@@ -40,15 +38,11 @@ CREATE TABLE `assemblaggi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `assemblaggi`
+-- Dump dei dati per la tabella `assemblaggi`
 --
 
 INSERT INTO `assemblaggi` (`id`, `id_componente`, `id_utente`, `quantita`, `data_inizio`, `note`, `data_fine`) VALUES
-(1, 4, 2, 10, '2026-02-07 18:53:47', 'Assemblaggio lotto gennaio', '2026-02-23 16:30:46'),
-(2, 4, 3, 5, '2026-02-07 18:53:47', 'Assemblaggio urgente', '2026-02-23 16:30:46'),
 (3, 4, 1, 1, '2026-02-08 18:13:14', 'Assemblaggio resistenze 08/02', '2026-02-23 16:30:46'),
-(4, 8, 2, 15, '2026-02-09 17:03:45', 'Produzione moduli LED', '2026-02-23 16:30:46'),
-(5, 4, 2, 8, '2026-02-09 17:03:45', 'Assemblaggio extra febbraio', '2026-02-23 16:30:46'),
 (6, 4, 1, 20, '2026-02-14 17:10:53', 'Assemblaggio 14 febbraio', '2026-02-23 16:30:46'),
 (7, 4, 1, 5, '2026-02-20 16:09:06', 'festa', '2026-02-23 16:30:46'),
 (8, 4, 1, 1, '2026-02-25 16:00:38', '', NULL),
@@ -61,7 +55,7 @@ INSERT INTO `assemblaggi` (`id`, `id_componente`, `id_utente`, `quantita`, `data
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cliente`
+-- Struttura della tabella `cliente`
 --
 
 CREATE TABLE `cliente` (
@@ -73,7 +67,7 @@ CREATE TABLE `cliente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `cliente`
+-- Dump dei dati per la tabella `cliente`
 --
 
 INSERT INTO `cliente` (`codice`, `nome`, `cognome`, `email`, `numero`) VALUES
@@ -87,7 +81,7 @@ INSERT INTO `cliente` (`codice`, `nome`, `cognome`, `email`, `numero`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `componenti`
+-- Struttura della tabella `componenti`
 --
 
 CREATE TABLE `componenti` (
@@ -100,7 +94,7 @@ CREATE TABLE `componenti` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `componenti`
+-- Dump dei dati per la tabella `componenti`
 --
 
 INSERT INTO `componenti` (`id`, `sku`, `nome`, `qrcode`, `unita_misura`, `tipo`) VALUES
@@ -124,7 +118,7 @@ INSERT INTO `componenti` (`id`, `sku`, `nome`, `qrcode`, `unita_misura`, `tipo`)
 -- --------------------------------------------------------
 
 --
--- Table structure for table `consegna`
+-- Struttura della tabella `consegna`
 --
 
 CREATE TABLE `consegna` (
@@ -136,7 +130,7 @@ CREATE TABLE `consegna` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `consegna`
+-- Dump dei dati per la tabella `consegna`
 --
 
 INSERT INTO `consegna` (`id`, `id_fornitore`, `data_ordine`, `data_ricezione`, `note`) VALUES
@@ -152,7 +146,7 @@ INSERT INTO `consegna` (`id`, `id_fornitore`, `data_ordine`, `data_ricezione`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fornitore`
+-- Struttura della tabella `fornitore`
 --
 
 CREATE TABLE `fornitore` (
@@ -163,7 +157,7 @@ CREATE TABLE `fornitore` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `fornitore`
+-- Dump dei dati per la tabella `fornitore`
 --
 
 INSERT INTO `fornitore` (`id`, `nome`, `email`, `telefono`) VALUES
@@ -175,7 +169,7 @@ INSERT INTO `fornitore` (`id`, `nome`, `email`, `telefono`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `movimenti`
+-- Struttura della tabella `movimenti`
 --
 
 CREATE TABLE `movimenti` (
@@ -191,14 +185,12 @@ CREATE TABLE `movimenti` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `movimenti`
+-- Dump dei dati per la tabella `movimenti`
 --
 
 INSERT INTO `movimenti` (`id`, `delta`, `tipo`, `id_ordine`, `id_consegna`, `id_assemblaggio`, `id_componente`, `data_movimento`, `note`) VALUES
 (1, -2, 'ORDER', 1, NULL, NULL, NULL, '2026-02-07 18:53:48', 'Ordine cliente 10001'),
 (2, 200, 'DELIVERY', NULL, 1, NULL, NULL, '2026-02-07 18:53:48', 'Carico da fornitore'),
-(3, -20, 'ASSEMBLY', NULL, NULL, 1, 4, '2026-02-07 18:53:48', 'Usate per assemblaggio'),
-(4, 10, 'ASSEMBLY', NULL, NULL, 1, 4, '2026-02-07 18:53:48', 'Assemblati moduli'),
 (5, 1, 'ASSEMBLY', NULL, NULL, NULL, 4, '2026-02-08 18:13:14', 'Assemblaggio resistenze 08/02'),
 (6, -3, 'ORDER', 4, NULL, NULL, 8, '2026-02-09 17:03:46', 'Ordine cliente 10004'),
 (7, -2, 'ORDER', 5, NULL, NULL, 4, '2026-02-09 17:03:46', 'Ordine cliente 10005'),
@@ -231,7 +223,7 @@ INSERT INTO `movimenti` (`id`, `delta`, `tipo`, `id_ordine`, `id_consegna`, `id_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ordini`
+-- Struttura della tabella `ordini`
 --
 
 CREATE TABLE `ordini` (
@@ -243,7 +235,7 @@ CREATE TABLE `ordini` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `ordini`
+-- Dump dei dati per la tabella `ordini`
 --
 
 INSERT INTO `ordini` (`id`, `id_shopify`, `data_creazione`, `stato`, `id_cliente`) VALUES
@@ -257,7 +249,7 @@ INSERT INTO `ordini` (`id`, `id_shopify`, `data_creazione`, `stato`, `id_cliente
 -- --------------------------------------------------------
 
 --
--- Table structure for table `parti_componente`
+-- Struttura della tabella `parti_componente`
 --
 
 CREATE TABLE `parti_componente` (
@@ -267,12 +259,17 @@ CREATE TABLE `parti_componente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `parti_componente`
+-- Dump dei dati per la tabella `parti_componente`
 --
 
 INSERT INTO `parti_componente` (`id_assembly`, `id_raw`, `quantita`) VALUES
+(3, 5, 1),
+(3, 19, 1),
+(3, 21, 1),
 (4, 1, 1),
 (4, 2, 1),
+(5, 7, 1),
+(5, 20, 1),
 (8, 6, 1),
 (8, 7, 1),
 (8, 14, 1),
@@ -283,17 +280,10 @@ INSERT INTO `parti_componente` (`id_assembly`, `id_raw`, `quantita`) VALUES
 (18, 4, 1),
 (18, 8, 1);
 
-insert into parti_componente (id_assembly, id_raw, quantita) values
-(5, 20, 1),
-(5, 7, 1),
-(3, 19, 1),
-(3, 5, 1),
-(3, 21, 1);
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `righe_consegna`
+-- Struttura della tabella `righe_consegna`
 --
 
 CREATE TABLE `righe_consegna` (
@@ -301,10 +291,10 @@ CREATE TABLE `righe_consegna` (
   `id_componente` int(5) NOT NULL,
   `qta_ordinata` int(5) NOT NULL,
   `qta_ricevuta` int(5) DEFAULT 0
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `righe_consegna`
+-- Dump dei dati per la tabella `righe_consegna`
 --
 
 INSERT INTO `righe_consegna` (`id_consegna`, `id_componente`, `qta_ordinata`, `qta_ricevuta`) VALUES
@@ -323,43 +313,69 @@ INSERT INTO `righe_consegna` (`id_consegna`, `id_componente`, `qta_ordinata`, `q
 -- --------------------------------------------------------
 
 --
--- Table structure for table `righe_ordini`
+-- Struttura della tabella `righe_ordini`
 --
 
 CREATE TABLE `righe_ordini` (
   `id_ordine` int(5) NOT NULL,
   `id_componente` int(5) NOT NULL,
   `quantita` int(5) NOT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `righe_ordini`
+-- Dump dei dati per la tabella `righe_ordini`
 --
 
 INSERT INTO `righe_ordini` (`id_ordine`, `id_componente`, `quantita`) VALUES
 (1, 4, 2),
 (2, 4, 1),
-(3, 18, 10),
 (3, 3, 5),
+(3, 18, 10),
 (4, 8, 3),
 (5, 18, 2),
-(6, 18, 20),
-(6, 5, 10);
+(6, 5, 10),
+(6, 18, 20);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stock`
+-- Struttura della tabella `ruoli`
+--
+
+CREATE TABLE `ruoli` (
+  `id` int(5) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `magazzino` tinyint(1) NOT NULL DEFAULT 0,
+  `inserimenti_nuovi` tinyint(1) NOT NULL DEFAULT 0,
+  `ordini` tinyint(1) NOT NULL DEFAULT 0,
+  `consegne` tinyint(1) NOT NULL DEFAULT 0,
+  `assemblaggi` tinyint(1) NOT NULL DEFAULT 0,
+  `movimenti` tinyint(1) NOT NULL DEFAULT 0,
+  `andamenti` tinyint(1) NOT NULL DEFAULT 0,
+  `impostazioni` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `ruoli`
+--
+
+INSERT INTO `ruoli` (`id`, `nome`, `magazzino`, `inserimenti_nuovi`, `ordini`, `consegne`, `assemblaggi`, `movimenti`, `andamenti`, `impostazioni`) VALUES
+(1, 'ADMIN', 1, 1, 1, 1, 1, 1, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `stock`
 --
 
 CREATE TABLE `stock` (
   `id_componente` int(11) NOT NULL,
   `quantita` int(11) NOT NULL DEFAULT 0,
   `ultima_modifica` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `stock`
+-- Dump dei dati per la tabella `stock`
 --
 
 INSERT INTO `stock` (`id_componente`, `quantita`, `ultima_modifica`) VALUES
@@ -383,32 +399,30 @@ INSERT INTO `stock` (`id_componente`, `quantita`, `ultima_modifica`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `utenti`
+-- Struttura della tabella `utenti`
 --
 
 CREATE TABLE `utenti` (
   `id` int(5) NOT NULL,
   `email` varchar(30) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
-  `ruolo` enum('WAREHOUSE','ADMIN') NOT NULL DEFAULT 'WAREHOUSE'
+  `ruolo` enum('WAREHOUSE','ADMIN') NOT NULL DEFAULT 'WAREHOUSE',
+  `id_ruolo` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `utenti`
+-- Dump dei dati per la tabella `utenti`
 --
 
-INSERT INTO `utenti` (`id`, `email`, `password_hash`, `ruolo`) VALUES
-(1, 'admin@magazzino.it', '$2y$10$OqBkbLEnrVOq8q/Ts4tMZuG2iPwTudlKtevWcIYzr2yE.DsxVBPSe', 'ADMIN'),
-(2, 'warehouse1@magazzino.it', '$2y$10$G2K33oWL57BzCb6S2qiTze4YODnpolcZP.UqEX/KBU8M..5NYBS.G', 'WAREHOUSE'),
-(3, 'warehouse2@magazzino.it', '$2y$10$IcoA4Qh89UMk0tjnkPE3VOwjk1RvAnK.huRWBQ9V9o/FkRPJg92hK', 'WAREHOUSE'),
-(5, 'marcello.celani@studenti.iispa', '$2y$10$S1cfunUV5aAGBkSdMZMFcuBPxI/PSk7ZJwSgIFVtKWW/ExWop1FwW', 'WAREHOUSE');
+INSERT INTO `utenti` (`id`, `email`, `password_hash`, `ruolo`, `id_ruolo`) VALUES
+(1, 'admin@magazzino.it', '$2y$10$OqBkbLEnrVOq8q/Ts4tMZuG2iPwTudlKtevWcIYzr2yE.DsxVBPSe', 'ADMIN', 1);
 
 --
--- Indexes for dumped tables
+-- Indici per le tabelle scaricate
 --
 
 --
--- Indexes for table `assemblaggi`
+-- Indici per le tabelle `assemblaggi`
 --
 ALTER TABLE `assemblaggi`
   ADD PRIMARY KEY (`id`),
@@ -416,14 +430,14 @@ ALTER TABLE `assemblaggi`
   ADD KEY `id_utente` (`id_utente`);
 
 --
--- Indexes for table `cliente`
+-- Indici per le tabelle `cliente`
 --
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`codice`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `componenti`
+-- Indici per le tabelle `componenti`
 --
 ALTER TABLE `componenti`
   ADD PRIMARY KEY (`id`),
@@ -431,21 +445,21 @@ ALTER TABLE `componenti`
   ADD UNIQUE KEY `qrcode` (`qrcode`);
 
 --
--- Indexes for table `consegna`
+-- Indici per le tabelle `consegna`
 --
 ALTER TABLE `consegna`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_fornitore` (`id_fornitore`);
 
 --
--- Indexes for table `fornitore`
+-- Indici per le tabelle `fornitore`
 --
 ALTER TABLE `fornitore`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `movimenti`
+-- Indici per le tabelle `movimenti`
 --
 ALTER TABLE `movimenti`
   ADD PRIMARY KEY (`id`),
@@ -455,7 +469,7 @@ ALTER TABLE `movimenti`
   ADD KEY `id_componente` (`id_componente`);
 
 --
--- Indexes for table `ordini`
+-- Indici per le tabelle `ordini`
 --
 ALTER TABLE `ordini`
   ADD PRIMARY KEY (`id`),
@@ -463,110 +477,124 @@ ALTER TABLE `ordini`
   ADD KEY `id_cliente` (`id_cliente`);
 
 --
--- Indexes for table `parti_componente`
+-- Indici per le tabelle `parti_componente`
 --
 ALTER TABLE `parti_componente`
   ADD PRIMARY KEY (`id_assembly`,`id_raw`),
   ADD KEY `id_raw` (`id_raw`);
 
 --
--- Indexes for table `righe_consegna`
+-- Indici per le tabelle `righe_consegna`
 --
 ALTER TABLE `righe_consegna`
   ADD PRIMARY KEY (`id_consegna`,`id_componente`),
   ADD KEY `id_componente` (`id_componente`);
 
 --
--- Indexes for table `righe_ordini`
+-- Indici per le tabelle `righe_ordini`
 --
 ALTER TABLE `righe_ordini`
   ADD PRIMARY KEY (`id_ordine`,`id_componente`),
   ADD KEY `id_componente` (`id_componente`);
 
 --
--- Indexes for table `stock`
+-- Indici per le tabelle `ruoli`
+--
+ALTER TABLE `ruoli`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nome` (`nome`);
+
+--
+-- Indici per le tabelle `stock`
 --
 ALTER TABLE `stock`
   ADD PRIMARY KEY (`id_componente`);
 
 --
--- Indexes for table `utenti`
+-- Indici per le tabelle `utenti`
 --
 ALTER TABLE `utenti`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `fk_id_ruolo` (`id_ruolo`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT per le tabelle scaricate
 --
 
 --
--- AUTO_INCREMENT for table `assemblaggi`
+-- AUTO_INCREMENT per la tabella `assemblaggi`
 --
 ALTER TABLE `assemblaggi`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `cliente`
+-- AUTO_INCREMENT per la tabella `cliente`
 --
 ALTER TABLE `cliente`
   MODIFY `codice` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `componenti`
+-- AUTO_INCREMENT per la tabella `componenti`
 --
 ALTER TABLE `componenti`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT for table `consegna`
+-- AUTO_INCREMENT per la tabella `consegna`
 --
 ALTER TABLE `consegna`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `fornitore`
+-- AUTO_INCREMENT per la tabella `fornitore`
 --
 ALTER TABLE `fornitore`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `movimenti`
+-- AUTO_INCREMENT per la tabella `movimenti`
 --
 ALTER TABLE `movimenti`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
--- AUTO_INCREMENT for table `ordini`
+-- AUTO_INCREMENT per la tabella `ordini`
 --
 ALTER TABLE `ordini`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `utenti`
+-- AUTO_INCREMENT per la tabella `ruoli`
+--
+ALTER TABLE `ruoli`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT per la tabella `utenti`
 --
 ALTER TABLE `utenti`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- Constraints for dumped tables
+-- Limiti per le tabelle scaricate
 --
 
 --
--- Constraints for table `assemblaggi`
+-- Limiti per la tabella `assemblaggi`
 --
 ALTER TABLE `assemblaggi`
   ADD CONSTRAINT `assemblaggi_ibfk_1` FOREIGN KEY (`id_componente`) REFERENCES `componenti` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `assemblaggi_ibfk_2` FOREIGN KEY (`id_utente`) REFERENCES `utenti` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `consegna`
+-- Limiti per la tabella `consegna`
 --
 ALTER TABLE `consegna`
   ADD CONSTRAINT `consegna_ibfk_1` FOREIGN KEY (`id_fornitore`) REFERENCES `fornitore` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `movimenti`
+-- Limiti per la tabella `movimenti`
 --
 ALTER TABLE `movimenti`
   ADD CONSTRAINT `movimenti_ibfk_1` FOREIGN KEY (`id_ordine`) REFERENCES `ordini` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -575,31 +603,37 @@ ALTER TABLE `movimenti`
   ADD CONSTRAINT `movimenti_ibfk_4` FOREIGN KEY (`id_componente`) REFERENCES `componenti` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `ordini`
+-- Limiti per la tabella `ordini`
 --
 ALTER TABLE `ordini`
   ADD CONSTRAINT `ordini_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `parti_componente`
+-- Limiti per la tabella `parti_componente`
 --
 ALTER TABLE `parti_componente`
   ADD CONSTRAINT `parti_componente_ibfk_1` FOREIGN KEY (`id_assembly`) REFERENCES `componenti` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `parti_componente_ibfk_2` FOREIGN KEY (`id_raw`) REFERENCES `componenti` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `righe_consegna`
+-- Limiti per la tabella `righe_consegna`
 --
 ALTER TABLE `righe_consegna`
   ADD CONSTRAINT `righe_consegna_ibfk_1` FOREIGN KEY (`id_consegna`) REFERENCES `consegna` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `righe_consegna_ibfk_2` FOREIGN KEY (`id_componente`) REFERENCES `componenti` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `righe_ordini`
+-- Limiti per la tabella `righe_ordini`
 --
 ALTER TABLE `righe_ordini`
   ADD CONSTRAINT `righe_ordini_ibfk_1` FOREIGN KEY (`id_ordine`) REFERENCES `ordini` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `righe_ordini_ibfk_2` FOREIGN KEY (`id_componente`) REFERENCES `componenti` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `utenti`
+--
+ALTER TABLE `utenti`
+  ADD CONSTRAINT `fk_id_ruolo` FOREIGN KEY (`id_ruolo`) REFERENCES `ruoli` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

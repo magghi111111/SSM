@@ -1,9 +1,17 @@
 <?php
 session_start();
+
 $page = $_GET['page'] ?? 'dashboard';
+
 if (!isset($_SESSION['user'])) {
     $page = 'login';
 }
+
+if($page !== 'login' && $page!=='dashboard'  && (!isset($_SESSION['permessi'][$page]) || !$_SESSION['permessi'][$page])){
+    header("Location: index.php?page=dashboard");
+    exit();
+}
+
 $page_file = __DIR__ . "/frontend/" . $page . '/' . $page . '.php';
 
 define('TITLE', 'SSM | ' . ucfirst($page));

@@ -1,17 +1,8 @@
 <!-- HEADER -->
 <?php
-$menu = [
-    'Dashboard'   => 'speedometer2',
-    'Magazzino'   => 'box-seam',
-    'Ordini'      => 'cart3',
-    'Consegne'    => 'truck',
-    'Assemblaggi' => 'tools',
-    'Movimenti'   => 'terminal',
-    'Andamenti'   => 'bar-chart'
-];
-$bottomMenu = [
-    'Impostazioni'=> 'gear'
-];
+
+require_once 'backend/controller/roleCntrl.php';
+
 ?>
 
 <aside class="sidebar d-flex flex-column justify-content-between">

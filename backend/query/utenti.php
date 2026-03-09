@@ -4,7 +4,10 @@ require_once '../model/database.php';
 
 function getUSer($user){
     $conn=connect();
-    $sql="SELECT * FROM utenti WHERE email=:email";
+    $sql="SELECT *
+    FROM utenti u
+    join ruoli r on u.id_ruolo=r.id 
+    WHERE email=:email";
     $stmt=$conn->prepare($sql);
     $stmt->execute(['email'=>$user]);
     $utente = $stmt->fetch(PDO::FETCH_ASSOC);
