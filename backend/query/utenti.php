@@ -1,6 +1,5 @@
 <?php
 
-require_once '../model/database.php';
 
 function getUSer($user){
     $conn=connect();
@@ -20,4 +19,12 @@ function setUser($email, $password_hashed){
     $stmt=$conn->prepare($sql);
     return $stmt->execute(['email'=>$email, 'password_hash'=>$password_hashed]);
 }
+
+function getRuoli(){
+    $conn=connect();
+    $sql="SELECT * FROM ruoli where nome <>'ADMIN'";
+    $stmt=$conn->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 ?>

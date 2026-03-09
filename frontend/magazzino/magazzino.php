@@ -244,9 +244,12 @@ $componenti = getComponenti();
             <?php foreach ($componenti as $componente): ?>
               <option value="<?= $componente['id']; ?>"><?= $componente['nome']; ?></option>
             <?php endforeach; ?>
+            <?php if($_SESSION['permessi']['inserimenti']):?>
             <option value="new">Nuovo componente</option>
+            <?php endif; ?>
           </select>
         </div>
+        <?php if($_SESSION['permessi']['inserimenti']):?>
         <div id="nuovo-componente" class="form-group full-width hidden">
           <div class="component-type-badge">
             Creazione componente <strong>RAW</strong>
@@ -283,6 +286,7 @@ $componenti = getComponenti();
           <input type="hidden" name="tipo" value="RAW">
 
         </div>
+        <?php endif; ?>
 
         <div class="form-group">
           <label for="delta">Variazione quantità</label>
@@ -301,6 +305,7 @@ $componenti = getComponenti();
       </form>
     </div>
 
+    <?php if($_SESSION['permessi']['inserimenti']):?>
     <div class="card full">
       <button type="button" class="btn-secondary btn-assembly" onclick="toggleAssemblyBuilder()">➕ Crea nuovo assembly</button>
     </div>
@@ -381,6 +386,8 @@ $componenti = getComponenti();
         </div>
       </form>
     </div>
+
+    <?php endif; ?>
 
     <?php
 

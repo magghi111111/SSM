@@ -2,6 +2,7 @@
 
 session_start();
 
+require_once '../model/database.php';
 require_once '../query/utenti.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

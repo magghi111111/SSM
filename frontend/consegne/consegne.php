@@ -90,9 +90,12 @@ $consegne = getConsegne();
             <?php foreach ($fornitori as $fornitore): ?>
               <option value="<?= $fornitore['id']; ?>"><?= $fornitore['nome']; ?></option>
             <?php endforeach; ?>
+            <?php if($_SESSION['permessi']['inserimenti']):?>
             <option value="new">Nuovo fornitore</option>
+            <?php endif; ?>
           </select>
         </div>
+        <?php if($_SESSION['permessi']['inserimenti']):?>
         <div id="nuovo-fornitore" class="form-group full-width hidden">
           <div class="form-grid nested">
 
@@ -113,7 +116,7 @@ $consegne = getConsegne();
 
           </div>
         </div>
-
+        <?php endif; ?>
         <div class="form-group">
           <label for="data_ordine">Data ordine</label>
           <input type="datetime-local" name="data_ordine" id="data_ordine" required>

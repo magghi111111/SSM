@@ -1,4 +1,10 @@
-<?php if ($_SESSION['role'] === 'ADMIN'): ?>
+<?php 
+require_once 'backend/query/utenti.php';
+
+$ruoli = getRuoli();
+
+if ($_SESSION['role'] === 'ADMIN'): 
+?>
 <main class="main">
     <div class="card user-create-card">
         <h2>Aggiungi nuovo utente</h2>
@@ -15,11 +21,23 @@
                 <label>Conferma password</label>
                 <input type="password" name="signup_pass_confirm" placeholder="Conferma password" required>
             </div>
+            <div class='form-group'>
+            <label>Ruolo</label>
+            <select name="ruolo">
+                <option value="" disabled selected>Seleziona Ruolo</option>
+                <?php foreach ($ruoli as $ruolo): ?>
+                    <option value="<?= htmlspecialchars($ruolo['id']) ?>">
+                        <?= htmlspecialchars($ruolo['nome']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            </div>
             <div class="form-actions">
                 <button type="submit" class="btn-primary">
                     Aggiungi utente
                 </button>
             </div>
+            
         </form>
         <?php if (isset($_COOKIE['signup_error'])): ?>
             <p class="form-message error auto-hide">
@@ -32,6 +50,11 @@
             </p>
         <?php endif; ?>
     </div>
+
+    <div class="card user-create-card">
+        <h2>Gestione utenti</h2>
+    <div>
+
 </main>
 <?php endif; ?>
 
