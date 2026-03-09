@@ -39,7 +39,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $password_hashed = password_hash($password, PASSWORD_BCRYPT);
-    if (setUser($email, $password_hashed)) {
+
+    $id_ruolo = $_POST['ruolo'] ?? null;
+    if(!$id_ruolo || !getRuoloById($id_ruolo)){
+        setcookie("signup_error", "Ruolo non valido", time() + 20, "/");
+        header('Location: ../../index.php?page=impostazioni');
+        exit();
+    }
+
+    if (setUser($email, $password_hashed, $id_ruolo)) {
         setcookie("signup_success", "Utente creato con successo", time() + 20, "/");
         header('Location: ../../index.php?page=impostazioni');
         exit();
