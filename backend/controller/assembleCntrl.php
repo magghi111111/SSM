@@ -13,13 +13,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $componenti_qr = $_POST['componenti_qr'] ?? [];
 
     if(empty($componenti_qr) || !$assembly_type){
-        setcookie('assemblaggio', 'input_error', time() + 20, "/");
+        setcookie('assemblaggio', 'input_error', time() + 5, "/");
         header("Location: ../../index.php?page=assemblaggi");
         exit();
     }
 
     if(count($componenti_qr) != count(array_unique($componenti_qr))){
-        setcookie('assemblaggio', 'duplicate_error', time() + 20, "/");
+        setcookie('assemblaggio', 'duplicate_error', time() + 5, "/");
         header("Location: ../../index.php?page=assemblaggi");
         exit();
     }
@@ -27,17 +27,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     foreach($componenti_qr as $componente_id => $qr_code){
         $id_componente = getComponenteByQR($qr_code);
         if(!$id_componente){
-            setcookie('assemblaggio', 'component_error', time() + 20, "/");
+            setcookie('assemblaggio', 'component_error', time() + 5, "/");
             header("Location: ../../index.php?page=assemblaggi");
             exit();
         }
         if(checkStocks($id_componente, 1)){
-            setcookie('assemblaggio', 'stock_error', time() + 20, "/");
+            setcookie('assemblaggio', 'stock_error', time() + 5, "/");
             header("Location: ../../index.php?page=assemblaggi");
             exit();
         }
         if(checkAssembly($assembly_type, $id_componente)){
-            setcookie('assemblaggio', 'qr_error', time() + 20, "/");
+            setcookie('assemblaggio', 'qr_error', time() + 5, "/");
             header("Location: ../../index.php?page=assemblaggi");
             exit();
         }
@@ -47,20 +47,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if($idAssemblaggio){
         if(updateStockAssemblaggio($assembly_type, 1)){
             if(setMovimento($idAssemblaggio,$assembly_type, 1, 'ASSEMBLY',$note)){
-                setcookie('assemblaggio', 'success', time() + 20, "/");
+                setcookie('assemblaggio', 'success', time() + 5, "/");
                 header("Location: ../../index.php?page=assemblaggi");
             } else {
-                setcookie('assemblaggio', 'movimento_error', time() + 20, "/");
+                setcookie('assemblaggio', 'movimento_error', time() + 5, "/");
                 header("Location: ../../index.php?page=assemblaggi");
             }
         }
         else {
-            setcookie('assemblaggio', 'stock_update_error', time() + 20, "/");
+            setcookie('assemblaggio', 'stock_update_error', time() + 5, "/");
             header("Location: ../../index.php?page=assemblaggi");
         }
     }
     else {
-        setcookie('assemblaggio', 'error', time() + 20, "/");
+        setcookie('assemblaggio', 'error', time() + 5, "/");
         header("Location: ../../index.php?page=assemblaggi");
     }
 

@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($componenti_finali as $assembly) {
         foreach ($assembly as $qr) {
             if (empty($qr)) {
-                setcookie('ordine', 'input_error', time() + 20, "/");
+                setcookie('ordine', 'input_error', time() + 5, "/");
                 header("Location: ../../index.php?page=assemblaggiOrdine&id_ordine=$id_ordine");
                 exit();
             }
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $componente = getComponenteByQR($qr);
             if (!$componente || $componente!= $id_componente) {
-                setcookie('ordine', 'component_error', time() + 20, "/");
+                setcookie('ordine', 'component_error', time() + 5, "/");
                 header("Location: ../../index.php?page=assemblaggiOrdine&id_ordine=$id_ordine");
                 exit();
             }
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if(!$id_ordine){
-        setcookie('ordine', 'input_error', time() + 20, "/");
+        setcookie('ordine', 'input_error', time() + 5, "/");
         header("Location: ../../index.php?page=assemblaggiOrdine&id_ordine=$id_ordine");
         exit();
     }elseif(setStatoOrdine($id_ordine,'PREPARED')){
@@ -46,20 +46,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if(!empty($componenti_assemblati)){
                 foreach($componenti_assemblati as $id_componente){
                     if(!setMovimento(null, $id_componente, -1, 'ASSEMBLY', 'Componente assemblato per ordine '.$id_ordine)){
-                        setcookie('ordine', 'movimento_error', time() + 20, "/");
+                        setcookie('ordine', 'movimento_error', time() + 5, "/");
                         header("Location: ../../index.php?page=assemblaggiOrdine&id_ordine=$id_ordine");
                         exit();
                     }
                 }
             }
-            setcookie('ordine', 'success', time() + 20, "/");
+            setcookie('ordine', 'success', time() + 5, "/");
             header("Location: ../../index.php?page=assemblaggiOrdine&id_ordine=$id_ordine");
         } else {
-            setcookie('ordine', 'movimento_error', time() + 20, "/");
+            setcookie('ordine', 'movimento_error', time() + 5, "/");
             header("Location: ../../index.php?page=assemblaggiOrdine&id_ordine=$id_ordine");
         }
     } else {
-        setcookie('ordine', 'update_error', time() + 20, "/");
+        setcookie('ordine', 'update_error', time() + 5, "/");
         header("Location: ../../index.php?page=assemblaggiOrdine&id_ordine=$id_ordine");
 
     }

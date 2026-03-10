@@ -7,7 +7,7 @@ if (!isset($_SESSION['user'])) {
     $page = 'login';
 }
 
-if($page !== 'login' && $page!=='dashboard'  && (!isset($_SESSION['permessi'][$page]) || !$_SESSION['permessi'][$page])){
+if($page !== 'login' && $page!=='dashboard' && $page!=='assemblaggiOrdine'&& (!isset($_SESSION['permessi'][$page]) || !$_SESSION['permessi'][$page])){
     header("Location: index.php?page=dashboard");
     exit();
 }

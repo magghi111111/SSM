@@ -15,7 +15,7 @@ function getUSer($user){
 
 function getAllUsers(){
     $conn=connect();
-    $sql="SELECT u.email, r.nome AS ruolo
+    $sql="SELECT u.id,u.email, r.nome AS ruolo
     FROM utenti u
     join ruoli r on u.id_ruolo=r.id";
     $stmt=$conn->query($sql);
@@ -41,7 +41,32 @@ function getRuoloById($id){
     $sql="SELECT * FROM ruoli WHERE id=:id";
     $stmt=$conn->prepare($sql);
     $stmt->execute(['id'=>$id]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    return $stmt->fetch(PDO::FETCH_ASSOC) ?? null;
+}
+
+function getUserById($id){
+    $conn=connect();
+    $sql="SELECT u.id,u.email, r.nome AS ruolo
+    FROM utenti u
+    join ruoli r on u.id_ruolo=r.id 
+    WHERE u.id=:id";
+    $stmt=$conn->prepare($sql);
+    $stmt->execute(['id'=>$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC) ?? null;
+}
+
+function eliminaRuolo($id){
+    $conn=connect();
+    $sql="DELETE FROM ruoli WHERE id=:id";
+    $stmt=$conn->prepare($sql);
+    return $stmt->execute(['id'=>$id]);
+}
+
+function eliminaUtente($id){
+    $conn=connect();
+    $sql="DELETE FROM utenti WHERE id=:id";
+    $stmt=$conn->prepare($sql);
+    return $stmt->execute(['id'=>$id]);
 }
 
 function setRole($nome, $permessi){

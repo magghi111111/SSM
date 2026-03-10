@@ -24,7 +24,7 @@ if ($_SESSION['role'] === 'ADMIN'):
             </div>
             <div class='form-group'>
             <label>Ruolo</label>
-            <select name="ruolo">
+            <select name="ruolo" required>
                 <option value="" disabled selected>Seleziona Ruolo</option>
                 <?php foreach ($ruoli as $ruolo): ?>
                     <option value="<?= htmlspecialchars($ruolo['id']) ?>">
@@ -128,10 +128,15 @@ if ($_SESSION['role'] === 'ADMIN'):
                     <td><?= $ruolo['movimenti'] ? '<i class="bi bi-check-lg"></i>' : '' ?></td>
                     <td><?= $ruolo['andamenti'] ? '<i class="bi bi-check-lg"></i>' : '' ?></td>
                     <td><?= $ruolo['impostazioni'] ? '<i class="bi bi-check-lg"></i>' : '' ?></td>
-                    <td><?= $ruolo['nome']=='ADMIN' ? '' : '<i class="bi bi-pencil"></i>|<i class="bi bi-trash"></i> ' ?></td>
+                    <td><?= $ruolo['nome']=='ADMIN' ? '' : '<i class="bi bi-pencil"></i> | <a style=color:red; href=backend/controller/deleteRole.php?delete_id='.$ruolo['id'].'><i class="bi bi-trash"></i></a> ' ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
+        <?php if (isset($_COOKIE['delete_role_error'])): ?>
+            <p class="form-message error auto-hide">
+                <?= htmlspecialchars($_COOKIE['delete_role_error']) ?>
+            </p>
+        <?php endif; ?>
     </div>
     
     <div class="card user-create-card">
@@ -146,7 +151,7 @@ if ($_SESSION['role'] === 'ADMIN'):
                 <tr>
                     <td><?= htmlspecialchars($utente['email']) ?></td>
                     <td><?= htmlspecialchars($utente['ruolo']) ?></td>
-                    <td><?= $utente['ruolo']=='ADMIN' ? '' : 'Modifica Ruolo | Elimina' ?></td>
+                    <td><?= $utente['ruolo']=='ADMIN' ? '' : '<i class="bi bi-pencil"></i> | <a style=color:red; href=backend/controller/deleteUser.php?delete_id='.$utente['id'].'><i class="bi bi-trash"></i></a> '  ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
@@ -179,6 +184,8 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 
 });
+
+
 
 </script>
 
