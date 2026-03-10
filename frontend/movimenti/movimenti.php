@@ -20,7 +20,7 @@ $componenti = getDistinctComponenti();
 
 <body>
   <div class="main">
-    <div class="card full">
+    <div class="card card-movimenti">
       <form method="GET" class="filters" action="">
         <input type="hidden" name="page" value="movimenti">
 
@@ -30,7 +30,6 @@ $componenti = getDistinctComponenti();
           <select name="order">
             <option value="">Data (default)</option>
             <option value="tipo" <?= ($_GET['order'] ?? '') === 'tipo' ? 'selected' : '' ?>>Tipo</option>
-            <option value="data_movimento" <?= ($_GET['order'] ?? '') === 'data_movimento' ? 'selected' : '' ?>>Data</option>
             <option value="nome" <?= ($_GET['order'] ?? '') === 'nome' ? 'selected' : '' ?>>Componente</option>
           </select>
         </div>
@@ -53,20 +52,27 @@ $componenti = getDistinctComponenti();
         </div>
 
         <!-- FILTRO COMPONENTI -->
-        <div class="filter-block">
-          <label>Componente</label>
-          <div class="checkbox-group">
-            <?php foreach ($componenti as $c): ?>
-              <label class="checkbox-item">
-                <input
-                  type="checkbox"
-                  name="componenti[]"
-                  value="<?= $c['id'] ?>"
-                  <?= in_array($c['id'], $_GET['componenti'] ?? []) ? 'checked' : '' ?>>
-                <?= htmlspecialchars($c['nome']) ?>
-              </label>
-            <?php endforeach; ?>
-          </div>
+        <div class="filter-block component-filter">
+
+        <label>Componenti</label>
+
+        <button type="button" class="component-toggle">
+        Seleziona componenti
+        </button>
+
+        <div class="component-dropdown">
+
+        <?php foreach ($componenti as $c): ?>
+
+        <label class="component-item">
+          <input type="checkbox" name="componenti[]" value="<?= $c['id'] ?>"<?= in_array($c['id'], $_GET['componenti'] ?? []) ? 'checked' : '' ?>>
+          <span><?= htmlspecialchars($c['nome']) ?></span>
+        </label>
+
+        <?php endforeach; ?>
+
+        </div>
+
         </div>
 
         <!-- BOTTONI -->
@@ -107,3 +113,47 @@ $componenti = getDistinctComponenti();
 </body>
 
 </html>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+
+const toggle = document.querySelector(".component-toggle");
+const dropdown = document.querySelector(".component-dropdown");
+
+if(!toggle || !dropdown) return;
+
+const checkboxes = dropdown.querySelectorAll("input");
+
+toggle.addEventListener("click", function(e){
+e.stopPropagation();
+dropdown.classList.toggle("open");
+});
+
+document.addEventListener("click", function(e){
+if(!dropdown.contains(e.target) && e.target !== toggle){
+dropdown.classList.remove("open");
+}
+});
+
+/* aggiorna testo bottone */
+
+function updateLabel(){
+
+const checked = dropdown.querySelectorAll("input:checked").length;
+
+if(checked === 0){
+toggle.textContent = "Seleziona componenti";
+}else{
+toggle.textContent = "Componenti (" + checked + ")";
+}
+
+}
+
+checkboxes.forEach(cb=>{
+cb.addEventListener("change", updateLabel);
+});
+
+updateLabel();
+
+});
+</script>
