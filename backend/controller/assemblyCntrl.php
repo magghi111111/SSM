@@ -6,7 +6,7 @@ require_once '../query/componenti.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if(checkComponenteExists($_POST['assembly_sku'], $_POST['assembly_nome'], $_POST['assembly_qrcode'])){
-        setcookie('assembly', 'exists', time() + 20, "/");
+        setcookie('assembly', 'exists', time() + 5, "/");
         header("Location: ../../index.php?page=magazzino");
         exit();
     }
@@ -33,10 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         setAssemblyComponente($idAssembly, $comp['id'], $comp['qta']);
     }
     if($idAssembly){
-        setcookie('assembly', 'success', time() + 20, "/");
+        setcookie('assembly', 'success', time() + 5, "/");
         header("Location: ../../index.php?page=magazzino");
     } else {
-        setcookie('assembly', 'error', time() + 20, "/");
+        setcookie('assembly', 'error', time() + 5, "/");
         header("Location: ../../index.php?page=magazzino&assembly=error");
     }
 
