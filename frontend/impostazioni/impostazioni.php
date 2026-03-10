@@ -6,7 +6,7 @@ $utenti = getAllUsers();
 
 if ($_SESSION['role'] === 'ADMIN'): 
 ?>
-<main class="main">
+<main class="main settings-page">
     <div class="card user-create-card">
         <h2>Aggiungi nuovo utente</h2>
         <form class="user-form" method="post" action="backend/controller/signUpCntrl.php">

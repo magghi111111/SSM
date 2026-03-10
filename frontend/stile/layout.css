@@ -1241,16 +1241,11 @@ input:focus, select:focus, textarea:focus {
     }
 }
 
-
 /* ===============================
    SETTINGS PAGE LAYOUT
    =============================== */
 
-.main {
-    margin-left: 220px;
-    padding: 140px 30px 30px;
-    min-height: 100vh;
-
+.settings-page {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
@@ -1258,14 +1253,14 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* card impostazioni */
-.user-create-card {
+.settings-page .user-create-card {
     max-width: 100%;
     min-width: unset;
 }
 
-/* tabelle più larghe */
-.user-create-card:nth-child(3),
-.user-create-card:nth-child(4) {
+/* tabelle gestione a tutta larghezza */
+.settings-page .user-create-card:nth-child(3),
+.settings-page .user-create-card:nth-child(4) {
     grid-column: span 2;
 }
 
