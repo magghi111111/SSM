@@ -7,6 +7,7 @@
 -- Versione del server: 10.4.28-MariaDB
 -- Versione PHP: 8.2.4
 
+CREATE DATABASE gestore_magazzino;
 use gestore_magazzino;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";

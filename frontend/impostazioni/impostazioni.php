@@ -128,7 +128,7 @@ if ($_SESSION['role'] === 'ADMIN'):
                     <td><?= $ruolo['movimenti'] ? '<i class="bi bi-check-lg"></i>' : '' ?></td>
                     <td><?= $ruolo['andamenti'] ? '<i class="bi bi-check-lg"></i>' : '' ?></td>
                     <td><?= $ruolo['impostazioni'] ? '<i class="bi bi-check-lg"></i>' : '' ?></td>
-                    <td><?= $ruolo['nome']=='ADMIN' ? '' : 'Modifica | Elimina' ?></td>
+                    <td><?= $ruolo['nome']=='ADMIN' ? '' : '<i class="bi bi-pencil"></i>|<i class="bi bi-trash"></i> ' ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
