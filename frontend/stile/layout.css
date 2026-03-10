@@ -1466,3 +1466,7 @@ width:100%;
 }
 
 }
+
+.role-edit-form input{
+    width: 32%;
+}

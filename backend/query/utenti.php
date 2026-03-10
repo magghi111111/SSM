@@ -3,7 +3,7 @@
 
 function getUSer($user){
     $conn=connect();
-    $sql="SELECT *
+    $sql="SELECT u.id as uid,u.email,u.password_hash,r.*
     FROM utenti u
     join ruoli r on u.id_ruolo=r.id 
     WHERE email=:email";
@@ -84,6 +84,28 @@ function setRole($nome, $permessi){
         $parametri[$campo] = $v;
     }
     return $stmt->execute($parametri);
+}
+
+function editRole($id, $valori){
+    $conn = connect();
+    $campi = [];
+    foreach($valori as $campo => $v){
+        $campi[] = "$campo = :$campo";
+    }
+    $sql = "UPDATE ruoli SET " . implode(", ", $campi) . " WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+    $parametri = ["id" => $id];
+    foreach($valori as $campo => $v){
+        $parametri[$campo] = $v;
+    }
+    return $stmt->execute($parametri);
+}
+
+function editUser($id, $email, $id_ruolo){
+    $conn = connect();
+    $sql = "UPDATE utenti SET email = :email, id_ruolo = :id_ruolo WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+    return $stmt->execute(['email' => $email, 'id_ruolo' => $id_ruolo, 'id' => $id]);
 }
 
 ?>

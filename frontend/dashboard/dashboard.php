@@ -26,6 +26,7 @@ $ordidni_da_evadere = getOrdiniDaProcessare();
         <!-- KPI -->
         <section class="kpi-section">
 
+            <?php if(isset($_SESSION['permessi']['ordini']) && $_SESSION['permessi']['ordini']): ?>
             <div class="kpi-card info">
                 <a href="index.php?page=ordini" style="text-decoration: none; color: inherit;">
                     <div class="kpi-header">
@@ -35,7 +36,9 @@ $ordidni_da_evadere = getOrdiniDaProcessare();
                     <p class="kpi-value"><?= $ordidni_da_evadere ?></p>
                 </a>
             </div>
+            <?php endif; ?>
 
+            <?php if(isset($_SESSION['permessi']['andamenti']) && $_SESSION['permessi']['andamenti']): ?>
             <div class="kpi-card warning">
                 <a href="index.php?page=andamenti" style="text-decoration: none; color: inherit;">
                     <div class="kpi-header">
@@ -55,6 +58,7 @@ $ordidni_da_evadere = getOrdiniDaProcessare();
                     <p class="kpi-value">€ 5.230</p>
                 </a>
             </div>
+            <?php endif; ?>
 
             <div class="kpi-card alert">
                 <a href="index.php?page=avvisi" style="text-decoration: none; color: inherit;">
@@ -70,9 +74,11 @@ $ordidni_da_evadere = getOrdiniDaProcessare();
 
 
         <!-- CONTENT GRID -->
+        <?php if((isset($_SESSION['permessi']['andamenti']) && $_SESSION['permessi']['andamenti'])
+                || (isset($_SESSION['permessi']['movimenti']) && $_SESSION['permessi']['movimenti'])): ?>
         <section class="content-grid">
-
             <!-- PREVISIONI -->
+            <?php if(isset($_SESSION['permessi']['andamenti']) && $_SESSION['permessi']['andamenti']): ?>
             <div class="card">
                 <h2>Previsioni Vendite</h2>
                 <p class="subtitle">
@@ -83,8 +89,10 @@ $ordidni_da_evadere = getOrdiniDaProcessare();
                     <img src="frontend/img/graficoEsempio.png" class="grafico-dashboard">
                 </div>
             </div>
+            <?php endif; ?>
 
             <!-- MOVIMENTI -->
+            <?php if(isset($_SESSION['permessi']['movimenti']) && $_SESSION['permessi']['movimenti']): ?>
             <div class="card">
                 <a href="index.php?page=movimenti" style="text-decoration: none; color: inherit;">
                     <h2>Ultimi Movimenti</h2>
@@ -102,9 +110,12 @@ $ordidni_da_evadere = getOrdiniDaProcessare();
                     </ul>
                 </a>
             </div>
+            <?php endif; ?>
         </section>
+        <?php endif; ?>
 
         <!-- ORDINI RECENTI -->
+        <?php if(isset($_SESSION['permessi']['ordini']) && $_SESSION['permessi']['ordini']): ?>
         <section class="card full">
             <h2>Ordini recenti</h2>
 
@@ -137,7 +148,7 @@ $ordidni_da_evadere = getOrdiniDaProcessare();
                 </tbody>
             </table>
         </section>
-
+        <?php endif; ?>
     </main>
 
 </body>
