@@ -379,7 +379,7 @@ body {
 }
 
 /* Badges e Stati */
-.status {
+.status,.grado {
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 11px;
@@ -388,9 +388,9 @@ body {
 }
 
 /* Uso RGBA per effetto trasparenza su sfondo scuro */
-.status.pending  { background: rgba(241, 155, 35, 0.2); color: var(--secondary-color); }
-.status.out_of_stock  { background: rgba(224, 81, 37, 0.2); color: red; }
-.status.prepared { background: rgba(144, 238, 144, 0.2); color: var(--success-color); }
+.status.pending , .grado.medio { background: rgba(241, 155, 35, 0.2); color: var(--secondary-color); }
+.status.out_of_stock  , .grado.alto{ background: rgba(224, 81, 37, 0.2); color: red; }
+.status.prepared , .grado.basso { background: rgba(144, 238, 144, 0.2); color: var(--success-color); }
 
 .status-ok       { color: var(--success-color); font-weight: 600; }
 .status-pending  { color: var(--secondary-color); font-weight: 600; }

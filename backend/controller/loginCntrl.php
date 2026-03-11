@@ -25,7 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'consegne' => $utente['consegne'],
             'assemblaggi' => $utente['assemblaggi'],
             'movimenti' => $utente['movimenti'],
-            'andamenti' => $utente['andamenti']
+            'andamenti' => $utente['andamenti'],
+            'acquisti' => $utente['acquisti']
         ];
         header('Location: ../../index.php');
         exit();

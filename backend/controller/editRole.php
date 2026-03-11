@@ -50,6 +50,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         "assemblaggi",
         "movimenti",
         "andamenti",
+        "acquisti",
         "impostazioni"
     ];
 

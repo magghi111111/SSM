@@ -71,6 +71,7 @@ if ($_SESSION['role'] === 'ADMIN'):
                         <th>Movimenti</th>
                         <th>Andamenti</th>
                         <th>Impostazioni</th>
+                        <th>Acquisti</th>
                     </tr>
                     <tr>
                         <td><input type="checkbox" name="permessi[]" value="magazzino"></td>
@@ -81,6 +82,7 @@ if ($_SESSION['role'] === 'ADMIN'):
                         <td><input type="checkbox" name="permessi[]" value="movimenti"></td>
                         <td><input type="checkbox" name="permessi[]" value="andamenti"></td>
                         <td><input type="checkbox" name="permessi[]" value="impostazioni"></td>
+                        <td><input type="checkbox" name="permessi[]" value="acquisti"></td>
                     </tr>
                 </table>
             </div>
@@ -125,6 +127,7 @@ if ($_SESSION['role'] === 'ADMIN'):
                 <th>Movimenti</th>
                 <th>Andamenti</th>
                 <th>Impostazioni</th>
+                <th>Acquisti</th>
                 <th>Azioni</th>
             </tr>
             <?php foreach ($ruoli as $ruolo): ?>
@@ -138,6 +141,7 @@ if ($_SESSION['role'] === 'ADMIN'):
                     <td><?= $ruolo['movimenti'] ? '<i class="bi bi-check-lg"></i>' : '' ?></td>
                     <td><?= $ruolo['andamenti'] ? '<i class="bi bi-check-lg"></i>' : '' ?></td>
                     <td><?= $ruolo['impostazioni'] ? '<i class="bi bi-check-lg"></i>' : '' ?></td>
+                    <td><?= $ruolo['acquisti'] ? '<i class="bi bi-check-lg"></i>' : '' ?></td>
                     <td><?= $ruolo['nome']=='ADMIN' ? '' : '<i data-id='.$ruolo['id'].' style="color: blue;" class="bi bi-pencil"></i> | <a style="color: red;" href=backend/controller/deleteRole.php?delete_id='.$ruolo['id'].'><i class="bi bi-trash"></i></a> ' ?></td>
                 </tr>
                 <?php if($ruolo['nome'] == 'ADMIN') continue; ?>
@@ -153,6 +157,7 @@ if ($_SESSION['role'] === 'ADMIN'):
                     <td><input type="checkbox" name="permessi[]" value="movimenti" <?= $ruolo['movimenti'] ? 'checked' : '' ?>></td>
                     <td><input type="checkbox" name="permessi[]" value="andamenti" <?= $ruolo['andamenti'] ? 'checked' : '' ?>></td>
                     <td><input type="checkbox" name="permessi[]" value="impostazioni" <?= $ruolo['impostazioni'] ? 'checked' : '' ?>></td>
+                    <td><input type="checkbox" name="permessi[]" value="acquisti" <?= $ruolo['acquisti'] ? 'checked' : '' ?>></td>
                     <td><button type="submit" class="btn-primary">Modifica</button></td>
                 </tr>
                 </form>
