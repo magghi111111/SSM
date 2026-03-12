@@ -44,6 +44,13 @@ function getRuoloById($id){
     return $stmt->fetch(PDO::FETCH_ASSOC) ?? null;
 }
 
+function getRuoliOrdini(){
+    $conn=connect();
+    $sql="SELECT id FROM ruoli WHERE ordini = 1 and nome <> 'ADMIN'";
+    $stmt=$conn->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
+}
+
 function getUserById($id){
     $conn=connect();
     $sql="SELECT u.id,u.email, r.nome AS ruolo

@@ -2,10 +2,10 @@
 
 require 'backend/query/ordini.php';
 require 'backend/query/movimenti.php';
+require_once 'backend/controller/avvisiCntrl.php';
 $ordini_recenti = getOrdiniRecenti();
 $movimenti_recenti = getUltimiMovimenti();
 $ordini_mese = getOrdiniMese();
-$ordidni_da_evadere = getOrdiniDaProcessare();
 
 ?>
 
@@ -66,7 +66,7 @@ $ordidni_da_evadere = getOrdiniDaProcessare();
                     <h3>Avvisi</h3>
                     <i class="bi bi-exclamation-triangle kpi-icon"></i>
                 </div>
-                <p class="kpi-value">2</p>
+                <p class="kpi-value"><?= countAvvisiByRuolo($_SESSION['role']) ?></p>
                 </a>
             </div>
 

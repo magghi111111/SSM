@@ -167,5 +167,17 @@ function getStock($id_componente){
     return $stmt->fetchColumn();
 }
 
+function getStockTotale(){
+    $conn = connect();
+    $sql = "SELECT id_componente, quantita FROM stock";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $stock = [];
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $stock[$row['id_componente']] = $row['quantita'];
+    }
+    return $stock;
+}
+
 
 ?>

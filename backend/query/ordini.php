@@ -75,9 +75,8 @@ function setStatoOrdine($id_ordine,$stato){
     return $stmt->execute([':id' => $id_ordine, ':stato' => $stato]);
 }
 
-function checkDisponibilitaComponenti($id_ordine){
+function checkDisponibilitaComponenti($id_ordine, &$stock){
     $dettagli = getDettagliOrdine($id_ordine);
-    $stock = [];
     foreach ($dettagli as $componente){
         for($i = 0; $i < $componente['quantita']; $i++){
             if(!verificaComponente($componente['id_componente'], $stock)){
@@ -88,14 +87,16 @@ function checkDisponibilitaComponenti($id_ordine){
     return true;
 }
 
-function verificaComponente($id_componente,&$stock){
+function verificaComponente($id_componente, &$stock){
     if(!isset($stock[$id_componente])){
-        $stock[$id_componente] = getStock($id_componente);
+        $stock[$id_componente] = 0;
     }
+    // usa stock già assemblato
     if($stock[$id_componente] > 0){
         $stock[$id_componente]--;
         return true;
     }
+    // controlla se può essere assemblato
     $children = getPartiComponente($id_componente);
     if(empty($children)){
         return false;

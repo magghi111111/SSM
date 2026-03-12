@@ -23,7 +23,6 @@ if ($_SESSION['role'] === 'ADMIN') {
                 <th>Data Pubblicazione</th>
                 <th>Nome Componente</th>
                 <th>Grado Urgenza</th>
-                <th>Nome Ruolo</th>
             </tr>
         </thead>
         <tbody>
@@ -34,7 +33,6 @@ if ($_SESSION['role'] === 'ADMIN') {
                     <td><?= $avviso['data_pubblicazione'] ?></td>
                     <td><?= $avviso['nome_componente']  ?></td>
                     <td><span class="grado <?= strtolower($avviso['grado_urgenza']); ?>"><?= $avviso['grado_urgenza'] ?></span></td>
-                    <td><?= $avviso['nome_ruolo'] ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

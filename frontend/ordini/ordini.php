@@ -6,16 +6,6 @@ require_once 'backend/query/ordini.php';
 require_once 'backend/query/componenti.php';
 require_once 'frontend/ordini/ordiniSubTable.php';
 
-
-foreach (getAllOrdini() as $ordine) {
-    if(checkDisponibilitaComponenti($ordine['id']) && $ordine['stato'] != 'PREPARED'){
-      setStatoOrdine($ordine['id'], 'PENDING');
-    }elseif($ordine['stato'] != 'PREPARED'){
-      setStatoOrdine($ordine['id'], 'OUT_OF_STOCK');
-    }
-}
-
-
 $ordini = getAllOrdini();
 
 ?>
