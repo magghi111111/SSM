@@ -396,6 +396,11 @@ body {
 .status-pending  { color: var(--secondary-color); font-weight: 600; }
 .status-error    { color: var(--error-color); font-weight: 600; }
 
+.avvisi-order-row:hover {
+    background-color: var(--background-hover);
+    cursor: pointer;
+}
+
 /* ===============================
    10. FORMS & INPUTS (Dark Mode)
    =============================== */

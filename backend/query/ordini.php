@@ -40,7 +40,7 @@ function getOrdineById($id){
     $sql = "SELECT o.id_shopify, DATE_FORMAT(o.data_creazione, '%d/%m/%Y') AS data_creazione,o.stato, c.nome, c.cognome
     FROM ordini o
     JOIN cliente c ON o.id_cliente = c.codice
-    WHERE o.id = :id and o.stato <> 'PREPARED';";
+    WHERE o.id = :id and o.stato = 'PENDING';";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':id' => $id]);
