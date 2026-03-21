@@ -53,12 +53,12 @@ require_once 'frontend/assemblaggiOrdine/tabellaOrdine.php';
       </table>
 
       <?php include 'frontend/assemblaggiOrdine/messaggi.php'; ?>
-
-      <button type="button" id="openScanner" class="btn-primary">
-        <i class="bi bi-qr-code-scan"></i> Scansiona componente
-      </button>
-
       <div class="assembly-footer">
+        <button type="button" id="openScanner" class="btn-primary">
+        <i class="bi bi-qr-code-scan"></i> Scansiona componente
+        </button>
+
+      
         <button type="submit" class="btn-primary">Completa ordine</button>
       </div>
 

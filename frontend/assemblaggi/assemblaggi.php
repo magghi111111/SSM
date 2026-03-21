@@ -68,7 +68,6 @@ $componentiAssembly = getComponentiAssembly();
         <div id="scannerError" class="hidden" style="color:red;"></div>
 
         <div id="assemblyActions" class="hidden">
-
           <button type="button" id="openScanner" class="btn-primary">
             <i class="bi bi-qr-code-scan"></i> Scansiona componente
           </button>
@@ -81,7 +80,6 @@ $componentiAssembly = getComponentiAssembly();
           <button type="submit" class="btn-primary">
             Registra assemblaggio
           </button>
-
         </div>
       </form>
 

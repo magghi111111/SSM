@@ -8,7 +8,7 @@
 
         <div class="topbar-right">
             <div class="user-menu">
-                <img src="frontend/img/avatar.jpeg " class="avatar-logo">
+                <img src="frontend/img/utente_logo.avif " class="avatar-logo">
                 <span class="username"><?= $_SESSION['user'] ?? 'Utente' ?></span>
                 <a href="backend/controller/logout.php">
                     <button type="button" class="btn btn-danger">

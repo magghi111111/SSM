@@ -116,16 +116,13 @@ body {
     gap: 10px;
 }
 
-.avatar {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    border: 2px solid var(--highlight-color);
-}
-
 .avatar-logo {
         width: 40px;
         height: auto;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 2px solid var(--highlight-color);
     }
 
 .logout-btn {
@@ -1474,4 +1471,11 @@ width:100%;
 
 .role-edit-form input{
     width: 32%;
+}
+
+.assembly-footer{
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
