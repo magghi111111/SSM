@@ -25,14 +25,14 @@
         <canvas id="graficoConsegne"></canvas>
       </div>
 
-      <div class="chart-card">
+      <div class="card andamento-ordini">
         <h3>Tempo di preparazione</h3>
-        <canvas id="graficoPrepTime"></canvas>
+        <canvas id="graficoTempoPreparazione"></canvas>
       </div>
 
-      <div class="chart-card">
+      <div class="card andamento-ordini">
         <h3>Errori per tipologia</h3>
-        <div id="errorsChart" class="chart-placeholder"></div>
+        <div id="errorsChart"></div>
       </div>
 
     </section>

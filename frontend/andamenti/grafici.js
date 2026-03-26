@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   caricaGrafico('ordini', 'graficoOrdini', 'Ordini');
   caricaGrafico('consegne', 'graficoConsegne', 'Consegne');
-  caricaGrafico('tempo_assemblaggio', 'graficoPrepTime', 'Tempo medio assemblaggio (min)');
+  caricaGrafico('tempo_preparazione', 'graficoTempoPreparazione', 'Tempo medio preparazione (min)');
 });
 
 const mesi = [
@@ -58,3 +58,4 @@ function generaGrafico(canvasId, label, dati) {
     }
   });
 }
+

@@ -18,7 +18,9 @@ switch ($tipo) {
             GROUP BY mese
             ORDER BY mese
         ";
+        $bind = [':anno' => $anno];
         break;
+
 
     case 'consegne':
         $sql = "
@@ -27,25 +29,44 @@ switch ($tipo) {
                 COUNT(*) AS totale
             FROM consegna
             WHERE data_ricezione IS NOT NULL
-              AND YEAR(data_ricezione) = :anno
+            AND YEAR(data_ricezione) = :anno
             GROUP BY mese
             ORDER BY mese
         ";
+        $bind = [':anno' => $anno];
         break;
 
-    case 'tempo_assemblaggio':
+
+    case 'tempo_preparazione':
+
         $sql = "
             SELECT 
-                c.nome AS prodotto,
-                AVG(TIMESTAMPDIFF(MINUTE, a.data_inizio, a.data_fine)) AS tempo_medio
-            FROM assemblaggi a
-            JOIN componenti c ON c.id = a.id_componente
-            WHERE a.data_fine IS NOT NULL
-            AND YEAR(a.data_inizio) = :anno
-            GROUP BY c.nome
-            ORDER BY tempo_medio DESC
+                DATE_FORMAT(data_assemblaggio, '%Y-%m') AS mese,
+
+                ROUND(
+                    AVG(
+                        TIMESTAMPDIFF(
+                            MINUTE,
+                            data_creazione,
+                            data_assemblaggio
+                        )
+                    ), 2
+                ) AS totale
+
+            FROM ordini
+
+            WHERE stato = 'PREPARED'
+            AND data_assemblaggio IS NOT NULL
+            AND YEAR(data_assemblaggio) = :anno
+
+            GROUP BY mese
+            ORDER BY mese
         ";
+
+        $bind = [':anno' => $anno];
+
         break;
+
 
     default:
         http_response_code(400);
@@ -54,9 +75,8 @@ switch ($tipo) {
 }
 
 $stmt = $conn->prepare($sql);
-$stmt->execute([':anno' => $anno]);
+$stmt->execute($bind);
 
 $dati = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 echo json_encode($dati);
-?>

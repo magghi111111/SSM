@@ -7,7 +7,7 @@ require_once 'backend/controller/roleCntrl.php';
 
 <aside class="sidebar d-flex flex-column justify-content-between">
     <div>
-        <img src="frontend/img/logo-removebg-preview.png" id="sidebar-logo">
+        <img id="sidebar-logo">
 
         <!-- PARTE ALTA -->
         <ul class="nav nav-pills flex-column gap-1">
