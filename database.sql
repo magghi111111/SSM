@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 11, 2026 at 05:12 PM
+-- Generation Time: Mar 26, 2026 at 05:34 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -77,7 +77,11 @@ CREATE TABLE `avvisi` (
 --
 
 INSERT INTO `avvisi` (`id`, `titolo`, `descrizione`, `data_pubblicazione`, `grado_urgenza`, `id_ordini`, `id_componente`) VALUES
-(2, 'Prova', 'Prova Avviso', '2026-03-11 17:10:58', 'MEDIO', NULL, NULL);
+(2, 'Prova', 'Prova Avviso', '2026-03-11 17:10:58', 'MEDIO', NULL, NULL),
+(10, 'Ordine #10006 in attesa da più di 3 giorni', 'L\'ordine #10006 è in attesa da più di 3 giorni. Verificare lo stato dell\'ordine e prepararlo.', '2026-03-13 16:44:24', 'MEDIO', 6, NULL),
+(12, 'Ordine #10002 in attesa da più di 3 giorni', 'L\'ordine #10002 è in attesa da più di 3 giorni. Verificare lo stato dell\'ordine e prepararlo.', '2026-03-13 16:44:24', 'MEDIO', 2, NULL),
+(14, 'Ordine #10004 in attesa da più di 3 giorni', 'L\'ordine #10004 è in attesa da più di 3 giorni. Verificare lo stato dell\'ordine e prepararlo.', '2026-03-13 16:45:10', 'MEDIO', 4, NULL),
+(18, 'Ordine #10005 in attesa da più di 3 giorni', 'L\'ordine #10005 è in attesa da più di 3 giorni. Verificare lo stato dell\'ordine e prepararlo.', '2026-03-14 08:36:15', 'MEDIO', 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -245,7 +249,8 @@ INSERT INTO `movimenti` (`id`, `delta`, `tipo`, `id_ordine`, `id_consegna`, `id_
 (32, 1, 'ASSEMBLY', NULL, NULL, 13, 4, '2026-02-25 17:05:41', 'Assemblaggio effettuato il 2026-02-25 17:05:41'),
 (33, 10, 'MANUAL', NULL, NULL, NULL, 19, '2026-02-26 15:32:44', 'Aggiunta componente'),
 (34, 10, 'MANUAL', NULL, NULL, NULL, 20, '2026-02-26 15:34:10', 'Aggiunta componente'),
-(35, 10, 'MANUAL', NULL, NULL, NULL, 21, '2026-02-26 15:39:34', 'Aggiunta componente');
+(35, 10, 'MANUAL', NULL, NULL, NULL, 21, '2026-02-26 15:39:34', 'Aggiunta componente'),
+(36, 0, 'ORDER', 1, NULL, NULL, NULL, '2026-03-26 17:31:17', 'Ordine preparato daadmin@magazzino.it');
 
 -- --------------------------------------------------------
 
@@ -258,20 +263,21 @@ CREATE TABLE `ordini` (
   `id_shopify` int(5) NOT NULL,
   `data_creazione` datetime NOT NULL DEFAULT current_timestamp(),
   `stato` enum('PENDING','OUT_OF_STOCK','PREPARED') NOT NULL DEFAULT 'PENDING',
-  `id_cliente` int(5) NOT NULL
+  `id_cliente` int(5) NOT NULL,
+  `data_assemblaggio` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ordini`
 --
 
-INSERT INTO `ordini` (`id`, `id_shopify`, `data_creazione`, `stato`, `id_cliente`) VALUES
-(1, 10001, '2026-02-07 18:53:44', 'PENDING', 1),
-(2, 10002, '2026-02-07 18:53:44', 'PENDING', 2),
-(3, 10003, '2026-01-07 18:53:44', 'PREPARED', 3),
-(4, 10004, '2026-01-09 17:03:45', 'PENDING', 4),
-(5, 10005, '2026-02-09 17:03:45', 'PENDING', 5),
-(6, 10006, '2026-02-09 17:03:45', 'PENDING', 6);
+INSERT INTO `ordini` (`id`, `id_shopify`, `data_creazione`, `stato`, `id_cliente`, `data_assemblaggio`) VALUES
+(1, 10001, '2026-02-07 18:53:44', 'PREPARED', 1, '2026-03-26'),
+(2, 10002, '2026-02-07 18:53:44', 'PENDING', 2, NULL),
+(3, 10003, '2026-01-07 18:53:44', 'PREPARED', 3, '2026-03-26'),
+(4, 10004, '2026-01-09 17:03:45', 'PENDING', 4, NULL),
+(5, 10005, '2026-02-09 17:03:45', 'PENDING', 5, NULL),
+(6, 10006, '2026-02-09 17:03:45', 'PENDING', 6, NULL);
 
 -- --------------------------------------------------------
 
@@ -359,7 +365,7 @@ INSERT INTO `righe_ordini` (`id_ordine`, `id_componente`, `quantita`) VALUES
 (3, 3, 5),
 (3, 18, 10),
 (4, 8, 3),
-(5, 18, 2),
+(5, 2, 5),
 (6, 5, 10),
 (6, 18, 20);
 
@@ -390,7 +396,7 @@ CREATE TABLE `ruoli` (
 INSERT INTO `ruoli` (`id`, `nome`, `magazzino`, `inserimenti_nuovi`, `ordini`, `consegne`, `assemblaggi`, `movimenti`, `andamenti`, `impostazioni`, `acquisti`) VALUES
 (1, 'ADMIN', 1, 1, 1, 1, 1, 1, 1, 1, 1),
 (2, 'MAGAZZINiERE', 1, 1, 1, 1, 1, 0, 0, 0, 0),
-(3, 'RUOLO 1', 0, 0, 0, 1, 0, 0, 0, 0, 1);
+(3, 'RUOLO 1', 0, 0, 1, 1, 1, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -402,6 +408,20 @@ CREATE TABLE `ruoli_avvisi` (
   `id_ruolo` int(11) NOT NULL,
   `id_avviso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ruoli_avvisi`
+--
+
+INSERT INTO `ruoli_avvisi` (`id_ruolo`, `id_avviso`) VALUES
+(2, 10),
+(2, 12),
+(2, 14),
+(2, 18),
+(3, 10),
+(3, 12),
+(3, 14),
+(3, 18);
 
 -- --------------------------------------------------------
 
@@ -423,7 +443,7 @@ INSERT INTO `stock` (`id_componente`, `quantita`, `ultima_modifica`) VALUES
 (1, 494, '2026-02-25 17:05:41'),
 (2, 369, '2026-02-25 17:05:41'),
 (3, 174, '2026-02-20 16:09:06'),
-(4, 56, '2026-02-25 17:05:41'),
+(4, 54, '2026-03-26 17:31:17'),
 (5, 800, '2026-02-09 17:03:45'),
 (6, 500, '2026-02-09 17:03:45'),
 (7, 450, '2026-02-09 17:03:45'),
@@ -589,7 +609,7 @@ ALTER TABLE `assemblaggi`
 -- AUTO_INCREMENT for table `avvisi`
 --
 ALTER TABLE `avvisi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `cliente`
@@ -619,7 +639,7 @@ ALTER TABLE `fornitore`
 -- AUTO_INCREMENT for table `movimenti`
 --
 ALTER TABLE `movimenti`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `ordini`

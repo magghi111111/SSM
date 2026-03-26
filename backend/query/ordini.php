@@ -75,6 +75,13 @@ function setStatoOrdine($id_ordine,$stato){
     return $stmt->execute([':id' => $id_ordine, ':stato' => $stato]);
 }
 
+function setDataAssemblaggio($id_ordine, $data){
+    $pdo=connect();
+    $sql = "UPDATE ordini SET data_assemblaggio =:data WHERE id = :id;";
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([':id' => $id_ordine, ':data' => $data]);
+}
+
 function checkDisponibilitaComponenti($id_ordine, &$stock){
     $dettagli = getDettagliOrdine($id_ordine);
     foreach ($dettagli as $componente){

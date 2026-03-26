@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         setcookie('ordine', 'input_error', time() + 5, "/");
         header("Location: ../../index.php?page=assemblaggiOrdine&id_ordine=$id_ordine");
         exit();
-    }elseif(setStatoOrdine($id_ordine,'PREPARED')){
-        if(setMovimentoOrdine($id_ordine, 'Ordine preparato da'.$_SESSION['user'])){
+    }elseif(setStatoOrdine($id_ordine,'PREPARED') && setDataAssemblaggio($id_ordine, date('Y-m-d h:i:s'))){
+        if(setMovimentoOrdine($id_ordine, 'Ordine preparato da '.$_SESSION['user'])){
             if(!empty($componenti_assemblati)){
                 foreach($componenti_assemblati as $id_componente){
                     if(!setMovimento(null, $id_componente, -1, 'ASSEMBLY', 'Componente assemblato per ordine '.$id_ordine)){
