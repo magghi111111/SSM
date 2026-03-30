@@ -1,8 +1,10 @@
 <?php
 
-require_once 'backend/query/avvisi.php';
-require_once 'backend/query/componenti.php';
-require_once 'backend/query/utenti.php';
+require_once '../model/database.php';
+require_once '../query/ordini.php';
+require_once '../query/avvisi.php';
+require_once '../query/componenti.php';
+require_once '../query/utenti.php';
 
 $stock = getStockTotale();
 $ordini = getAllOrdini();

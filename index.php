@@ -7,9 +7,14 @@ if (!isset($_SESSION['user'])) {
     $page = 'login';
 }
 
-$pagine_senza_permessi = ['login', 'dashboard', 'assemblaggiOrdine','avvisi'];
+$pagine_senza_permessi = ['login', 'dashboard','avvisi'];
+$permessi_derivati = [
+    'andamenti'  => 'previsioni',
+    'ordini' => 'assemblaggiOrdine'
+];
 
-if(!in_array($page, $pagine_senza_permessi) && (!isset($_SESSION['permessi'][$page]) || !$_SESSION['permessi'][$page])){
+if(!in_array($page, $pagine_senza_permessi) && (!isset($_SESSION['permessi'][$page]) || !$_SESSION['permessi'][$page]) && 
+(!isset($_SESSION['permessi'][$permessi_derivati[$page]]) || !$_SESSION['permessi'][$permessi_derivati[$page]])){
     header("Location: index.php?page=dashboard");
     exit();
 }

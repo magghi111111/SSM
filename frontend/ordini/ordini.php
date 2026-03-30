@@ -9,38 +9,26 @@ require_once 'frontend/ordini/ordiniSubTable.php';
 $ordini = getAllOrdini();
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="it">
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-
     document.querySelectorAll(".assembly_component").forEach(row => {
-
       row.addEventListener("click", function() {
-
-
         const details = this.nextElementSibling;
-
         if (!details || !details.classList.contains("assembly-details")) {
           return;
         }
-
         details.classList.toggle("hidden");
         this.classList.toggle("open");
-
       });
-
     });
-
     document.querySelectorAll(".order-action a").forEach(link => {
       link.addEventListener("click", function(e) {
         e.stopPropagation();
       });
     });
-
   });
 </script>
 
@@ -80,8 +68,6 @@ $ordini = getAllOrdini();
       </table>
     </div>
   </div>
-
-  <div class="footer">© 2025 - PWA</div>
 
 </body>
 

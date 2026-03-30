@@ -8,7 +8,8 @@ $menu = [
     'Consegne'    => 'truck',
     'Assemblaggi' => 'tools',
     'Movimenti'   => 'terminal',
-    'Andamenti'   => 'bar-chart'
+    'Andamenti'   => 'bar-chart',
+    'Previsioni'   => 'calendar3'
 ];
 $bottomMenu = [
     'Impostazioni'=> 'gear'
@@ -24,6 +25,10 @@ if(isset($_SESSION['permessi']) && is_array($_SESSION['permessi'])){
 if(!isset($_SESSION['permessi']['impostazioni']) || !$_SESSION['permessi']['impostazioni']){
     echo $_SESSION['permessi']['impostazioni'];
     unset($bottomMenu['Impostazioni']);
+}
+
+if(!isset($_SESSION['permessi']['andamenti']) && !$_SESSION['permessi']['andamenti']){
+    unset($menu['Previsioni']);
 }
 
 ?>

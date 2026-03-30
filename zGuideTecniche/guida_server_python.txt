@@ -1,0 +1,561 @@
+================================================================================
+   GUIDA COMPLETA — SERVER PYTHON PER PREVISIONE VENDITE MAGAZZINO
+================================================================================
+
+
+════════════════════════════════════════════════════════════════════════════════
+ PARTE 1 — COSA INSTALLARE E COME FAR PARTIRE IL SERVER
+════════════════════════════════════════════════════════════════════════════════
+
+
+────────────────────────────────────────────────────────────────────────────────
+ STEP 1 — Installa Python sul tuo PC
+────────────────────────────────────────────────────────────────────────────────
+
+1. Vai su questo sito: https://www.python.org/downloads/
+2. Clicca sul pulsante giallo "Download Python 3.11.x"
+3. Avvia il file scaricato (.exe)
+4. IMPORTANTE: nella prima schermata dell'installer, spunta la casella
+   "Add Python to PATH" in basso prima di cliccare "Install Now"
+   (senza questo segno di spunta, niente funzionerà)
+5. Aspetta che finisca e clicca "Close"
+
+Per verificare che Python sia installato correttamente:
+- Apri VS Code
+- Apri il terminale con CTRL + ò  (o dal menu: Terminal > New Terminal)
+- Digita:   python --version
+- Dovresti vedere qualcosa come:   Python 3.11.9
+  Se vedi un errore, Python non è nel PATH — riinstallalo ripetendo lo step 1
+
+
+────────────────────────────────────────────────────────────────────────────────
+ STEP 2 — Installa le estensioni VS Code
+────────────────────────────────────────────────────────────────────────────────
+
+1. Apri VS Code
+2. Premi CTRL + SHIFT + X  per aprire il pannello delle estensioni
+3. Cerca e installa queste due estensioni (entrambe di Microsoft):
+
+   - "Python"   → riconoscimento del codice, esecuzione, debug
+   - "Pylance"  → autocompletamento intelligente mentre scrivi
+
+4. Dopo l'installazione, riavvia VS Code
+
+
+────────────────────────────────────────────────────────────────────────────────
+ STEP 3 — Apri la cartella del progetto in VS Code
+────────────────────────────────────────────────────────────────────────────────
+
+1. In VS Code vai su:  File > Open Folder
+2. Seleziona la cartella dove hai messo main.py e config.json
+3. VS Code caricherà la cartella nel pannello a sinistra
+
+
+────────────────────────────────────────────────────────────────────────────────
+ STEP 4 — Installa le librerie Python necessarie
+────────────────────────────────────────────────────────────────────────────────
+
+Apri il terminale in VS Code (CTRL + ò) e copia-incolla questo comando:
+
+   pip install fastapi uvicorn prophet pymysql pandas cachetools
+
+Premi INVIO e aspetta. Il sistema scaricherà e installerà tutto in automatico.
+
+ATTENZIONE: "prophet" è una libreria pesante e può richiedere 2-5 minuti.
+Non chiudere il terminale mentre installa.
+
+Al termine vedrai qualcosa come:
+   Successfully installed fastapi-... uvicorn-... prophet-...
+
+Le librerie si installano una volta sola. Non devi ripeterlo ogni volta.
+
+Cosa fa ognuna:
+   fastapi    → il framework che crea l'API web
+   uvicorn    → il server che fa girare FastAPI
+   prophet    → la libreria di Meta per le previsioni (il "cervello" dell'AI)
+   pymysql    → permette a Python di parlare con MariaDB/MySQL
+   pandas     → gestisce i dati in formato tabella (come Excel, ma in Python)
+   cachetools → memorizza i risultati per non ricalcolare ogni volta
+
+
+────────────────────────────────────────────────────────────────────────────────
+ STEP 5 — Verifica che config.json sia corretto
+────────────────────────────────────────────────────────────────────────────────
+
+Prima di avviare il server, controlla che il file config.json contenga
+le tue credenziali reali del database:
+
+   {
+       "db_host": "127.0.0.1",
+       "db_user": "root",
+       "db_password": "LA_TUA_PASSWORD",
+       "db_name": "gestore_magazzino",
+       "allowed_origins": ["http://localhost"]
+   }
+
+Il file config.json deve trovarsi nella stessa cartella di main.py.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ STEP 6 — Avvia il server Python
+────────────────────────────────────────────────────────────────────────────────
+
+Nel terminale di VS Code, scrivi questo comando e premi INVIO:
+
+   uvicorn main:app --reload
+
+Cosa significa:
+   uvicorn  → il programma che avvia il server
+   main     → il nome del tuo file (main.py)
+   app      → il nome della variabile FastAPI dentro il file
+   --reload → riavvia automaticamente il server ogni volta che salvi main.py
+
+Se tutto va bene vedrai queste righe nel terminale:
+
+   INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+   INFO:     Started reloader process
+
+Il server è acceso e pronto a ricevere richieste.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ STEP 7 — Verifica che il server funzioni
+────────────────────────────────────────────────────────────────────────────────
+
+Apri il browser e vai su:
+
+   http://127.0.0.1:8000/health
+
+Se vedi:   {"status":"ok"}   il server funziona correttamente.
+
+Puoi anche andare su:
+
+   http://127.0.0.1:8000/docs
+
+Qui trovi una pagina generata automaticamente da FastAPI dove puoi
+testare l'API direttamente dal browser, senza toccare il gestionale.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ STEP 8 — Come fermare il server
+────────────────────────────────────────────────────────────────────────────────
+
+Nel terminale dove il server è in esecuzione, premi:
+
+   CTRL + C
+
+Il server si fermerà immediatamente.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ RIEPILOGO — Ogni volta che vuoi usare il sistema
+────────────────────────────────────────────────────────────────────────────────
+
+Le librerie si installano una volta sola. Ogni volta che vuoi usare
+il sistema di previsioni devi solo:
+
+   1. Aprire VS Code
+   2. Aprire il terminale (CTRL + ò)
+   3. Spostarti nella cartella del progetto se necessario
+   4. Digitare:   uvicorn main:app --reload
+   5. Lasciare il terminale aperto mentre lavori con il gestionale
+   6. Quando hai finito, premere CTRL+C per spegnere il server
+
+
+════════════════════════════════════════════════════════════════════════════════
+ PARTE 2 — SPIEGAZIONE RIGA PER RIGA DEL CODICE main.py
+════════════════════════════════════════════════════════════════════════════════
+
+
+────────────────────────────────────────────────────────────────────────────────
+ BLOCCO 1 — Importazioni (le "dipendenze" del codice)
+────────────────────────────────────────────────────────────────────────────────
+
+from fastapi import FastAPI, HTTPException, Query
+
+   Importa FastAPI (il framework), HTTPException (per restituire errori
+   al browser in modo corretto, es. "componente non trovato") e Query
+   (per validare i parametri che arrivano nell'URL).
+
+from fastapi.middleware.cors import CORSMiddleware
+
+   Importa il middleware CORS. CORS è un meccanismo di sicurezza del browser
+   che blocca le richieste tra domini o porte diverse. Senza questo, il
+   gestionale PHP (porta 80) non potrebbe chiamare l'API Python (porta 8000).
+
+from contextlib import contextmanager
+
+   Importa uno strumento Python per creare "blocchi gestiti" — cioè
+   funzioni che aprono una risorsa (come la connessione al DB) e garantiscono
+   che venga chiusa correttamente anche se succede un errore.
+
+from cachetools import TTLCache
+
+   Importa la cache con scadenza temporale. TTL sta per "Time To Live"
+   (tempo di vita). Permette di salvare i risultati già calcolati e
+   restituirli immediatamente senza rielaborare tutto.
+
+import pandas as pd
+
+   Pandas è la libreria per gestire dati in formato tabella. Il risultato
+   della query SQL viene caricato in un "DataFrame" (come un foglio Excel
+   in memoria). L'alias "pd" è una convenzione universale.
+
+from prophet import Prophet
+
+   Importa il modello di intelligenza artificiale di Meta (Facebook) per
+   le previsioni di serie temporali. È il cuore di tutto il sistema.
+
+import pymysql
+
+   Il "driver" che permette a Python di connettersi e dialogare con
+   il database MariaDB/MySQL.
+
+import logging
+
+   La libreria standard di Python per scrivere messaggi di log nel
+   terminale (es. "sto calcolando la previsione per il componente 4").
+   Molto più professionale di usare print().
+
+import warnings
+
+   Libreria standard per gestire gli avvisi di Python.
+
+import json
+
+   Libreria standard per leggere e scrivere file in formato JSON.
+
+import os
+
+   Libreria standard per interagire con il sistema operativo,
+   usata qui per costruire il percorso del file config.json.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ BLOCCO 2 — Configurazione iniziale
+────────────────────────────────────────────────────────────────────────────────
+
+warnings.filterwarnings('ignore')
+
+   Silenzia gli avvisi che Prophet lancia normalmente durante
+   l'addestramento. Non sono errori, solo messaggi informativi che
+   renderebbero i log difficili da leggere.
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
+   Configura il sistema di log. "INFO" significa che verranno mostrati
+   i messaggi informativi e quelli di errore (ma non i messaggi di debug
+   molto dettagliati). Il formato aggiunge data/ora davanti a ogni riga.
+
+logger = logging.getLogger(__name__)
+
+   Crea un "canale" di log specifico per questo file. __name__ è una
+   variabile automatica di Python che contiene il nome del modulo corrente.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ BLOCCO 3 — Lettura del file di configurazione
+────────────────────────────────────────────────────────────────────────────────
+
+config_path = os.path.join(os.path.dirname(__file__), 'config.json')
+
+   Costruisce il percorso assoluto del file config.json.
+   __file__ è il percorso di main.py, os.path.dirname() prende solo
+   la cartella, os.path.join() ci aggiunge 'config.json'.
+   Questo funziona indipendentemente da dove viene avviato il server.
+
+with open(config_path, 'r') as f:
+    config = json.load(f)
+
+   Apre il file config.json in modalità lettura ('r') e lo converte
+   da testo JSON a un dizionario Python. Il blocco "with" garantisce
+   che il file venga chiuso automaticamente dopo la lettura.
+
+DB_CONFIG = {
+    'host':     config['db_host'],
+    'user':     config['db_user'],
+    'password': config['db_password'],
+    'database': config['db_name'],
+}
+
+   Costruisce un dizionario con le credenziali del database, leggendole
+   dal config.json appena caricato. Questo dizionario verrà passato
+   direttamente a pymysql per aprire la connessione.
+
+ALLOWED_ORIGINS = config.get('allowed_origins', ['*'])
+
+   Legge la lista dei domini autorizzati a chiamare l'API.
+   Il metodo .get() con secondo argomento ['*'] significa: "se la chiave
+   'allowed_origins' non esiste nel JSON, usa ['*'] come valore di default"
+   (cioè permetti tutti i domini).
+
+
+────────────────────────────────────────────────────────────────────────────────
+ BLOCCO 4 — Creazione dell'applicazione FastAPI e CORS
+────────────────────────────────────────────────────────────────────────────────
+
+app = FastAPI(title="API Previsione Vendite Magazzino", version="2.0")
+
+   Crea l'applicazione FastAPI. title e version sono metadati che
+   appaiono nella pagina di documentazione automatica su /docs.
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
+
+   Aggiunge il middleware CORS all'applicazione.
+   allow_origins → quali siti web possono chiamare l'API
+   allow_credentials → permette l'invio di cookie nelle richieste
+   allow_methods → solo richieste GET sono permesse (l'API non modifica dati)
+   allow_headers → qualsiasi intestazione HTTP è accettata
+
+
+────────────────────────────────────────────────────────────────────────────────
+ BLOCCO 5 — Cache
+────────────────────────────────────────────────────────────────────────────────
+
+_cache = TTLCache(maxsize=100, ttl=3600)
+
+   Crea un oggetto cache che funziona come un dizionario intelligente.
+   maxsize=100 → può contenere al massimo 100 previsioni diverse
+   ttl=3600    → ogni risultato viene dimenticato dopo 3600 secondi (1 ora)
+   Il prefisso _ nel nome indica che è una variabile "interna" del modulo.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ BLOCCO 6 — Gestione connessione al database
+────────────────────────────────────────────────────────────────────────────────
+
+@contextmanager
+def get_db_connection():
+
+   Il decoratore @contextmanager trasforma questa funzione in un "gestore
+   di contesto", cioè qualcosa che si può usare con la sintassi "with".
+
+    con = None
+    try:
+        con = pymysql.connect(**DB_CONFIG)
+        yield con
+
+   Tenta di aprire la connessione al database usando le credenziali in
+   DB_CONFIG. Il ** davanti al dizionario "spacchetta" le coppie
+   chiave-valore come parametri separati. "yield" è il punto dove
+   la connessione viene "consegnata" al codice che la usa.
+
+    except pymysql.Error as e:
+        logger.error(f"Errore connessione DB: {e}")
+        raise HTTPException(status_code=503, detail="Database non raggiungibile.")
+
+   Se la connessione fallisce (es. MariaDB non è avviato), cattura
+   l'errore, lo scrive nei log e restituisce al browser un errore 503
+   (Service Unavailable) con un messaggio leggibile.
+
+    finally:
+        if con:
+            con.close()
+
+   Il blocco "finally" viene eseguito SEMPRE, sia che ci sia stato un
+   errore che no. Garantisce che la connessione venga sempre chiusa,
+   evitando il problema delle connessioni "aperte e abbandonate".
+
+
+────────────────────────────────────────────────────────────────────────────────
+ BLOCCO 7 — Funzione per recuperare i dati storici
+────────────────────────────────────────────────────────────────────────────────
+
+def ottieni_dati_storici(id_componente: int) -> pd.DataFrame:
+
+   Definisce una funzione che accetta un intero (id_componente) e
+   restituisce un DataFrame di pandas. Il "-> pd.DataFrame" è un
+   "type hint" (suggerimento di tipo), non obbligatorio ma utile per
+   capire cosa fa la funzione a colpo d'occhio.
+
+    query = """
+        SELECT DATE(o.data_creazione) AS ds, SUM(ro.quantita) AS y
+        FROM ordini o
+        JOIN righe_ordini ro ON o.id = ro.id_ordine
+        WHERE ro.id_componente = %s
+        GROUP BY DATE(o.data_creazione)
+        ORDER BY ds ASC
+    """
+
+   La query SQL che recupera lo storico vendite. Le colonne vengono
+   rinominate "ds" e "y" perché Prophet richiede ESATTAMENTE questi nomi.
+   ds = datestamp (data), y = il valore da prevedere (quantità venduta).
+   DATE() raggruppa per giorno, SUM() somma tutte le quantità di quel giorno.
+   %s è un segnaposto sicuro per il parametro (protegge da SQL injection).
+
+    with get_db_connection() as con:
+        df = pd.read_sql(query, con, params=(id_componente,))
+
+   Apre la connessione usando il gestore creato sopra, esegue la query
+   e carica il risultato direttamente in un DataFrame pandas.
+   params=(id_componente,) sostituisce il %s nella query in modo sicuro.
+   La virgola dopo id_componente è necessaria per creare una tupla.
+
+    if df.empty:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Nessun dato trovato per il componente {id_componente}."
+        )
+    return df
+
+   Se la query non ha restituito righe, il DataFrame è vuoto.
+   In quel caso si interrompe l'esecuzione e si manda al browser
+   un errore 404 (Not Found). Altrimenti si restituisce il DataFrame.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ BLOCCO 8 — Endpoint principale dell'API
+────────────────────────────────────────────────────────────────────────────────
+
+@app.get("/previsione/{id_componente}")
+
+   Questo decoratore dice a FastAPI: "quando arriva una richiesta GET
+   all'indirizzo /previsione/qualcosa, esegui la funzione qui sotto".
+   {id_componente} è una parte variabile dell'URL — se l'URL è
+   /previsione/4, allora id_componente varrà 4.
+
+def calcola_previsione(
+    id_componente: int,
+    giorni: int = Query(default=30, ge=1, le=365, description="...")
+):
+
+   Definisce la funzione che gestisce la richiesta.
+   id_componente viene preso dall'URL automaticamente da FastAPI.
+   giorni viene preso dal parametro nell'URL (es. ?giorni=15).
+   Query() aggiunge validazione automatica: ge=1 significa "minimo 1",
+   le=365 significa "massimo 365". Se arriva un valore fuori range,
+   FastAPI risponde automaticamente con un errore senza eseguire il codice.
+
+    cache_key = f"{id_componente}_{giorni}"
+    if cache_key in _cache:
+        logger.info(f"Cache HIT — componente {id_componente}, {giorni} giorni")
+        return _cache[cache_key]
+
+   Costruisce una chiave unica per questa combinazione di parametri
+   (es. "4_15" per componente 4, 15 giorni). Se questa chiave è già
+   nella cache, restituisce subito il risultato salvato senza ricalcolare.
+   Questo rende la risposta quasi istantanea per richieste ripetute.
+
+    logger.info(f"Calcolo previsione — componente {id_componente}, {giorni} giorni")
+
+   Scrive un messaggio nel terminale per tenere traccia di cosa sta
+   facendo il server. Utile per il debug.
+
+    df = ottieni_dati_storici(id_componente)
+
+   Chiama la funzione definita sopra per recuperare i dati dal DB.
+
+    if len(df) < 2:
+        raise HTTPException(
+            status_code=400,
+            detail="Dati storici insufficienti (servono almeno 2 giorni di vendite)."
+        )
+
+   Prophet ha bisogno di almeno 2 punti dati per fare una previsione.
+   Se i dati sono insufficienti, si interrompe con un errore 400
+   (Bad Request) e un messaggio esplicativo.
+
+    m = Prophet(
+        daily_seasonality=False,
+        yearly_seasonality='auto',
+        weekly_seasonality=True
+    )
+
+   Crea il modello Prophet con queste impostazioni:
+   daily_seasonality=False   → non cercare pattern ora per ora
+                               (non ha senso con dati giornalieri)
+   yearly_seasonality='auto' → rileva automaticamente se c'è un pattern
+                               annuale (es. vendite più alte in estate)
+   weekly_seasonality=True   → cerca pattern settimanali (es. il lunedì
+                               si vende di più del sabato)
+
+    m.add_country_holidays(country_name='IT')
+
+   Aggiunge le festività italiane al modello. Prophet le tratta come
+   eventi speciali: sa che il 25 dicembre le vendite saranno anomale
+   e non le considera come un pattern normale da ripetere.
+
+    m.fit(df)
+
+   "Addestramento" del modello. Prophet analizza tutti i dati storici
+   e impara i pattern: tendenza generale, stagionalità, festività.
+   Questa è la fase più lenta dell'operazione.
+
+    future = m.make_future_dataframe(periods=giorni)
+
+   Crea una tabella con le date future su cui fare la previsione.
+   Contiene sia le date passate (già nei dati) che i giorni futuri.
+
+    forecast = m.predict(future)
+
+   Applica il modello addestrato alle date future e genera le previsioni.
+   Il risultato è un DataFrame con molte colonne, tra cui:
+   yhat        → valore previsto centrale
+   yhat_lower  → limite inferiore dell'intervallo di confidenza
+   yhat_upper  → limite superiore dell'intervallo di confidenza
+
+    previsioni_future = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail(giorni)
+
+   Prende dal DataFrame solo le 4 colonne che ci interessano e solo
+   le ultime "giorni" righe, che corrispondono ai giorni futuri.
+   .tail(giorni) prende le ultime N righe.
+
+    risultato = []
+    for _, row in previsioni_future.iterrows():
+        risultato.append({
+            "data":               row['ds'].strftime('%Y-%m-%d'),
+            "quantita_prevista":  round(max(0, row['yhat'])),
+            "forchetta_minima":   round(max(0, row['yhat_lower'])),
+            "forchetta_massima":  round(max(0, row['yhat_upper']))
+        })
+
+   Scorre ogni riga del risultato e costruisce la lista di dizionari
+   che diventerà il JSON restituito al browser.
+   _ (underscore) è una convenzione per dire "non mi interessa l'indice".
+   .strftime('%Y-%m-%d') formatta la data come "2024-04-10".
+   max(0, valore) impedisce quantità negative (non ha senso fisicamente).
+   round() arrotonda al numero intero più vicino.
+
+    risposta = {
+        "id_componente":   id_componente,
+        "giorni_previsti": giorni,
+        "dati":            risultato
+    }
+
+   Costruisce il dizionario finale che FastAPI convertirà automaticamente
+   in JSON e invierà al browser.
+
+    _cache[cache_key] = risposta
+    return risposta
+
+   Salva il risultato nella cache prima di restituirlo, così la prossima
+   volta che arriva la stessa richiesta verrà servita istantaneamente.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ BLOCCO 9 — Endpoint di health check
+────────────────────────────────────────────────────────────────────────────────
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
+   Un endpoint semplicissimo che risponde sempre con {"status": "ok"}.
+   Serve per verificare rapidamente che il server sia acceso e risponda,
+   senza dover fare una vera previsione. Utile per monitoraggio e debug.
+   Aprendo http://127.0.0.1:8000/health nel browser vedi subito se il
+   server è attivo.
+
+
+================================================================================
+ FINE DOCUMENTO
+================================================================================

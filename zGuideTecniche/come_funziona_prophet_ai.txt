@@ -1,0 +1,390 @@
+================================================================================
+   COME FUNZIONA IL MODELLO AI — PROPHET (Meta/Facebook)
+   Guida in linguaggio semplice per capire la previsione delle vendite
+================================================================================
+
+
+════════════════════════════════════════════════════════════════════════════════
+ PARTE 1 — COS'È PROPHET E DA DOVE VIENE
+════════════════════════════════════════════════════════════════════════════════
+
+Prophet è una libreria di intelligenza artificiale sviluppata da Meta
+(la società che possiede Facebook) e rilasciata al pubblico gratuitamente
+nel 2017. È progettata specificamente per fare previsioni su dati che
+cambiano nel tempo: vendite, visite a un sito web, consumi energetici,
+traffico stradale, e così via.
+
+Il nome "Prophet" (profeta in inglese) è esattamente quello che suggerisce:
+il modello studia il passato per "profetizzare" il futuro.
+
+È usato da migliaia di aziende nel mondo, da piccole realtà fino a grandi
+gruppi industriali, perché funziona bene anche con pochi dati storici e
+non richiede di essere esperti di matematica per configurarlo.
+
+NON è una rete neurale né un sistema di deep learning — è un modello
+statistico avanzato, più simile a una formula matematica molto sofisticata
+che a un "cervello artificiale" come ChatGPT. Questo lo rende veloce,
+affidabile e comprensibile.
+
+
+════════════════════════════════════════════════════════════════════════════════
+ PARTE 2 — IL CONCETTO BASE: COSA IMPARA PROPHET DAI TUOI DATI
+════════════════════════════════════════════════════════════════════════════════
+
+Quando gli dai lo storico delle vendite, Prophet scompone i dati in
+tre componenti separati e li studia uno per uno:
+
+
+────────────────────────────────────────────────────────────────────────────────
+ COMPONENTE 1 — La Tendenza (Trend)
+────────────────────────────────────────────────────────────────────────────────
+
+È la direzione generale delle vendite nel tempo, ignorando i picchi e
+le oscillazioni normali.
+
+Esempio pratico:
+   Gennaio:  100 pezzi venduti
+   Aprile:   130 pezzi venduti
+   Agosto:   160 pezzi venduti
+   Dicembre: 190 pezzi venduti
+
+Anche se ci sono stati giorni bassi e giorni alti in mezzo, la tendenza
+generale è in crescita. Prophet capisce questa direzione e la proietta
+nel futuro.
+
+La tendenza può essere:
+   - In crescita costante (es. prodotto sempre più richiesto)
+   - In calo (es. prodotto che viene sostituito da un nuovo modello)
+   - Stabile (es. componente standard con domanda prevedibile)
+   - Con punti di rottura (es. dopo un cambio di fornitore o una crisi,
+     le vendite sono ripartite da zero — Prophet lo rileva automaticamente)
+
+
+────────────────────────────────────────────────────────────────────────────────
+ COMPONENTE 2 — La Stagionalità (Pattern Ricorrenti)
+────────────────────────────────────────────────────────────────────────────────
+
+Sono i pattern che si ripetono con regolarità nel tempo. Prophet ne
+cerca di due tipi nel tuo gestionale:
+
+SETTIMANALE:
+   Prophet controlla se certi giorni della settimana hanno vendite
+   sistematicamente più alte o più basse.
+
+   Esempio:
+   - Il lunedì si ricevono più ordini perché i clienti ripartono
+     dopo il weekend
+   - Il venerdì pomeriggio gli ordini calano
+   - Il sabato e la domenica non arrivano ordini
+
+   Se questo pattern si ripete ogni settimana nei dati storici,
+   Prophet lo impara e lo applica alle previsioni future.
+
+ANNUALE:
+   Prophet controlla se ci sono periodi dell'anno con più o meno
+   vendite in modo ricorrente.
+
+   Esempio:
+   - Ogni estate le vendite di certi componenti salgono
+   - A fine anno c'è sempre un picco per chiudere i bilanci
+   - A ferragosto le vendite crollano
+
+   Nella configurazione del tuo gestionale è impostato su 'auto':
+   Prophet decide da solo se c'è un pattern annuale abbastanza forte
+   da valere la pena di considerare, oppure se i dati sono troppo pochi
+   per affermarlo con certezza.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ COMPONENTE 3 — Le Festività
+────────────────────────────────────────────────────────────────────────────────
+
+Nel tuo codice è presente questa riga:
+   m.add_country_holidays(country_name='IT')
+
+Questo dice a Prophet di conoscere tutte le festività italiane:
+Capodanno, Epifania, Pasqua, 25 Aprile, 1 Maggio, Ferragosto,
+1 Novembre, 8 Dicembre, Natale, Santo Stefano e così via.
+
+Le festività vengono trattate come "eventi speciali": Prophet sa che
+in quei giorni le vendite saranno anomale (quasi sempre vicine a zero
+o comunque molto diverse dal normale) e non le considera come un
+pattern da ripetere nei giorni normali.
+
+Senza questa informazione, il modello potrebbe "confondersi":
+se ogni 25 dicembre le vendite sono zero, senza sapere che è Natale
+potrebbe pensare che i giorni di fine dicembre siano sempre
+caratterizzati da vendite basse — il che sarebbe sbagliato.
+
+
+════════════════════════════════════════════════════════════════════════════════
+ PARTE 3 — COME PROPHET COMBINA LE TRE COMPONENTI
+════════════════════════════════════════════════════════════════════════════════
+
+Una volta che ha studiato separatamente le tre componenti, Prophet
+le somma per costruire la previsione finale.
+
+In termini molto semplici, la formula è:
+
+   PREVISIONE = Tendenza + Stagionalità Settimanale + Stagionalità Annuale
+                + Effetto Festività + Margine di Errore
+
+Esempio concreto per giovedì 10 aprile:
+
+   Tendenza generale del prodotto:          +12 pezzi
+   Effetto "giovedì" (giorno buono):        +3  pezzi
+   Effetto stagionale (aprile è attivo):    +2  pezzi
+   Nessuna festività quel giorno:            0  pezzi
+   ─────────────────────────────────────────────────
+   PREVISIONE FINALE:                       17  pezzi
+
+   Margine di incertezza:
+   Minimo (scenario pessimista):            11  pezzi
+   Massimo (scenario ottimista):            24  pezzi
+
+
+════════════════════════════════════════════════════════════════════════════════
+ PARTE 4 — COSA SIGNIFICANO I TRE VALORI RESTITUITI
+════════════════════════════════════════════════════════════════════════════════
+
+Per ogni giorno futuro il sistema restituisce tre numeri, non uno solo.
+Questo è uno dei punti di forza di Prophet rispetto ad altri modelli.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ quantita_prevista (yhat)
+────────────────────────────────────────────────────────────────────────────────
+
+È la stima centrale: il valore che il modello ritiene più probabile.
+È il numero da usare come riferimento principale per pianificare
+gli ordini di riapprovvigionamento.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ forchetta_minima (yhat_lower)
+────────────────────────────────────────────────────────────────────────────────
+
+È il limite inferiore dell'intervallo di confidenza.
+Significa: "con alta probabilità non venderai MENO di questo".
+
+Quando usarlo:
+   Se vuoi minimizzare le scorte e rischi il magazzino pieno,
+   usa questo valore per ordinare il minimo indispensabile.
+   Attenzione: potresti andare in rottura di stock.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ forchetta_massima (yhat_upper)
+────────────────────────────────────────────────────────────────────────────────
+
+È il limite superiore dell'intervallo di confidenza.
+Significa: "con alta probabilità non venderai PIÙ di questo".
+
+Quando usarlo:
+   Se un componente è critico e non puoi permetterti di rimanere
+   senza scorte, ordina in base a questo valore per stare sicuro.
+   Attenzione: potresti avere magazzino in eccesso.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ L'intervallo di confidenza — cosa vuol dire esattamente
+────────────────────────────────────────────────────────────────────────────────
+
+Prophet è sicuro all'80% che il valore reale delle vendite cada
+tra forchetta_minima e forchetta_massima.
+
+Questo non significa che sbaglia il 20% delle volte — significa che
+c'è un 20% di probabilità che eventi imprevedibili (un ordine straordinario,
+una crisi di fornitura, un cliente nuovo importante) portino il valore
+fuori da quell'intervallo.
+
+Più è ampia la forchetta, meno il modello è sicuro di sé.
+Una forchetta stretta indica dati storici molto regolari e prevedibili.
+Una forchetta larga indica dati storici molto variabili o pochi dati.
+
+
+════════════════════════════════════════════════════════════════════════════════
+ PARTE 5 — QUANTO È AFFIDABILE? I LIMITI DEL MODELLO
+════════════════════════════════════════════════════════════════════════════════
+
+Prophet è potente ma non è infallibile. Ci sono situazioni in cui
+le sue previsioni vanno prese con più cautela:
+
+
+────────────────────────────────────────────────────────────────────────────────
+ Dati storici insufficienti
+────────────────────────────────────────────────────────────────────────────────
+
+Prophet ha bisogno di almeno 2 punti dati per funzionare (il codice
+lo verifica e blocca la richiesta se non bastano). Ma per fare previsioni
+affidabili servono idealmente:
+
+   - Almeno 2-3 mesi di dati per cogliere i pattern settimanali
+   - Almeno 1-2 anni di dati per cogliere i pattern annuali
+
+Con pochi mesi di storico le previsioni funzionano, ma la forchetta
+di incertezza sarà più ampia.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ Dati molto irregolari
+────────────────────────────────────────────────────────────────────────────────
+
+Se le vendite di un componente sono completamente casuali (oggi 0,
+domani 50, dopodomani 2, poi 30...) senza nessun pattern regolare,
+Prophet farà fatica. Il modello è bravo a riconoscere regolarità —
+se non ce ne sono, la previsione sarà poco precisa.
+
+Questo si nota subito: la forchetta tra minimo e massimo sarà
+molto ampia, segnale che il modello ha poca certezza.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ Eventi straordinari non prevedibili
+────────────────────────────────────────────────────────────────────────────────
+
+Prophet non può prevedere:
+   - Un cliente nuovo che fa un ordine enorme
+   - Una crisi di fornitura che blocca le vendite per settimane
+   - Un cambio di prodotto o di mercato improvviso
+   - Una pandemia, una guerra, un embargo
+
+Questi eventi "rompono" i pattern storici e rendono le previsioni
+basate sul passato meno attendibili finché non si accumulano
+abbastanza nuovi dati post-evento.
+
+
+────────────────────────────────────────────────────────────────────────────────
+ Componenti nuovi o con poche vendite
+────────────────────────────────────────────────────────────────────────────────
+
+Se un componente è stato introdotto di recente o viene venduto
+raramente (es. 2-3 pezzi al mese), Prophet avrà pochi dati su cui
+lavorare. Le previsioni saranno indicative ma non affidabili.
+Il codice mostra un errore specifico se i dati sono troppo pochi.
+
+
+════════════════════════════════════════════════════════════════════════════════
+ PARTE 6 — COME USARE LE PREVISIONI NEL GESTIONALE
+════════════════════════════════════════════════════════════════════════════════
+
+Le previsioni non sostituiscono il giudizio umano — lo supportano.
+Ecco come interpretarle in pratica:
+
+
+SCENARIO 1 — Componente standard, vendite regolari
+   → La forchetta è stretta, il modello è affidabile
+   → Usa "quantita_prevista" per pianificare il riordino
+   → Aggiungi un piccolo buffer di sicurezza (es. +10%)
+
+SCENARIO 2 — Componente critico, non puoi rimanere senza
+   → Usa "forchetta_massima" come base per l'ordine
+   → Costi di magazzino più alti, ma zero rischio di stockout
+
+SCENARIO 3 — Componente costoso, vuoi minimizzare le scorte
+   → Usa "forchetta_minima" come base
+   → Rischio di rottura di stock se la domanda supera le attese
+
+SCENARIO 4 — Forchetta molto ampia (es. min 2, max 40)
+   → Il modello è incerto — le vendite sono troppo irregolari
+   → Non affidarti solo alla previsione: usa anche il tuo giudizio
+      sul contesto (ordini in pipeline, stagionalità del settore)
+
+SCENARIO 5 — Previsione vicina a 0
+   → Il modello prevede poca o nessuna vendita
+   → Verifica che non ci siano ordini già confermati per quel periodo
+      che il sistema non conosce ancora
+
+
+════════════════════════════════════════════════════════════════════════════════
+ PARTE 7 — COME MIGLIORARE LE PREVISIONI NEL TEMPO
+════════════════════════════════════════════════════════════════════════════════
+
+Le previsioni di Prophet migliorano automaticamente man mano che
+accumuli più dati storici nel database. Non devi fare nulla:
+ogni volta che un ordine viene registrato nel gestionale, quel dato
+entra a far parte dello storico su cui Prophet si addestrerà
+la prossima volta.
+
+Consigli pratici:
+
+1. REGISTRA SEMPRE GLI ORDINI PUNTUALMENTE
+   Dati incompleti o inseriti in ritardo "confondono" il modello.
+   Se un ordine del 5 marzo viene inserito il 20 marzo, Prophet
+   vedrà un picco anomalo il 20 marzo che non rispecchia la realtà.
+
+2. USA PERIODI LUNGHI
+   Più giorni chiedi (es. 60 o 90 invece di 15), più il grafico
+   mostrerà i pattern settimanali e stagionali in modo chiaro.
+   Per pianificazioni a breve termine usa 15-30 giorni.
+   Per pianificazioni stagionali usa 60-90 giorni.
+
+3. CONTROLLA REGOLARMENTE
+   Confronta ogni mese le previsioni del mese scorso con i dati
+   reali. Se le previsioni sono costantemente sovrastimate o
+   sottostimate per un certo componente, potrebbe esserci
+   un cambio strutturale nella domanda che il modello non ha
+   ancora imparato (perché è recente).
+
+4. NON FIDARTI DELLE PREVISIONI OLTRE 60-90 GIORNI
+   Più si va avanti nel tempo, più l'incertezza cresce.
+   Le previsioni a 7-30 giorni sono le più affidabili.
+   Quelle a 90+ giorni sono indicazioni di tendenza, non stime precise.
+
+
+════════════════════════════════════════════════════════════════════════════════
+ PARTE 8 — DIFFERENZA TRA PROPHET E ALTRI SISTEMI DI PREVISIONE
+════════════════════════════════════════════════════════════════════════════════
+
+Esistono molti modi per fare previsioni. Ecco dove si colloca Prophet:
+
+
+MEDIA MOBILE (il metodo più semplice)
+   Calcola la media degli ultimi N giorni e la proietta avanti.
+   Facile da capire, ma non considera stagionalità né festività.
+   Prophet è molto più preciso.
+
+EXCEL / FOGLIO DI CALCOLO (metodo manuale)
+   Qualcuno traccia le vendite a mano e "a occhio" stima il futuro.
+   Funziona per chi ha molta esperienza, ma è soggettivo e lento.
+   Prophet automatizza questo processo in modo oggettivo.
+
+RETI NEURALI / DEEP LEARNING (es. LSTM)
+   Modelli molto potenti ma che richiedono enormi quantità di dati
+   e mesi di addestramento. Eccessivi per un magazzino di medie
+   dimensioni. Prophet è più adatto a dataset di poche migliaia di righe.
+
+ARIMA (modello statistico classico)
+   Molto preciso ma richiede competenze statistiche avanzate per
+   essere configurato correttamente. Prophet è stato progettato
+   proprio per essere usabile senza essere statistici.
+
+PROPHET (il tuo sistema)
+   Equilibrio ideale tra semplicità di utilizzo, velocità e precisione
+   per dati di vendita con pattern settimanali e stagionali.
+   Gestisce automaticamente festività, dati mancanti e punti di rottura.
+
+
+════════════════════════════════════════════════════════════════════════════════
+ RIEPILOGO IN 5 PUNTI
+════════════════════════════════════════════════════════════════════════════════
+
+  1. Prophet analizza lo storico delle vendite dal tuo database MariaDB
+
+  2. Scompone i dati in tre componenti: tendenza, stagionalità
+     settimanale, stagionalità annuale — più l'effetto delle
+     festività italiane
+
+  3. Combina tutto in una previsione con tre valori:
+     valore centrale, minimo stimato, massimo stimato
+
+  4. L'intervallo min-max rappresenta l'incertezza del modello:
+     più è stretto, più il modello è sicuro
+
+  5. Le previsioni migliorano automaticamente nel tempo
+     man mano che accumuli più dati storici
+
+
+================================================================================
+ FINE DOCUMENTO
+================================================================================

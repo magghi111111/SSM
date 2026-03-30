@@ -87,6 +87,11 @@ function applyTheme(theme) {
 
     // Persistenza
     document.cookie = "theme=" + theme + "; path=/; max-age=31536000";
+
+    const iframe = document.querySelector('iframe[src*="grafico.php"]');
+    if (iframe) {
+        iframe.contentWindow.postMessage({ theme }, '*');
+    }
 }
 
 

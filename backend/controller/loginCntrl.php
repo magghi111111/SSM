@@ -21,11 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'impostazioni' => $utente['impostazioni'],
             'magazzino' => $utente['magazzino'],
             'ordini' => $utente['ordini'],
+            'assemblaggiOrdine' => $utente['ordini'],
             'inserimenti' => $utente['inserimenti_nuovi'],
             'consegne' => $utente['consegne'],
             'assemblaggi' => $utente['assemblaggi'],
             'movimenti' => $utente['movimenti'],
             'andamenti' => $utente['andamenti'],
+            'previsioni' => $utente['andamenti'],
             'acquisti' => $utente['acquisti']
         ];
         header('Location: ../../index.php');

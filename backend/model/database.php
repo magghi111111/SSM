@@ -1,12 +1,15 @@
 <?php
 
 function connect(){
-    $host = "localhost";
-    $dbname = "gestore_magazzino";
+
+    $config = json_decode(file_get_contents('C:\xampp\htdocs\ProjectWork/config.json'), true);
+    //percorso assoluto per evitare problemi di path perche il file è incluso in più punti del progetto
+    $host = $config['db_host'];
+    $dbname = $config['db_name'];
 
     $dsn  = "mysql:host=$host;dbname=$dbname;";
-    $user = "root";
-    $password = "";
+    $user = $config['db_user'];
+    $password = $config['db_password'];
     try{
         $pdo = new PDO($dsn,$user,$password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);

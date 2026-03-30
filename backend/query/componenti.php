@@ -10,7 +10,7 @@ function getComponentiRaw(){
 
 function getComponentiAssembly(){
     $pdo=connect();
-    $sql = "SELECT * FROM componenti WHERE tipo = 'ASSEMBLY';";
+    $sql = "SELECT * FROM componenti WHERE tipo = 'ASSEMBLY' order by id desc;";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -116,9 +116,10 @@ function getComponenti(){
 
 function getPartiComponente($idAssembly){
     $pdo=connect();
-    $sql = "SELECT c.*, p.quantita
+    $sql = "SELECT c.*, p.quantita,s.quantita AS stock_attuale
     FROM parti_componente p
     join componenti c on p.id_raw = c.id
+    join stock s on c.id = s.id_componente
     WHERE id_assembly = :id_assembly;";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':id_assembly' => $idAssembly]);
