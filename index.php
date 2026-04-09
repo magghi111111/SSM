@@ -1,5 +1,5 @@
 <?php
-echo "eco di prova 6";
+echo "eco di prova 7";
 session_start();
 
 $page = $_GET['page'] ?? 'dashboard';
