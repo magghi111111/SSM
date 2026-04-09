@@ -116,3 +116,44 @@ function toggleTheme() {
 document.addEventListener('DOMContentLoaded', () => {
     applyTheme(window.__initialTheme);
 });
+
+/* =========================================================
+   SIDEBAR MOBILE TOGGLE
+   ========================================================= */
+document.addEventListener('DOMContentLoaded', () => {
+    const toggle  = document.getElementById('sidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    if (!toggle || !sidebar || !overlay) return;
+
+    function openSidebar() {
+        sidebar.classList.add('open');
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden'; // blocca scroll pagina
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', () => {
+        sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+    });
+
+    overlay.addEventListener('click', closeSidebar);
+
+    // Chiudi su navigazione (SPA-like)
+    sidebar.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) closeSidebar();
+        });
+    });
+
+    // Chiudi se si ruota il dispositivo e si passa a landscape
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) closeSidebar();
+    });
+});

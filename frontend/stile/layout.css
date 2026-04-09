@@ -1447,51 +1447,257 @@ input:focus, select:focus, textarea:focus {
     margin-top: 6px;
 }
 
+/* ===============================
+   RESPONSIVE — iPad e mobile
+   =============================== */
 
-/* ===============================================
-   RESPONSIVE — Scala proporzionale su schermi
-   più piccoli, layout identico al desktop
-   =============================================== */
-@media (max-width: 1180px) {
-
-    /* Sidebar leggermente più stretta */
-    .sidebar { width: 190px; }
-
-    .topbar,
-    .page-heading-wrapper { left: 190px; }
-
-    .main, .content, .footer { margin-left: 190px; }
-
-    .topbar-logo { width: 200px; }
-    .kpi-value { font-size: 24px; }
+/* iPad Pro 12.9" landscape (1366px) — tutto invariato, solo leggeri aggiustamenti */
+@media (max-width: 1366px) {
+    .kpi-value { font-size: 26px; }
 }
 
-@media (max-width: 1024px) {
+/* iPad Pro 11" / Air landscape (1180px) */
+@media (max-width: 1180px) {
+    .sidebar { width: 200px; }
 
-    /* Sidebar sempre visibile, solo più stretta */
-    .sidebar { width: 170px; padding: 16px; }
-    .sidebar h5 { font-size: 12px; }
+    .topbar,
+    .page-heading-wrapper { left: 200px; }
+
+    .main, .content, .footer { margin-left: 200px; }
+
+    .topbar-logo { width: 200px; }
+    .kpi-value   { font-size: 24px; }
+
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .filters {
+        grid-template-columns:
+            minmax(140px, 180px)
+            minmax(180px, 1fr)
+            auto;
+    }
+}
+
+/* iPad Air / iPad standard landscape (1024px) */
+@media (max-width: 1024px) {
+    .sidebar { width: 170px; padding: 16px 12px; }
+    .sidebar h5 { font-size: 11px; }
     .sidebar .nav-link { font-size: 13px; padding: 8px 10px; }
 
-    /* Topbar e heading agganciati alla sidebar ridotta */
     .topbar,
     .page-heading-wrapper { left: 170px; }
 
     .main, .content, .footer {
         margin-left: 170px;
-        padding-left: 18px;
-        padding-right: 18px;
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
-    /* Burger e overlay mai visibili — sidebar sempre aperta */
-    .sidebar-toggle  { display: none !important; }
-    .sidebar-overlay { display: none !important; }
-
-    .topbar-logo { width: 170px; }
-    .page-title  { font-size: 18px; }
+    .topbar-logo { width: 160px; }
+    .page-title  { font-size: 16px; }
     .kpi-value   { font-size: 22px; }
     .kpi-card h3, .kpi-title { font-size: 11px; }
 
-    .orders-table th, .assembly-table th { font-size: 12px; padding: 10px; }
-    .orders-table td, .assembly-table td { font-size: 13px; padding: 10px; }
+    /* Sidebar toggle ancora nascosto in landscape */
+    .sidebar-toggle  { display: none; }
+    .sidebar-overlay { display: none; }
+
+    /* Griglie */
+    .kpi-grid     { grid-template-columns: repeat(2, 1fr); }
+    .content-grid { grid-template-columns: 1fr; }
+    .charts-grid  { grid-template-columns: 1fr; }
+
+    /* Tabelle */
+    .orders-table th, .assembly-table th { font-size: 12px; padding: 10px 8px; }
+    .orders-table td, .assembly-table td { font-size: 13px; padding: 10px 8px; }
+
+    /* Form */
+    .filters {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+    .filter-actions { grid-column: span 2; }
+
+    /* Settings */
+    .settings-page { grid-template-columns: 1fr; }
+    .settings-page .user-create-card:nth-child(3),
+    .settings-page .user-create-card:nth-child(4) { grid-column: span 1; }
+}
+
+/* ============================================================
+   iPad portrait (768px) — sidebar diventa overlay
+   ============================================================ */
+@media (max-width: 768px) {
+
+    /* --- Sidebar: fuori schermo, slide-in via JS --- */
+    .sidebar {
+        width: 260px;
+        transform: translateX(-100%);
+        box-shadow: none;
+        z-index: 200;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 4px 0 24px rgba(0,0,0,0.35);
+    }
+
+    /* --- Overlay scuro dietro la sidebar --- */
+    .sidebar-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 199;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .sidebar-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* --- Hamburger visibile --- */
+    .sidebar-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        border: none;
+        color: var(--text-light);
+        font-size: 22px;
+        cursor: pointer;
+        border-radius: 6px;
+        flex-shrink: 0;
+    }
+
+    .sidebar-toggle:hover {
+        background: rgba(255,255,255,0.1);
+    }
+
+    /* --- Topbar e heading a tutta larghezza --- */
+    .topbar,
+    .page-heading-wrapper {
+        left: 0;
+    }
+
+    /* --- Main content senza margine sidebar --- */
+    .main, .content, .footer {
+        margin-left: 0;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .content { padding-top: 130px; }
+
+    /* --- Logo topbar più piccolo --- */
+    .topbar-logo { width: 130px; }
+    .page-title  { font-size: 15px; }
+
+    /* --- KPI: 2 colonne, poi 1 sotto 480px --- */
+    .kpi-grid    { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .kpi-section { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .kpi-card    { height: auto; min-height: 100px; padding: 16px; }
+    .kpi-value   { font-size: 22px; margin-top: 8px; }
+
+    /* --- Griglie: tutto su colonna singola --- */
+    .content-grid { grid-template-columns: 1fr; gap: 16px; }
+    .charts-grid  { grid-template-columns: 1fr; gap: 16px; }
+
+    /* --- Form: colonna singola --- */
+    .form-grid        { grid-template-columns: 1fr; gap: 12px; }
+    .form-grid.nested { grid-template-columns: 1fr; }
+    .form-group.full-width { grid-column: span 1; }
+    .form-actions      { grid-column: span 1; justify-content: stretch; }
+    .form-actions .btn-primary { width: 100%; }
+
+    /* --- Filtri movimenti --- */
+    .filters {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .filter-actions {
+        grid-column: span 1;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    /* --- Component dropdown: non uscire dallo schermo --- */
+    .component-dropdown {
+        width: calc(100vw - 32px);
+        grid-template-columns: 1fr;
+    }
+
+    /* --- Tabelle: scroll orizzontale già gestito da .table-responsive --- */
+    .orders-table, .assembly-table {
+        min-width: 580px; /* forza scroll prima di spiaccicarsi */
+    }
+
+    /* --- Assembly selector: stack verticale --- */
+    .assembly-selector { flex-direction: column; }
+    .assembly-option span { display: block; }
+
+    /* --- Required component: semplifica griglia --- */
+    .required-component {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    /* --- Delivery row --- */
+    .delivery-row {
+        grid-template-columns: 1fr 80px 36px;
+        gap: 6px;
+    }
+
+    /* --- Settings: colonna singola --- */
+    .settings-page {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .settings-page .user-create-card:nth-child(3),
+    .settings-page .user-create-card:nth-child(4) {
+        grid-column: span 1;
+    }
+
+    .user-create-card {
+        max-width: 100%;
+        min-width: unset;
+    }
+
+    /* --- User form: colonna singola --- */
+    .user-form { grid-template-columns: 1fr; }
+    .user-form .full-width { grid-column: span 1; }
+    .user-form .form-actions { grid-column: span 1; }
+
+    /* --- Footer --- */
+    .footer { margin-left: 0; }
+
+    /* --- Topbar right: comprimi --- */
+    .topbar-right { gap: 10px; }
+    .username { display: none; } /* nasconde email utente, mostra solo avatar */
+
+    /* --- Iframe preview in dashboard --- */
+    iframe { height: 220px; }
+}
+
+/* Smartphone (480px) — opzionale, utile se il sito viene aperto su iPhone */
+@media (max-width: 480px) {
+    .kpi-grid    { grid-template-columns: 1fr; }
+    .kpi-section { grid-template-columns: 1fr; }
+
+    .main, .content {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .topbar { padding: 0 12px; }
+
+    .required-component {
+        grid-template-columns: 1fr;
+    }
+    .open-component-scanner { width: 100%; }
 }

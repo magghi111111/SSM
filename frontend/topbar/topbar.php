@@ -2,6 +2,11 @@
 
     <!-- TOPBAR -->
     <div class="topbar">
+
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Apri menu">
+            <i class="bi bi-list"></i>
+        </button>
+
         <div class="topbar-left">
             <img src="frontend/img/scritta.png" class="topbar-logo">
         </div>

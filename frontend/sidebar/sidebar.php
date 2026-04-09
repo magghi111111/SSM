@@ -5,6 +5,8 @@ require_once 'backend/controller/roleCntrl.php';
 
 ?>
 
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
 <aside class="sidebar d-flex flex-column justify-content-between">
     <div>
         <img id="sidebar-logo">
