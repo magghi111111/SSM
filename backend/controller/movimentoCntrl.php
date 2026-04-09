@@ -18,13 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
             $_POST['tipo']
         );
     }
-    $_POST['delta'] ?? 0;
-    $_POST['note'] ?? 'Nessuna nota';
+    $delta = $_POST['delta'] ?? 0;
+    $note = $_POST['note'] ?? 'Nessuna nota';
 
     require_once '../query/movimenti.php';
 
-    $idMovimento = setMovimento(null,$id_componente, $_POST['delta'],'MANUAL',$_POST['note']);
-    setStock($id_componente, $_POST['delta']);
+    $idMovimento = setMovimento(null,$id_componente, $delta,'MANUAL', $note);
+    setStock($id_componente, $delta);
 
     if($idMovimento){
         setcookie('aggiunta_componente', 'success', time() + 5, "/");
