@@ -2,7 +2,7 @@
 
 function connect(){
 
-    $config = json_decode(file_get_contents('C:\xampp\htdocs\ProjectWork/config.json'), true);
+    $config = json_decode(file_get_contents('/Applications/XAMPP/xamppfiles/htdocs/SSM-1/config.json'), true);
     //percorso assoluto per evitare problemi di path perche il file è incluso in più punti del progetto
     $host = $config['db_host'];
     $dbname = $config['db_name'];

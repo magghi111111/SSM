@@ -1,0 +1,29 @@
+steps:
+# Step 1: Build the Docker image
+# The image will be tagged with the commit SHA for versioning
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'YOUR_REGION-docker.pkg.dev/project-7e62e06f-5df8-477b-abd/my-repo/my-php-python-app:${COMMIT_SHA}', '.']
+
+# Step 2: Push the Docker image to Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'YOUR_REGION-docker.pkg.dev/project-7e62e06f-5df8-477b-abd/my-repo/my-php-python-app:${COMMIT_SHA}']
+
+# Step 3: Deploy the image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args:
+  - 'run'
+  - 'deploy'
+  - 'my-php-python-service' # Your Cloud Run service name
+  - '--image'
+  - 'YOUR_REGION-docker.pkg.dev/project-7e62e06f-5df8-477b-abd/my-repo/my-php-python-app:${COMMIT_SHA}'
+  - '--region'
+  - 'YOUR_REGION' # e.g., us-central1
+  - '--platform'
+  - 'managed'
+  - '--allow-unauthenticated' # Adjust as needed for production
+  - '--port'
+  - '8080' # Ensure this matches the EXPOSE port in your Dockerfile
+
+images:
+- 'europe-north1-docker.pkg.dev/project-7e62e06f-5df8-477b-abd/my-repo/my-php-python-app:${COMMIT_SHA}'
