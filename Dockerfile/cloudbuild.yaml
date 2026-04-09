@@ -27,3 +27,5 @@ steps:
 
 images:
 - 'europe-north1-docker.pkg.dev/project-7e62e06f-5df8-477b-abd/my-repo/my-php-python-app:${COMMIT_SHA}'
+options:
+  logging: CLOUD_LOGGING_ONLY
