@@ -7,7 +7,6 @@
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
-drop DATABASE gestore_magazzino;
 create DATABASE gestore_magazzino;
 use gestore_magazzino;
 
