@@ -1,0 +1,341 @@
+/* =============================================================
+   ipad.css — Caricato DOPO layout.css e Bootstrap
+   Copre tutti i modelli iPad: 768px → 1366px
+   ============================================================= */
+
+/* ============================================================
+   RANGE COMPLETO TABLET
+   ============================================================ */
+@media only screen and (min-width: 768px) and (max-width: 1366px) {
+
+    /* Forza scroll orizzontale su TUTTE le tabelle */
+    .orders-table,
+    .assembly-table,
+    .sub-table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Elimina min-width rigido che causa overflow */
+    .user-create-card {
+        min-width: unset !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* Touch target minimo 44px su tutto il clickable */
+    .btn-primary,
+    .btn-secondary,
+    .btn-icon,
+    .btn-assembly,
+    .nav-link,
+    .open-component-scanner,
+    button[type="submit"],
+    button[type="button"] {
+        min-height: 44px;
+        touch-action: manipulation;
+    }
+
+    /* Evita zoom automatico iOS su focus */
+    input,
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+}
+
+
+/* ============================================================
+   iPad Pro 12.9" Landscape (1024px – 1366px)
+   Sidebar rimane a 220px, layout normale ma compresso
+   ============================================================ */
+@media only screen and (min-width: 1025px) and (max-width: 1366px) {
+
+    /* KPI: 4 → 2 colonne per evitare overflow del testo */
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px;
+    }
+
+    .kpi-value {
+        font-size: 24px;
+    }
+
+    /* Content grid: 2 col → 1 col per evitare card schiacciate */
+    .content-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Settings: 2 colonne ma senza min-width rigido */
+    .settings-page {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    /* Filtri: semplifica layout */
+    .filters {
+        grid-template-columns: 180px 1fr auto !important;
+        gap: 14px;
+    }
+
+    /* Widget previsione: controls wrappano */
+    #widget-previsione .controls {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    #widget-previsione input[type="number"] {
+        width: 80px;
+    }
+
+    /* Tabella avvisi: righe più alte per touch */
+    .avvisi-order-row td,
+    .assembly_component td {
+        padding: 12px 8px;
+    }
+}
+
+
+/* ============================================================
+   iPad Air / standard Landscape + iPad Pro Portrait
+   (769px – 1024px) con sidebar 170px attiva
+   ============================================================ */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+
+    /* Sidebar già a 170px nel CSS originale — qui affiniamo il contenuto */
+
+    /* KPI: 4 → 2 colonne */
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 14px;
+    }
+
+    .kpi-section {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .kpi-card {
+        height: auto;
+        min-height: 100px;
+        padding: 16px;
+    }
+
+    .kpi-value {
+        font-size: 22px;
+    }
+
+    /* Content grid: 1 colonna */
+    .content-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px;
+    }
+
+    /* Charts: 1 colonna */
+    .charts-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Form: 1 colonna */
+    .form-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+    }
+
+    .form-group.full-width {
+        grid-column: span 1 !important;
+    }
+
+    .form-actions {
+        grid-column: span 1 !important;
+        justify-content: stretch;
+    }
+
+    .form-actions .btn-primary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Settings page: 1 colonna */
+    .settings-page {
+        grid-template-columns: 1fr !important;
+        gap: 16px;
+    }
+
+    .settings-page .user-create-card:nth-child(3),
+    .settings-page .user-create-card:nth-child(4) {
+        grid-column: span 1 !important;
+    }
+
+    /* Required component assembly: 2 righe */
+    .required-component {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .required-component .component-name {
+        grid-column: span 2;
+        font-size: 14px;
+    }
+
+    .required-component .component-qr {
+        grid-column: 1;
+    }
+
+    .required-component .open-component-scanner {
+        grid-column: 2;
+    }
+
+    /* Assembly selector: wrap */
+    .assembly-selector {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .assembly-option span {
+        display: block;
+        padding: 12px 20px;
+        font-size: 13px;
+    }
+
+    /* Filtri movimenti: 2 colonne */
+    .filters {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12px;
+    }
+
+    .filter-actions {
+        grid-column: span 2 !important;
+        padding-top: 0;
+        justify-content: flex-start;
+    }
+
+    /* User form in settings: 1 colonna */
+    .user-form {
+        grid-template-columns: 1fr !important;
+    }
+
+    .user-form .full-width,
+    .user-form .form-actions {
+        grid-column: span 1 !important;
+    }
+
+    /* Widget previsione */
+    #widget-previsione .controls {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    #widget-previsione .controls > div {
+        flex: 1 1 140px;
+    }
+
+    #widget-previsione input[type="number"] {
+        width: 100%;
+    }
+
+    /* Assembly footer: verticale */
+    .assembly-footer {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .assembly-footer .btn-primary,
+    .assembly-footer #openScanner {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Topbar: evita compressione logo */
+    .topbar-left {
+        overflow: hidden;
+        max-width: 45%;
+    }
+
+    .topbar-logo {
+        width: 140px;
+        max-width: 100%;
+    }
+
+    /* Delivery row */
+    .delivery-row {
+        grid-template-columns: 1fr 90px 40px !important;
+    }
+
+    /* Dropdown componenti: non sfora */
+    .component-dropdown {
+        width: 100%;
+        min-width: unset;
+        max-width: calc(100vw - 220px); /* sidebar 170px + padding */
+    }
+
+    /* Iframe dashboard */
+    iframe {
+        height: 240px;
+    }
+}
+
+
+/* ============================================================
+   iPad standard Portrait esatto (768px)
+   Sidebar diventa overlay — già gestita in layout.css
+   Qui affiniamo solo i dettagli mancanti
+   ============================================================ */
+@media only screen and (max-width: 768px) and (min-width: 481px) {
+
+    /* Assembly option: full width su portrait */
+    .assembly-option {
+        width: 100%;
+    }
+
+    .assembly-option span {
+        display: block;
+        text-align: center;
+        padding: 14px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Required component: 1 colonna */
+    .required-component {
+        grid-template-columns: 1fr !important;
+    }
+
+    .open-component-scanner {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Assembly footer */
+    .assembly-footer {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .assembly-footer button {
+        width: 100% !important;
+        justify-content: center;
+    }
+
+    /* Widget previsione */
+    #widget-previsione .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #widget-previsione input[type="number"],
+    #btn-calcola-previsione {
+        width: 100%;
+    }
+
+    /* Dropdown: mai fuori schermo */
+    .component-dropdown {
+        width: calc(100vw - 32px);
+        grid-template-columns: 1fr 1fr !important;
+    }
+}

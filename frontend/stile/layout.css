@@ -3,9 +3,17 @@
    ================================================= */
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap');
 
+/* ─── Custom property per la larghezza della sidebar ───────────────────────
+   Definita una sola volta e usata da topbar, main e footer.
+   Aggiornala nei breakpoint e tutto si allinea automaticamente.
+   Motivo per rem invece di %: una sidebar in % collassa a larghezze
+   ridotte. rem rimane proporzionale al font-size root (16px). */
+:root {
+    --sidebar-width: 13.75rem; /* 220px ÷ 16 = 13.75rem */
+}
 
 /* ===============================
-   2. RESET & BASE
+   2. RESET & BASEE
    =============================== */
 * {
     box-sizing: border-box;
@@ -28,12 +36,12 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 220px;
-    height: 100vh;
+    width: var(--sidebar-width);           /* 220px → rem via custom property */
+    height: 100vh;                          /* già vh: corretto */
     background-color: var(--background-alt);
-    border-right: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color); /* bordo mantenuto in px */
     color: var(--text-light);
-    padding: 20px;
+    padding: 1.25rem;                       /* 20px → rem */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -42,9 +50,9 @@ body {
 }
 
 .sidebar h5 {
-    font-size: 14px;
+    font-size: 0.875rem;                    /* 14px → rem */
     color: var(--highlight-color);
-    margin-bottom: 25px;
+    margin-bottom: 1.5625rem;               /* 25px → rem */
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -56,12 +64,12 @@ body {
 
 .sidebar .nav-link {
     display: block;
-    padding: 10px 12px;
-    margin-bottom: 6px;
+    padding: 0.625rem 0.75rem;             /* 10px 12px → rem */
+    margin-bottom: 0.375rem;               /* 6px → rem */
     color: var(--text-grey);
     text-decoration: none;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 6px;                    /* border-radius mantenuto in px */
+    font-size: 0.875rem;                   /* 14px → rem */
     transition: all 0.3s ease;
 }
 
@@ -70,14 +78,14 @@ body {
     background-color: var(--primary-color);
     color: var(--text-light);
     font-weight: 600;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* box-shadow mantenuto in px */
 }
 
 /* Loghi */
 #sidebar-logo {
-    width: 60px;
+    width: 3.75rem;                         /* 60px → rem */
     height: auto;
-    margin: 1rem auto;
+    margin: 1rem auto;                      /* 16px → rem */
     display: block;
 }
 
@@ -98,49 +106,49 @@ body {
 .topbar {
     position: fixed;
     top: 0;
-    left: 220px;
+    left: var(--sidebar-width);             /* 220px → riferimento alla custom property */
     right: 0;
-    height: 64px;
+    height: 4rem;                           /* 64px → rem: altezza topbar, usata come riferimento per top di page-heading */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 24px;
+    padding: 0 1.5rem;                      /* 24px → rem (orizzontale) */
     background: var(--primary-color);
-    border-bottom: 1px solid var(--highlight-color);
+    border-bottom: 1px solid var(--highlight-color); /* bordo in px */
     z-index: 100;
     color: var(--text-light);
     transition: left 0.3s ease;
 }
 
 .topbar-logo {
-    width: 240px;
+    width: 15rem;                           /* 240px → rem */
     height: auto;
 }
 
 .topbar-right {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 1.25rem;                           /* 20px → rem */
 }
 
 .user-menu {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 0.625rem;                          /* 10px → rem */
 }
 
 .avatar-logo {
-    width: 34px;
-    height: 34px;
+    width: 2.125rem;                        /* 34px → rem */
+    height: 2.125rem;                       /* 34px → rem */
     border-radius: 50%;
-    border: 2px solid var(--highlight-color);
+    border: 2px solid var(--highlight-color); /* bordo in px */
 }
 
 .logout-btn {
     background: none;
     border: none;
     color: var(--error-color);
-    font-size: 13px;
+    font-size: 0.8125rem;                   /* 13px → rem */
     cursor: pointer;
     font-weight: 600;
 }
@@ -148,23 +156,23 @@ body {
 /* PAGE HEADING */
 .page-heading-wrapper {
     position: fixed;
-    top: 64px;
-    left: 220px;
+    top: 4rem;                              /* 64px → rem: deve corrispondere esattamente all'altezza della topbar */
+    left: var(--sidebar-width);             /* 220px → custom property */
     right: 0;
-    height: 56px;
+    height: 3.5rem;                         /* 56px → rem */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
-    padding: 0 24px;
+    gap: 0.9375rem;                         /* 15px → rem */
+    padding: 0 1.5rem;                      /* 24px → rem (orizzontale) */
     background: var(--background-alt);
-    border-bottom: 1px solid var(--background-hover);
+    border-bottom: 1px solid var(--background-hover); /* bordo in px */
     z-index: 99;
     transition: left 0.3s ease;
 }
 
 .page-title {
-    font-size: 20px;
+    font-size: 1.25rem;                     /* 20px → rem */
     font-weight: 600;
     color: var(--highlight-color);
 }
@@ -173,16 +181,17 @@ body {
    5. MAIN CONTENT & LAYOUT
    =============================== */
 .main {
-    margin-left: 220px;
-    padding: 140px 30px 30px;
-    min-height: 100vh;
+    margin-left: var(--sidebar-width);      /* 220px → custom property */
+    /* 140px top = topbar (4rem) + heading (3.5rem) + 20px gap (1.25rem) */
+    padding: 8.75rem 1.875rem 1.875rem;    /* 140px 30px 30px → rem */
+    min-height: 100vh;                      /* height → min-height in vh: il contenuto può crescere liberamente */
     transition: margin-left 0.3s ease;
 }
 
 .content {
-    margin-left: 220px;
-    padding: 140px 24px 40px;
-    min-height: 100vh;
+    margin-left: var(--sidebar-width);      /* 220px → custom property */
+    padding: 8.75rem 1.5rem 2.5rem;        /* 140px 24px 40px → rem */
+    min-height: 100vh;                      /* height → min-height: si adatta al contenuto */
     display: flex;
     justify-content: center;
     transition: margin-left 0.3s ease;
@@ -191,20 +200,20 @@ body {
 .content-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 30px;
+    gap: 1.25rem;                           /* 20px → rem */
+    margin-bottom: 1.875rem;               /* 30px → rem */
 }
 
 .charts-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    margin-top: 24px;
+    gap: 1.5rem;                            /* 24px → rem */
+    margin-top: 1.5rem;                     /* 24px → rem */
 }
 
 iframe {
     width: 100%;
-    height: 300px;
+    height: 18.75rem;                       /* 300px → rem: rem preferito a vh per gli iframe, evita salti di layout */
     border: none !important;
     pointer-events: none;
     display: block;
@@ -220,24 +229,24 @@ iframe {
    =============================== */
 .kpi-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-bottom: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr)); /* 200px → rem nel minmax */
+    gap: 1.25rem;                           /* 20px → rem */
+    margin-bottom: 0.625rem;               /* 10px → rem */
 }
 
 .kpi-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-bottom: 10px;
+    gap: 1.25rem;                           /* 20px → rem */
+    margin-bottom: 0.625rem;               /* 10px → rem */
 }
 
 .kpi-card {
     background: var(--background-section);
-    padding: 20px;
-    border-radius: 10px;
+    padding: 1.25rem;                       /* 20px → rem */
+    border-radius: 10px;                   /* border-radius mantenuto in px */
     border: 1px solid var(--background-hover);
-    height: 120px;
+    min-height: 7.5rem;                     /* 120px: height → min-height in rem, permette crescita con testo lungo */
     box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     display: flex;
     flex-direction: column;
@@ -252,21 +261,21 @@ iframe {
 
 .kpi-card h3, .kpi-title {
     margin: 0;
-    font-size: 13px;
+    font-size: 0.8125rem;                   /* 13px → rem */
     font-weight: 500;
     color: var(--text-admin);
     text-transform: uppercase;
 }
 
 .kpi-icon {
-    font-size: 20px;
+    font-size: 1.25rem;                     /* 20px → rem */
     color: var(--highlight-color);
     flex-shrink: 0;
 }
 
 .kpi-value {
-    margin-top: 10px;
-    font-size: 28px;
+    margin-top: 0.625rem;                   /* 10px → rem */
+    font-size: 1.75rem;                     /* 28px → rem */
     font-weight: 700;
     color: var(--text-light);
 }
@@ -281,7 +290,7 @@ iframe {
    =============================== */
 .card {
     background: var(--background-section);
-    padding: 20px;
+    padding: 1.25rem;                       /* 20px → rem */
     border-radius: 12px;
     border: 1px solid var(--background-hover);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
@@ -291,26 +300,26 @@ iframe {
 }
 
 .card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-2px);            /* transform in px: intenzionale e visivamente impercettibile */
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
     transition: all 0.2s ease;
 }
 
 .card h2, .card h3 {
-    font-size: 16px;
-    margin-bottom: 12px;
+    font-size: 1rem;                        /* 16px → rem */
+    margin-bottom: 0.75rem;                 /* 12px → rem */
     font-weight: 600;
     color: var(--highlight-color);
 }
 
 .card.full {
     width: 100%;
-    margin: 20px 0;
+    margin: 1.25rem 0;                      /* 20px → rem (verticale) */
 }
 
 .assembly-card {
     background: var(--background-section);
-    padding: 20px;
+    padding: 1.25rem;                       /* 20px → rem */
     border-radius: 12px;
     border: 1px solid var(--background-hover);
     width: 100%;
@@ -335,12 +344,12 @@ iframe {
 }
 
 .list li {
-    padding: 10px 12px;
-    font-size: 14px;
+    padding: 0.625rem 0.75rem;             /* 10px 12px → rem */
+    font-size: 0.875rem;                   /* 14px → rem */
     border-bottom: 1px solid var(--background-hover);
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 0.25rem;                           /* 4px → rem */
     color: var(--text-grey);
 }
 
@@ -349,23 +358,23 @@ iframe {
 .list li strong:first-child {
     display: block;
     font-weight: bold;
-    margin-bottom: 4px;
+    margin-bottom: 0.25rem;                /* 4px → rem */
     color: var(--text-light);
 }
 
 .list li .info-row {
     display: flex;
     justify-content: space-between;
-    font-size: 13px;
+    font-size: 0.8125rem;                  /* 13px → rem */
     color: var(--highlight-color);
 }
 
 .notifications { list-style: none; }
 .notifications li {
-    font-size: 13px;
-    padding: 8px;
+    font-size: 0.8125rem;                  /* 13px → rem */
+    padding: 0.5rem;                        /* 8px → rem */
     border-radius: 6px;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;                  /* 8px → rem */
     font-weight: 600;
 }
 .notifications li.warning { background: var(--secondary-color); color: #000; }
@@ -377,7 +386,7 @@ iframe {
 .orders-table, .assembly-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin-top: 0.625rem;                   /* 10px → rem */
 }
 
 /* Scroll orizzontale se il contenuto non entra */
@@ -389,25 +398,25 @@ iframe {
 
 .orders-table th, .assembly-table th {
     text-align: left;
-    font-size: 13px;
+    font-size: 0.8125rem;                  /* 13px → rem */
     color: var(--highlight-color);
-    padding: 12px;
+    padding: 0.75rem;                       /* 12px → rem */
     background-color: var(--background-thead);
     font-weight: 600;
     border-bottom: 1px solid var(--border-color);
 }
 
 .orders-table td, .assembly-table td {
-    padding: 12px;
+    padding: 0.75rem;                       /* 12px → rem */
     border-bottom: 1px solid var(--background-hover);
-    font-size: 14px;
+    font-size: 0.875rem;                   /* 14px → rem */
     color: var(--text-grey);
 }
 
 .status, .grado {
-    padding: 4px 10px;
+    padding: 0.25rem 0.625rem;             /* 4px 10px → rem */
     border-radius: 20px;
-    font-size: 11px;
+    font-size: 0.6875rem;                  /* 11px → rem */
     font-weight: bold;
     text-transform: uppercase;
 }
@@ -431,15 +440,15 @@ iframe {
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-top: 16px;
+    gap: 1.25rem;                           /* 20px → rem */
+    margin-top: 1rem;                       /* 16px → rem */
 }
 
 .form-grid.nested {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-top: 8px;
-    padding-top: 16px;
+    gap: 1rem;                              /* 16px → rem */
+    margin-top: 0.5rem;                     /* 8px → rem */
+    padding-top: 1rem;                      /* 16px → rem (padding verticale) */
     border-top: 1px dashed var(--border-color);
 }
 
@@ -459,24 +468,23 @@ input:-webkit-autofill {
 }
 
 .form-group label, .assembly-row label {
-    font-size: 13px;
+    font-size: 0.8125rem;                  /* 13px → rem */
     font-weight: 600;
     color: var(--text-admin);
-    margin-bottom: 6px;
+    margin-bottom: 0.375rem;               /* 6px → rem */
     display: block;
 }
 
 input, select, textarea {
     width: 100%;
-    padding: 10px 12px;
+    padding: 0.625rem 0.75rem;             /* 10px 12px → rem */
     border: 1px solid var(--background-hover);
     border-radius: 6px;
-    font-size: 14px;
+    /* max() mantiene 1rem (16px) per prevenire lo zoom automatico su iOS */
+    font-size: max(1rem, 0.875rem);         /* 14px → rem, min 1rem per iOS */
     background-color: var(--background-color);
     color: var(--text-light);
     transition: border-color 0.2s, box-shadow 0.2s;
-    /* Previene zoom automatico su iOS/iPadOS */
-    font-size: max(16px, 14px);
 }
 
 input:focus, select:focus, textarea:focus {
@@ -486,9 +494,9 @@ input:focus, select:focus, textarea:focus {
 }
 
 .hint {
-    font-size: 12px;
+    font-size: 0.75rem;                    /* 12px → rem */
     color: var(--text-muted);
-    margin-top: 4px;
+    margin-top: 0.25rem;                   /* 4px → rem */
 }
 
 #assembly-builder .assembly-row select,
@@ -501,7 +509,7 @@ input:focus, select:focus, textarea:focus {
     width: 40%;
 }
 
-.qr-input-group { display: flex; gap: 8px; }
+.qr-input-group { display: flex; gap: 0.5rem; }  /* 8px → rem */
 .qr-input-group input {
     background-color: var(--background-hover);
     cursor: default;
@@ -516,16 +524,17 @@ input:focus, select:focus, textarea:focus {
     border: 1px solid var(--highlight-color);
     background: transparent;
     color: var(--highlight-color);
-    padding: 0 16px;
+    padding: 0 1rem;                        /* 16px → rem (padding orizzontale) */
     border-radius: 6px;
     cursor: pointer;
 }
 
-.delivery-components { display: flex; flex-direction: column; gap: 8px; }
+.delivery-components { display: flex; flex-direction: column; gap: 0.5rem; } /* 8px → rem */
 .delivery-row {
     display: grid;
-    grid-template-columns: 1fr 120px 40px;
-    gap: 8px;
+    /* 120px 40px: colonne fisse di griglia convertite in rem */
+    grid-template-columns: 1fr 7.5rem 2.5rem; /* 120px 40px → rem */
+    gap: 0.5rem;                            /* 8px → rem */
     align-items: center;
 }
 
@@ -536,16 +545,16 @@ input:focus, select:focus, textarea:focus {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 24px;
-    font-size: 14px;
+    padding: 0.625rem 1.5rem;              /* 10px 24px → rem */
+    font-size: 0.875rem;                   /* 14px → rem */
     font-weight: 600;
     color: var(--background-color);
     background-color: var(--highlight-color);
     border: 1px solid var(--highlight-color);
-    border-radius: 999px;
+    border-radius: 999px;                  /* pill shape: mantenuto in px */
     cursor: pointer;
     transition: all 0.2s ease;
-    min-height: 44px;
+    min-height: 2.75rem;                   /* 44px → rem: soglia minima accessibilità touch (WCAG) */
     touch-action: manipulation;
 }
 
@@ -559,8 +568,8 @@ input:focus, select:focus, textarea:focus {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 24px;
-    font-size: 14px;
+    padding: 0.625rem 1.5rem;              /* 10px 24px → rem */
+    font-size: 0.875rem;                   /* 14px → rem */
     font-weight: 600;
     color: var(--text-light);
     background-color: transparent;
@@ -568,7 +577,7 @@ input:focus, select:focus, textarea:focus {
     border-radius: 999px;
     cursor: pointer;
     transition: all 0.2s ease;
-    min-height: 44px;
+    min-height: 2.75rem;                   /* 44px → rem */
     touch-action: manipulation;
 }
 
@@ -583,10 +592,10 @@ input:focus, select:focus, textarea:focus {
     border: 1px solid var(--border-color);
     border-radius: 6px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 0.875rem;                   /* 14px → rem */
     color: var(--text-grey);
-    width: 36px;
-    height: 36px;
+    width: 2.25rem;                         /* 36px → rem */
+    height: 2.25rem;                        /* 36px → rem */
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -598,18 +607,18 @@ input:focus, select:focus, textarea:focus {
 }
 
 .btn-assembly {
-    font-size: 14px;
+    font-size: 0.875rem;                   /* 14px → rem */
     font-weight: 600;
-    padding: 10px 14px;
+    padding: 0.625rem 0.875rem;            /* 10px 14px → rem */
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 0.375rem;                          /* 6px → rem */
     color: var(--text-light);
     background: var(--background-hover);
     border: 1px solid var(--highlight-color);
     border-radius: 6px;
     cursor: pointer;
-    min-height: 44px;
+    min-height: 2.75rem;                   /* 44px → rem */
 }
 
 /* ===============================
@@ -628,12 +637,12 @@ input:focus, select:focus, textarea:focus {
 
 .sub-table {
     width: 100%;
-    margin: 10px 0;
+    margin: 0.625rem 0;                    /* 10px → rem (verticale) */
 }
 
 .sub-table th, .sub-table td {
-    padding: 6px 10px;
-    font-size: 13px;
+    padding: 0.375rem 0.625rem;            /* 6px 10px → rem */
+    font-size: 0.8125rem;                  /* 13px → rem */
     color: var(--text-grey);
 }
 
@@ -644,13 +653,13 @@ input:focus, select:focus, textarea:focus {
 }
 
 .component-type-badge {
-    font-size: 12px;
+    font-size: 0.75rem;                    /* 12px → rem */
     font-weight: 600;
     color: var(--highlight-color);
     background-color: rgba(130,192,204,0.15);
-    padding: 4px 8px;
+    padding: 0.25rem 0.5rem;              /* 4px 8px → rem */
     border-radius: 4px;
-    margin-bottom: 12px;
+    margin-bottom: 0.75rem;               /* 12px → rem */
     display: inline-block;
     border: 1px solid rgba(130,192,204,0.3);
 }
@@ -670,9 +679,9 @@ input:focus, select:focus, textarea:focus {
 .camera-box {
     position: relative;
     width: 100%;
-    max-width: 420px;
+    max-width: 26.25rem;                   /* 420px → rem: max-width in rem scala col font-size root */
     aspect-ratio: 4 / 3;
-    margin: 20px auto;
+    margin: 1.25rem auto;                  /* 20px → rem (verticale) */
     background: #000;
     border: 2px dashed var(--highlight-color);
     border-radius: 12px;
@@ -687,30 +696,30 @@ input:focus, select:focus, textarea:focus {
 #qr-reader, #qr-reader video {
     width: 100% !important;
     height: 100% !important;
-    max-height: 300px;
+    max-height: 18.75rem;                  /* 300px → rem */
     object-fit: contain;
     border-radius: 8px;
 }
 
 .close-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 0.625rem;                          /* 10px → rem */
+    right: 0.625rem;                        /* 10px → rem */
     z-index: 20;
     background: rgba(0,0,0,0.7);
     color: #fff;
     border: 1px solid var(--error-color);
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    font-size: 18px;
+    width: 2.25rem;                         /* 36px → rem */
+    height: 2.25rem;                        /* 36px → rem */
+    font-size: 1.125rem;                   /* 18px → rem */
     cursor: pointer;
 }
 
 .scan-message {
-    margin: 15px auto;
-    max-width: 420px;
-    padding: 12px 16px;
+    margin: 0.9375rem auto;                /* 15px → rem (verticale) */
+    max-width: 26.25rem;                   /* 420px → rem */
+    padding: 0.75rem 1rem;                 /* 12px 16px → rem */
     border-radius: 8px;
     text-align: center;
     font-weight: 600;
@@ -728,13 +737,14 @@ input:focus, select:focus, textarea:focus {
     background: var(--background-section);
     border: 1px solid var(--background-hover);
     border-radius: 8px;
-    padding: 16px;
-    height: 320px;
+    padding: 1rem;                          /* 16px → rem */
+    /* height → rem: il canvas Chart.js ha bisogno di un contenitore con altezza definita */
+    height: 20rem;                          /* 320px → rem */
 }
 .andamento-ordini canvas { flex: 1; }
 
 .chart-placeholder, .camera-placeholder {
-    height: 240px;
+    height: 15rem;                          /* 240px → rem: placeholder con altezza rem coerente con il grafico */
     background: var(--background-alt);
     border: 2px dashed var(--border-color);
     border-radius: 10px;
@@ -749,17 +759,17 @@ input:focus, select:focus, textarea:focus {
    =============================== */
 .hidden { display: none !important; }
 .assembly-form hr {
-    margin: 20px 0;
+    margin: 1.25rem 0;                     /* 20px → rem (verticale) */
     border: none;
     border-top: 1px solid var(--border-color);
 }
 
 /* Footer */
 .footer {
-    margin-left: 220px;
+    margin-left: var(--sidebar-width);     /* 220px → custom property */
     text-align: center;
-    padding: 15px;
-    font-size: 13px;
+    padding: 0.9375rem;                    /* 15px → rem */
+    font-size: 0.8125rem;                  /* 13px → rem */
     color: var(--text-muted);
     background-color: var(--background-color);
     border-top: 1px solid var(--border-color);
@@ -771,10 +781,10 @@ input:focus, select:focus, textarea:focus {
    =============================== */
 .andamento-ordini canvas {
     width: 100% !important;
-    height: 300px !important;
+    height: 18.75rem !important;           /* 300px → rem */
 }
 .andamento-ordini {
-    height: 320px;
+    height: 20rem;                          /* 320px → rem */
 }
 .andamento-ordini canvas {
     flex: 1;
@@ -801,58 +811,58 @@ input:focus, select:focus, textarea:focus {
     position: relative;
     background: var(--qr-modal-bg);
     color: var(--qr-modal-text);
-    width: 380px;
+    width: 23.75rem;                        /* 380px → rem */
     max-width: 90%;
-    margin: 10vh auto;
-    padding: 24px;
+    margin: 10vh auto;                      /* 10vh mantenuto: relativo al viewport, scelta corretta per centratura verticale */
+    padding: 1.5rem;                        /* 24px → rem */
     border-radius: 12px;
     box-shadow: 0 20px 60px var(--qr-shadow);
     text-align: center;
 }
 
-.qr-modal-content h3 { margin-bottom: 16px; }
+.qr-modal-content h3 { margin-bottom: 1rem; }  /* 16px → rem */
 
 .qr-preview {
     display: flex;
     justify-content: center;
-    margin: 16px 0;
+    margin: 1rem 0;                         /* 16px → rem (verticale) */
 }
 
 .qr-preview canvas {
     background: var(--qr-canvas-bg);
-    padding: 10px;
+    padding: 0.625rem;                      /* 10px → rem */
     border-radius: 8px;
 }
 
 .qr-value {
-    margin-bottom: 16px;
+    margin-bottom: 1rem;                    /* 16px → rem */
     word-break: break-all;
 }
 
 .qr-value code {
     background: var(--qr-code-bg);
     color: var(--qr-code-text);
-    padding: 6px 10px;
+    padding: 0.375rem 0.625rem;            /* 6px 10px → rem */
     border-radius: 6px;
-    font-size: 0.85rem;
+    font-size: 0.85rem;                    /* era già rem */
     display: inline-block;
 }
 
 .qr-actions {
     display: flex;
-    gap: 10px;
+    gap: 0.625rem;                          /* 10px → rem */
     justify-content: center;
     flex-wrap: wrap;
 }
 
 .qr-close {
     position: absolute;
-    top: 10px;
-    right: 12px;
+    top: 0.625rem;                          /* 10px → rem */
+    right: 0.75rem;                         /* 12px → rem */
     background: none;
     border: none;
     color: var(--qr-close-color);
-    font-size: 18px;
+    font-size: 1.125rem;                   /* 18px → rem */
     cursor: pointer;
 }
 
@@ -870,19 +880,19 @@ input:focus, select:focus, textarea:focus {
 #formAssemblaggio {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 1.5rem;                            /* 24px → rem */
     align-items: stretch;
-    margin-bottom: 50px;
+    margin-bottom: 3.125rem;               /* 50px → rem */
 }
 
 #formAssemblaggio .form-group {
-    max-width: 420px;
+    max-width: 26.25rem;                   /* 420px → rem */
 }
 
 #formAssemblaggio .form-group input {
-    padding: 10px 12px;
+    padding: 0.625rem 0.75rem;             /* 10px 12px → rem */
     border-radius: 6px;
-    font-size: 0.95rem;
+    font-size: 0.9375rem;                  /* 15px → rem (era 0.95rem, uniformato) */
     width: 100%;
     box-sizing: border-box;
 }
@@ -890,9 +900,9 @@ input:focus, select:focus, textarea:focus {
 #formAssemblaggio .camera-box {
     display: flex;
     justify-content: center;
-    margin-top: 6px;
+    margin-top: 0.375rem;                  /* 6px → rem */
     border-radius: 10px;
-    padding: 8px;
+    padding: 0.5rem;                        /* 8px → rem */
     width: 100%;
     box-sizing: border-box;
 }
@@ -901,11 +911,11 @@ input:focus, select:focus, textarea:focus {
 
 #formAssemblaggio .close-btn {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 0.5rem;                            /* 8px → rem */
+    right: 0.5rem;                          /* 8px → rem */
     border: none;
     background: transparent;
-    font-size: 1.2rem;
+    font-size: 1.2rem;                     /* era già rem */
     cursor: pointer;
 }
 
@@ -916,9 +926,9 @@ input:focus, select:focus, textarea:focus {
 #formAssemblaggio button[type="submit"],
 #formAssemblaggio #openScanner {
     width: auto;
-    max-width: 220px;
-    padding: 8px 18px;
-    font-size: 15px;
+    max-width: 13.75rem;                   /* 220px → rem */
+    padding: 0.5rem 1.125rem;              /* 8px 18px → rem */
+    font-size: 0.9375rem;                  /* 15px → rem */
 }
 
 /* ===============================
@@ -926,9 +936,9 @@ input:focus, select:focus, textarea:focus {
    =============================== */
 .user-create-card {
     max-width: 50%;
-    min-width: 480px;
+    min-width: 30rem;                       /* 480px → rem: minimo in rem per mantenere il form leggibile */
     margin: 0;
-    padding: 28px;
+    padding: 1.75rem;                       /* 28px → rem */
     background: var(--background-section);
     border: 1px solid var(--background-hover);
     border-radius: 12px;
@@ -937,8 +947,8 @@ input:focus, select:focus, textarea:focus {
 
 .user-create-card h2 {
     text-align: left;
-    margin-bottom: 22px;
-    font-size: 18px;
+    margin-bottom: 1.375rem;               /* 22px → rem */
+    font-size: 1.125rem;                   /* 18px → rem */
     font-weight: 600;
     color: var(--highlight-color);
 }
@@ -946,7 +956,7 @@ input:focus, select:focus, textarea:focus {
 .user-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px 20px;
+    gap: 0.875rem 1.25rem;                 /* 14px 20px → rem */
 }
 
 .user-form .form-group {
@@ -957,17 +967,17 @@ input:focus, select:focus, textarea:focus {
 .user-form .full-width { grid-column: span 2; }
 
 .user-form .form-group label {
-    font-size: 12px;
+    font-size: 0.75rem;                    /* 12px → rem */
     font-weight: 600;
     color: var(--text-admin);
-    margin-bottom: 4px;
+    margin-bottom: 0.25rem;               /* 4px → rem */
     letter-spacing: 0.2px;
 }
 
 .user-form input {
     width: 100%;
-    padding: 9px 12px;
-    font-size: 13.5px;
+    padding: 0.5625rem 0.75rem;           /* 9px 12px → rem */
+    font-size: 0.84375rem;                /* 13.5px → rem */
     border-radius: 6px;
     border: 1px solid var(--background-hover);
     background-color: var(--background-color);
@@ -983,27 +993,27 @@ input:focus, select:focus, textarea:focus {
 
 .user-form input::placeholder {
     color: var(--text-muted);
-    font-size: 13px;
+    font-size: 0.8125rem;                 /* 13px → rem */
 }
 
 .user-form .form-actions {
     grid-column: span 2;
     display: flex;
     justify-content: flex-end;
-    margin-top: 8px;
+    margin-top: 0.5rem;                    /* 8px → rem */
 }
 
 .user-form button {
-    padding: 10px 26px;
-    font-size: 14px;
+    padding: 0.625rem 1.625rem;           /* 10px 26px → rem */
+    font-size: 0.875rem;                  /* 14px → rem */
     font-weight: 600;
 }
 
 .form-message {
-    margin-top: 14px;
-    padding: 10px 14px;
+    margin-top: 0.875rem;                  /* 14px → rem */
+    padding: 0.625rem 0.875rem;           /* 10px 14px → rem */
     border-radius: 6px;
-    font-size: 13px;
+    font-size: 0.8125rem;                 /* 13px → rem */
     font-weight: 600;
     text-align: left;
 }
@@ -1025,7 +1035,7 @@ input:focus, select:focus, textarea:focus {
    =============================== */
 .assembly-selector {
     display: flex;
-    gap: 16px;
+    gap: 1rem;                             /* 16px → rem */
     flex-wrap: wrap;
 }
 
@@ -1037,7 +1047,7 @@ input:focus, select:focus, textarea:focus {
 .assembly-option input { display: none; }
 
 .assembly-option span {
-    padding: 16px 26px;
+    padding: 1rem 1.625rem;               /* 16px 26px → rem */
     border-radius: 10px;
     border: 2px solid var(--highlight-color);
     background: var(--background-color);
@@ -1051,8 +1061,8 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 0 12px var(--shadow-light);
 }
 
-.required-components { margin-top: 8px; }
-.required-components h3 { margin-bottom: 12px; }
+.required-components { margin-top: 0.5rem; }  /* 8px → rem */
+.required-components h3 { margin-bottom: 0.75rem; } /* 12px → rem */
 
 .required-components-list {
     list-style: none;
@@ -1064,10 +1074,10 @@ input:focus, select:focus, textarea:focus {
     display: grid;
     grid-template-columns: 2fr 1.2fr 2fr auto;
     align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
-    margin-bottom: 10px;
-    max-width: 900px;
+    gap: 0.75rem;                          /* 12px → rem */
+    padding: 0.75rem 0.875rem;            /* 12px 14px → rem */
+    margin-bottom: 0.625rem;              /* 10px → rem */
+    max-width: 56.25rem;                  /* 900px → rem */
     background: var(--background-alt);
     border: 1px solid var(--background-hover);
     border-radius: 8px;
@@ -1079,8 +1089,8 @@ input:focus, select:focus, textarea:focus {
 }
 
 .component-qr {
-    padding: 6px 8px;
-    font-size: 0.9rem;
+    padding: 0.375rem 0.5rem;             /* 6px 8px → rem */
+    font-size: 0.9rem;                    /* era già rem */
     background-color: var(--background-color);
     border: 1px solid var(--background-hover);
     border-radius: 6px;
@@ -1093,8 +1103,8 @@ input:focus, select:focus, textarea:focus {
 }
 
 .open-component-scanner {
-    padding: 6px 14px;
-    font-size: 0.85rem;
+    padding: 0.375rem 0.875rem;           /* 6px 14px → rem */
+    font-size: 0.85rem;                   /* era già rem */
     font-weight: 600;
     background: transparent;
     border: 1px solid var(--highlight-color);
@@ -1102,7 +1112,7 @@ input:focus, select:focus, textarea:focus {
     border-radius: 999px;
     cursor: pointer;
     transition: 0.2s;
-    min-height: 44px;
+    min-height: 2.75rem;                  /* 44px → rem */
 }
 
 .open-component-scanner:hover {
@@ -1116,7 +1126,7 @@ input:focus, select:focus, textarea:focus {
 .settings-page {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    gap: 1.5rem;                           /* 24px → rem */
     align-items: start;
 }
 
@@ -1133,22 +1143,22 @@ input:focus, select:focus, textarea:focus {
 .user-create-card table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin-top: 0.625rem;                 /* 10px → rem */
 }
 
 .user-create-card th {
     text-align: left;
-    font-size: 12px;
+    font-size: 0.75rem;                   /* 12px → rem */
     color: var(--highlight-color);
-    padding: 10px;
+    padding: 0.625rem;                    /* 10px → rem */
     background: var(--background-thead);
     border-bottom: 1px solid var(--border-color);
 }
 
 .user-create-card td {
-    padding: 10px;
+    padding: 0.625rem;                    /* 10px → rem */
     border-bottom: 1px solid var(--background-hover);
-    font-size: 13px;
+    font-size: 0.8125rem;                 /* 13px → rem */
     color: var(--text-grey);
 }
 
@@ -1160,24 +1170,24 @@ input:focus, select:focus, textarea:focus {
 .filters {
     display: grid;
     grid-template-columns:
-        minmax(160px, 220px)
-        minmax(220px, 1fr)
-        minmax(260px, 1.4fr)
+        minmax(10rem, 13.75rem)      /* 160px 220px → rem */
+        minmax(13.75rem, 1fr)        /* 220px → rem */
+        minmax(16.25rem, 1.4fr)      /* 260px → rem */
         auto;
-    gap: 24px;
+    gap: 1.5rem;                           /* 24px → rem */
     align-items: start;
-    margin-bottom: 25px;
+    margin-bottom: 1.5625rem;             /* 25px → rem */
 }
 
 .filter-block {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0.375rem;                         /* 6px → rem */
     min-width: 0;
 }
 
 .filter-block > label {
-    font-size: 12px;
+    font-size: 0.75rem;                   /* 12px → rem */
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -1185,13 +1195,13 @@ input:focus, select:focus, textarea:focus {
 }
 
 .filter-block select {
-    height: 38px;
-    padding: 0 12px;
+    height: 2.375rem;                      /* 38px → rem: altezza controllo form in rem */
+    padding: 0 0.75rem;                   /* 12px → rem (orizzontale) */
     border-radius: 8px;
     border: 1px solid var(--border-color);
     background: var(--background-section);
     color: var(--text-light);
-    font-size: 14px;
+    font-size: 0.875rem;                  /* 14px → rem */
     width: 100%;
     min-width: 0;
 }
@@ -1199,19 +1209,19 @@ input:focus, select:focus, textarea:focus {
 .checkbox-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px 18px;
+    gap: 0.625rem 1.125rem;               /* 10px 18px → rem */
 }
 
 .checkbox-item {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 14px;
+    gap: 0.375rem;                         /* 6px → rem */
+    font-size: 0.875rem;                  /* 14px → rem */
     color: var(--text-grey);
     cursor: pointer;
-    padding: 4px 6px;
+    padding: 0.25rem 0.375rem;            /* 4px 6px → rem */
     border-radius: 6px;
-    min-height: 44px;
+    min-height: 2.75rem;                  /* 44px → rem */
 }
 
 .checkbox-item input { accent-color: var(--highlight-color); }
@@ -1221,13 +1231,13 @@ input:focus, select:focus, textarea:focus {
 
 .component-toggle {
     width: 100%;
-    height: 38px;
-    padding: 0 12px;
+    height: 2.375rem;                      /* 38px → rem */
+    padding: 0 0.75rem;                   /* 12px → rem (orizzontale) */
     border-radius: 8px;
     border: 1px solid var(--border-color);
     background: var(--background-section);
     color: var(--text-grey);
-    font-size: 14px;
+    font-size: 0.875rem;                  /* 14px → rem */
     text-align: left;
     cursor: pointer;
     transition: border .15s ease;
@@ -1240,14 +1250,14 @@ input:focus, select:focus, textarea:focus {
     position: absolute;
     top: 100%;
     left: 0;
-    margin-top: 6px;
+    margin-top: 0.375rem;                  /* 6px → rem */
     background: var(--background-section);
     border: 1px solid var(--border-color);
     border-radius: 10px;
-    padding: 16px;
+    padding: 1rem;                          /* 16px → rem */
     box-shadow: 0 10px 20px var(--shadow-light);
-    width: 480px;
-    max-height: 400px;
+    width: 30rem;                           /* 480px → rem */
+    max-height: 25rem;                      /* 400px → rem: max-height in rem per scalabilità con il font-size root */
     overflow-y: auto;
     z-index: 100;
 }
@@ -1255,19 +1265,19 @@ input:focus, select:focus, textarea:focus {
 .component-dropdown.open {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: 40px;
-    row-gap: 10px;
+    column-gap: 2.5rem;                    /* 40px → rem */
+    row-gap: 0.625rem;                     /* 10px → rem */
 }
 
 .component-item {
     display: grid;
-    grid-template-columns: 18px 1fr;
+    grid-template-columns: 1.125rem 1fr;   /* 18px → rem: colonna icona/checkbox */
     align-items: center;
-    gap: 8px;
-    font-size: 14px;
+    gap: 0.5rem;                            /* 8px → rem */
+    font-size: 0.875rem;                   /* 14px → rem */
     color: var(--text-grey);
     cursor: pointer;
-    padding: 4px 6px;
+    padding: 0.25rem 0.375rem;             /* 4px 6px → rem */
     border-radius: 6px;
     transition: background .15s ease;
 }
@@ -1280,9 +1290,9 @@ input:focus, select:focus, textarea:focus {
 .filter-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 0.75rem;                           /* 12px → rem */
     justify-content: flex-end;
-    padding-top: 17px;
+    padding-top: 1.0625rem;               /* 17px → rem */
 }
 
 .card-movimenti { overflow: visible; }
@@ -1293,7 +1303,7 @@ input:focus, select:focus, textarea:focus {
 .role-edit-form input { width: 32%; }
 
 .assembly-footer {
-    padding-top: 20px;
+    padding-top: 1.25rem;                  /* 20px → rem */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1307,43 +1317,43 @@ input:focus, select:focus, textarea:focus {
     background: var(--background-section);
     border: 1px solid var(--background-hover);
     border-radius: 12px;
-    padding: 24px;
+    padding: 1.5rem;                        /* 24px → rem */
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
     color: var(--text-light);
     width: 100%;
 }
 
 #widget-previsione h2 {
-    font-size: 16px;
+    font-size: 1rem;                        /* 16px → rem */
     font-weight: 600;
     color: var(--highlight-color);
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;               /* 20px → rem */
 }
 
 #widget-previsione .controls {
     display: flex;
-    gap: 20px;
+    gap: 1.25rem;                           /* 20px → rem */
     align-items: flex-end;
     flex-wrap: wrap;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;               /* 20px → rem */
 }
 
 #widget-previsione label {
-    font-size: 12px;
+    font-size: 0.75rem;                   /* 12px → rem */
     font-weight: 600;
     color: var(--text-admin);
     text-transform: uppercase;
     letter-spacing: 0.4px;
-    margin-bottom: 6px;
+    margin-bottom: 0.375rem;              /* 6px → rem */
     display: block;
 }
 
 #widget-previsione input[type="number"] {
-    width: 90px;
-    padding: 9px 12px;
+    width: 5.625rem;                        /* 90px → rem */
+    padding: 0.5625rem 0.75rem;           /* 9px 12px → rem */
     border: 1px solid var(--background-hover);
     border-radius: 6px;
-    font-size: 14px;
+    font-size: 0.875rem;                  /* 14px → rem */
     background-color: var(--background-color);
     color: var(--text-light);
     font-family: "Sora", sans-serif;
@@ -1360,8 +1370,8 @@ input:focus, select:focus, textarea:focus {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 24px;
-    font-size: 14px;
+    padding: 0.625rem 1.5rem;             /* 10px 24px → rem */
+    font-size: 0.875rem;                  /* 14px → rem */
     font-weight: 600;
     font-family: "Sora", sans-serif;
     color: var(--background-color);
@@ -1370,7 +1380,7 @@ input:focus, select:focus, textarea:focus {
     border-radius: 999px;
     cursor: pointer;
     transition: all 0.2s ease;
-    min-height: 44px;
+    min-height: 2.75rem;                  /* 44px → rem */
 }
 
 #btn-calcola-previsione:hover:not(:disabled) {
@@ -1388,115 +1398,108 @@ input:focus, select:focus, textarea:focus {
 }
 
 #risultati-previsione {
-    margin-top: 4px;
-    min-height: 40px;
+    margin-top: 0.25rem;                   /* 4px → rem */
+    min-height: 2.5rem;                    /* 40px → rem: min-height per stabilizzare il layout durante il caricamento */
 }
 
 #risultati-previsione .errore {
     color: var(--error-color);
     font-weight: 600;
-    font-size: 14px;
+    font-size: 0.875rem;                  /* 14px → rem */
 }
 
 #risultati-previsione .info {
     color: var(--text-muted);
     font-style: italic;
-    font-size: 14px;
+    font-size: 0.875rem;                  /* 14px → rem */
 }
 
 #tabella-previsione {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 16px;
-    font-size: 14px;
+    margin-top: 1rem;                       /* 16px → rem */
+    font-size: 0.875rem;                  /* 14px → rem */
 }
 
 #tabella-previsione th {
     text-align: left;
-    font-size: 13px;
+    font-size: 0.8125rem;                 /* 13px → rem */
     color: var(--highlight-color);
-    padding: 12px;
+    padding: 0.75rem;                       /* 12px → rem */
     background-color: var(--background-thead);
     font-weight: 600;
     border-bottom: 1px solid var(--border-color);
 }
 
 #tabella-previsione td {
-    padding: 11px 12px;
+    padding: 0.6875rem 0.75rem;           /* 11px 12px → rem */
     border-bottom: 1px solid var(--background-hover);
     color: var(--text-grey);
 }
 
 #tabella-previsione tr:hover td { background-color: var(--background-hover); }
 #tabella-previsione td strong { color: var(--text-light); font-weight: 600; }
-#tabella-previsione .forchetta { color: var(--text-muted); font-size: 13px; }
+#tabella-previsione .forchetta { color: var(--text-muted); font-size: 0.8125rem; } /* 13px → rem */
 
 #contenitore-grafico {
-    margin-top: 24px;
+    margin-top: 1.5rem;                    /* 24px → rem */
     background: var(--background-alt);
     border: 1px solid var(--background-hover);
     border-radius: 8px;
-    padding: 16px;
+    padding: 1rem;                          /* 16px → rem */
     display: none;
 }
 
 #risultati-previsione p[style*="0.88em"],
 #risultati-previsione p:last-child {
-    font-size: 12px;
+    font-size: 0.75rem;                   /* 12px → rem: uniformato da em a rem per coerenza */
     color: var(--text-muted);
-    margin-top: 6px;
+    margin-top: 0.375rem;                  /* 6px → rem */
 }
 
 /* ===============================
    RESPONSIVE — iPad e mobile
    =============================== */
 
-/* iPad Pro 12.9" landscape (1366px) — tutto invariato, solo leggeri aggiustamenti */
+/* iPad Pro 12.9" landscape (1366px) */
 @media (max-width: 1366px) {
-    .kpi-value { font-size: 26px; }
+    .kpi-value { font-size: 1.625rem; }   /* 26px → rem */
 }
 
 /* iPad Pro 11" / Air landscape (1180px) */
 @media (max-width: 1180px) {
-    .sidebar { width: 200px; }
 
-    .topbar,
-    .page-heading-wrapper { left: 200px; }
+    /* Aggiorna la custom property: tutti gli elementi che la usano
+       (topbar left, main margin-left, footer margin-left) si aggiornano
+       automaticamente senza altri override. */
+    :root { --sidebar-width: 12.5rem; }   /* 200px → rem */
 
-    .main, .content, .footer { margin-left: 200px; }
-
-    .topbar-logo { width: 200px; }
-    .kpi-value   { font-size: 24px; }
+    .topbar-logo { width: 12.5rem; }      /* 200px → rem */
+    .kpi-value   { font-size: 1.5rem; }   /* 24px → rem */
 
     .kpi-grid { grid-template-columns: repeat(2, 1fr); }
 
     .filters {
         grid-template-columns:
-            minmax(140px, 180px)
-            minmax(180px, 1fr)
+            minmax(8.75rem, 11.25rem)      /* 140px 180px → rem */
+            minmax(11.25rem, 1fr)          /* 180px → rem */
             auto;
     }
 }
 
 /* iPad Air / iPad standard landscape (1024px) */
 @media (max-width: 1024px) {
-    .sidebar { width: 170px; padding: 16px 12px; }
-    .sidebar h5 { font-size: 11px; }
-    .sidebar .nav-link { font-size: 13px; padding: 8px 10px; }
 
-    .topbar,
-    .page-heading-wrapper { left: 170px; }
+    :root { --sidebar-width: 10.625rem; } /* 170px → rem */
 
-    .main, .content, .footer {
-        margin-left: 170px;
-        padding-left: 16px;
-        padding-right: 16px;
-    }
+    .sidebar { padding: 1rem 0.75rem; }   /* 16px 12px → rem */
+    .sidebar h5 { font-size: 0.6875rem; } /* 11px → rem */
+    .sidebar .nav-link { font-size: 0.8125rem; padding: 0.5rem 0.625rem; } /* 13px 8px 10px → rem */
 
-    .topbar-logo { width: 160px; }
-    .page-title  { font-size: 16px; }
-    .kpi-value   { font-size: 22px; }
-    .kpi-card h3, .kpi-title { font-size: 11px; }
+    .topbar-logo { width: 10rem; }        /* 160px → rem */
+    .page-title  { font-size: 1rem; }     /* 16px → rem */
+    .kpi-value   { font-size: 1.375rem; } /* 22px → rem */
+    .kpi-card h3, .kpi-title { font-size: 0.6875rem; } /* 11px → rem */
 
     /* Sidebar toggle ancora nascosto in landscape */
     .sidebar-toggle  { display: none; }
@@ -1508,13 +1511,13 @@ input:focus, select:focus, textarea:focus {
     .charts-grid  { grid-template-columns: 1fr; }
 
     /* Tabelle */
-    .orders-table th, .assembly-table th { font-size: 12px; padding: 10px 8px; }
-    .orders-table td, .assembly-table td { font-size: 13px; padding: 10px 8px; }
+    .orders-table th, .assembly-table th { font-size: 0.75rem; padding: 0.625rem 0.5rem; } /* 12px 10px 8px → rem */
+    .orders-table td, .assembly-table td { font-size: 0.8125rem; padding: 0.625rem 0.5rem; }
 
     /* Form */
     .filters {
         grid-template-columns: 1fr 1fr;
-        gap: 16px;
+        gap: 1rem;                          /* 16px → rem */
     }
     .filter-actions { grid-column: span 2; }
 
@@ -1531,7 +1534,10 @@ input:focus, select:focus, textarea:focus {
 
     /* --- Sidebar: fuori schermo, slide-in via JS --- */
     .sidebar {
-        width: 260px;
+        /* Nota: NON aggiorniamo --sidebar-width qui perché la sidebar ha ancora
+           una larghezza fisica (come overlay). Invece sovrascriviamo
+           direttamente le proprietà di layout su topbar/main/footer. */
+        width: 16.25rem;                    /* 260px → rem: larghezza della sidebar in overlay */
         transform: translateX(-100%);
         box-shadow: none;
         z-index: 200;
@@ -1564,12 +1570,12 @@ input:focus, select:focus, textarea:focus {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 40px;
-        height: 40px;
+        width: 2.5rem;                      /* 40px → rem */
+        height: 2.5rem;                     /* 40px → rem */
         background: transparent;
         border: none;
         color: var(--text-light);
-        font-size: 22px;
+        font-size: 1.375rem;               /* 22px → rem */
         cursor: pointer;
         border-radius: 6px;
         flex-shrink: 0;
@@ -1579,7 +1585,9 @@ input:focus, select:focus, textarea:focus {
         background: rgba(255,255,255,0.1);
     }
 
-    /* --- Topbar e heading a tutta larghezza --- */
+    /* --- Topbar e heading a tutta larghezza ---
+       Qui sovrascriviamo esplicitamente invece di cambiare --sidebar-width:
+       la sidebar esiste ancora come overlay con la propria larghezza. */
     .topbar,
     .page-heading-wrapper {
         left: 0;
@@ -1588,28 +1596,28 @@ input:focus, select:focus, textarea:focus {
     /* --- Main content senza margine sidebar --- */
     .main, .content, .footer {
         margin-left: 0;
-        padding-left: 16px;
-        padding-right: 16px;
+        padding-left: 1rem;                 /* 16px → rem (orizzontale) */
+        padding-right: 1rem;               /* 16px → rem (orizzontale) */
     }
 
-    .content { padding-top: 130px; }
+    .content { padding-top: 8.125rem; }    /* 130px → rem */
 
     /* --- Logo topbar più piccolo --- */
-    .topbar-logo { width: 130px; }
-    .page-title  { font-size: 15px; }
+    .topbar-logo { width: 8.125rem; }      /* 130px → rem */
+    .page-title  { font-size: 0.9375rem; } /* 15px → rem */
 
     /* --- KPI: 2 colonne, poi 1 sotto 480px --- */
-    .kpi-grid    { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .kpi-section { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .kpi-card    { height: auto; min-height: 100px; padding: 16px; }
-    .kpi-value   { font-size: 22px; margin-top: 8px; }
+    .kpi-grid    { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }  /* 12px → rem */
+    .kpi-section { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .kpi-card    { min-height: 6.25rem; padding: 1rem; }  /* 100px 16px → rem */
+    .kpi-value   { font-size: 1.375rem; margin-top: 0.5rem; }  /* 22px 8px → rem */
 
     /* --- Griglie: tutto su colonna singola --- */
-    .content-grid { grid-template-columns: 1fr; gap: 16px; }
-    .charts-grid  { grid-template-columns: 1fr; gap: 16px; }
+    .content-grid { grid-template-columns: 1fr; gap: 1rem; }   /* 16px → rem */
+    .charts-grid  { grid-template-columns: 1fr; gap: 1rem; }
 
     /* --- Form: colonna singola --- */
-    .form-grid        { grid-template-columns: 1fr; gap: 12px; }
+    .form-grid        { grid-template-columns: 1fr; gap: 0.75rem; } /* 12px → rem */
     .form-grid.nested { grid-template-columns: 1fr; }
     .form-group.full-width { grid-column: span 1; }
     .form-actions      { grid-column: span 1; justify-content: stretch; }
@@ -1618,7 +1626,7 @@ input:focus, select:focus, textarea:focus {
     /* --- Filtri movimenti --- */
     .filters {
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: 0.75rem;                       /* 12px → rem */
     }
     .filter-actions {
         grid-column: span 1;
@@ -1626,15 +1634,16 @@ input:focus, select:focus, textarea:focus {
         justify-content: flex-start;
     }
 
-    /* --- Component dropdown: non uscire dallo schermo --- */
+    /* --- Component dropdown: non uscire dallo schermo ---
+       calc() con rem: 2rem = 32px (16px padding per lato), evita il px fisso */
     .component-dropdown {
-        width: calc(100vw - 32px);
+        width: calc(100vw - 2rem);          /* 32px → 2rem nel calc() */
         grid-template-columns: 1fr;
     }
 
     /* --- Tabelle: scroll orizzontale già gestito da .table-responsive --- */
     .orders-table, .assembly-table {
-        min-width: 580px; /* forza scroll prima di spiaccicarsi */
+        min-width: 36.25rem;               /* 580px → rem: forza scroll prima di comprimere il layout */
     }
 
     /* --- Assembly selector: stack verticale --- */
@@ -1644,19 +1653,19 @@ input:focus, select:focus, textarea:focus {
     /* --- Required component: semplifica griglia --- */
     .required-component {
         grid-template-columns: 1fr 1fr;
-        gap: 8px;
+        gap: 0.5rem;                        /* 8px → rem */
     }
 
     /* --- Delivery row --- */
     .delivery-row {
-        grid-template-columns: 1fr 80px 36px;
-        gap: 6px;
+        grid-template-columns: 1fr 5rem 2.25rem; /* 80px 36px → rem */
+        gap: 0.375rem;                      /* 6px → rem */
     }
 
     /* --- Settings: colonna singola --- */
     .settings-page {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 1rem;                          /* 16px → rem */
     }
     .settings-page .user-create-card:nth-child(3),
     .settings-page .user-create-card:nth-child(4) {
@@ -1677,24 +1686,24 @@ input:focus, select:focus, textarea:focus {
     .footer { margin-left: 0; }
 
     /* --- Topbar right: comprimi --- */
-    .topbar-right { gap: 10px; }
-    .username { display: none; } /* nasconde email utente, mostra solo avatar */
+    .topbar-right { gap: 0.625rem; }       /* 10px → rem */
+    .username { display: none; }
 
     /* --- Iframe preview in dashboard --- */
-    iframe { height: 220px; }
+    iframe { height: 13.75rem; }           /* 220px → rem */
 }
 
-/* Smartphone (480px) — opzionale, utile se il sito viene aperto su iPhone */
+/* Smartphone (480px) */
 @media (max-width: 480px) {
     .kpi-grid    { grid-template-columns: 1fr; }
     .kpi-section { grid-template-columns: 1fr; }
 
     .main, .content {
-        padding-left: 12px;
-        padding-right: 12px;
+        padding-left: 0.75rem;             /* 12px → rem (orizzontale) */
+        padding-right: 0.75rem;            /* 12px → rem (orizzontale) */
     }
 
-    .topbar { padding: 0 12px; }
+    .topbar { padding: 0 0.75rem; }        /* 12px → rem (orizzontale) */
 
     .required-component {
         grid-template-columns: 1fr;
