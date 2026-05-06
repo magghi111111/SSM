@@ -1,6 +1,7 @@
 
 (function () {
-    const API_BASE = 'http://127.0.0.1:8000';
+    const API_BASE = 'http://'+window.location.hostname+':8000';
+    //const API_BASE = 'http://'+window.location.hostname+':8000'; da mettere quando si mette online, per ora localhost va bene
     let graficoInstance = null;
 
     const form = document.getElementById('form-previsione');

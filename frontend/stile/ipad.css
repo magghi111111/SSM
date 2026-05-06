@@ -26,12 +26,14 @@
         box-sizing: border-box;
     }
 
-    /* Touch target minimo 44px su tutto il clickable */
+    /* Touch target minimo 44px sui bottoni veri.
+       NB: .nav-link e .checkbox-item esclusi intenzionalmente:
+       - .nav-link a 44px faceva sforare Impostazioni dalla sidebar
+       - .checkbox-item a 44px + width:100% del checkbox rompeva il layout */
     .btn-primary,
     .btn-secondary,
     .btn-icon,
     .btn-assembly,
-    .nav-link,
     .open-component-scanner,
     button[type="submit"],
     button[type="button"] {
@@ -39,8 +41,41 @@
         touch-action: manipulation;
     }
 
-    /* Evita zoom automatico iOS su focus */
-    input,
+    .nav-link,
+    .checkbox-item {
+        touch-action: manipulation;
+    }
+
+    /* =====================================================
+       FIX CHECKBOX — CAUSA PRINCIPALE DEL LAYOUT ROTTO
+       layout.css ha "input { width: 100%; }" che si applica
+       anche a input[type="checkbox"] dentro il flex .checkbox-item.
+       Su iPad Safari questo fa sì che il checkbox occupi tutta
+       la riga e il testo del label venga spostato su righe
+       successive, separandosi visivamente dal suo checkbox.
+       ===================================================== */
+    .checkbox-item input[type="checkbox"] {
+        width: auto !important;
+        flex-shrink: 0;
+        min-height: auto !important;
+    }
+
+    /* Checkbox del filtro Tipo: compatti e allineati */
+    .checkbox-group {
+        flex-wrap: wrap;
+        gap: 6px 14px;
+    }
+    .checkbox-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 8px;
+        min-height: 36px;
+        white-space: nowrap;
+    }
+
+    /* Evita zoom automatico iOS su focus — esclusi i checkbox */
+    input:not([type="checkbox"]),
     select,
     textarea {
         font-size: 16px !important;
@@ -49,12 +84,32 @@
 
 
 /* ============================================================
-   iPad Pro 12.9" Landscape (1024px – 1366px)
+   iPad Pro 12.9" Landscape (1025px – 1366px)
    Sidebar rimane a 220px, layout normale ma compresso
    ============================================================ */
 @media only screen and (min-width: 1025px) and (max-width: 1366px) {
 
-    /* KPI: 4 → 2 colonne per evitare overflow del testo */
+    /* ===== SIDEBAR: compatta per far entrare anche Impostazioni ===== */
+    .sidebar {
+        padding: 14px 14px;
+        height: 100vh;
+        height: 100dvh;
+        overflow-y: auto;
+    }
+    .sidebar .nav-link {
+        padding: 8px 12px !important;
+        margin-bottom: 4px;
+        font-size: 14px;
+        line-height: 1.3;
+        min-height: auto !important;
+    }
+    #sidebar-logo {
+        width: 52px;
+        margin: 0.5rem auto;
+    }
+    .sidebar .mb-3 { margin-bottom: 0.5rem !important; }
+
+    /* KPI: 4 → 2 colonne */
     .kpi-grid {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 16px;
@@ -64,24 +119,58 @@
         font-size: 24px;
     }
 
-    /* Content grid: 2 col → 1 col per evitare card schiacciate */
+    /* Content grid: 1 colonna */
     .content-grid {
         grid-template-columns: 1fr !important;
     }
 
-    /* Settings: 2 colonne ma senza min-width rigido */
+    /* ===== SETTINGS: 2 colonne con scroll interno alle card ===== */
     .settings-page {
         grid-template-columns: 1fr 1fr;
         gap: 16px;
     }
 
-    /* Filtri: semplifica layout */
-    .filters {
-        grid-template-columns: 180px 1fr auto !important;
-        gap: 14px;
+    .settings-page .user-create-card {
+        overflow-x: auto;
     }
 
-    /* Widget previsione: controls wrappano */
+    .user-create-card table {
+        font-size: 13px;
+    }
+    .user-create-card th {
+        padding: 8px 6px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+    .user-create-card td {
+        padding: 8px 6px;
+        font-size: 13px;
+    }
+
+    /* ===== FILTRI MOVIMENTI: 2 colonne, Componenti su tutta la riga ===== */
+    .filters {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 16px 24px;
+    }
+
+    .filter-block.component-filter {
+        grid-column: span 2 !important;
+    }
+
+    .filter-actions {
+        grid-column: span 2 !important;
+        justify-content: flex-end;
+        padding-top: 8px;
+    }
+
+    .component-dropdown {
+        width: 100% !important;
+        min-width: 320px;
+        max-width: 100% !important;
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    /* Widget previsione */
     #widget-previsione .controls {
         flex-wrap: wrap;
         gap: 12px;
@@ -91,7 +180,6 @@
         width: 80px;
     }
 
-    /* Tabella avvisi: righe più alte per touch */
     .avvisi-order-row td,
     .assembly_component td {
         padding: 12px 8px;
@@ -105,7 +193,31 @@
    ============================================================ */
 @media only screen and (min-width: 769px) and (max-width: 1024px) {
 
-    /* Sidebar già a 170px nel CSS originale — qui affiniamo il contenuto */
+    /* ===== SIDEBAR: ultra-compatta per far entrare anche Impostazioni ===== */
+    .sidebar {
+        padding: 10px 10px;
+        height: 100vh;
+        height: 100dvh;
+        overflow-y: auto;
+    }
+    .sidebar h5 {
+        font-size: 11px;
+        margin-bottom: 10px;
+    }
+    .sidebar .nav-link {
+        padding: 6px 8px !important;
+        margin-bottom: 2px;
+        font-size: 13px;
+        line-height: 1.25;
+        min-height: auto !important;
+    }
+    .sidebar .nav-link i { font-size: 14px; }
+
+    #sidebar-logo {
+        width: 44px;
+        margin: 0.4rem auto;
+    }
+    .sidebar .mb-3 { margin-bottom: 0.25rem !important; }
 
     /* KPI: 4 → 2 colonne */
     .kpi-grid {
@@ -158,7 +270,7 @@
         justify-content: center;
     }
 
-    /* Settings page: 1 colonna */
+    /* ===== SETTINGS: niente scroll a destra ===== */
     .settings-page {
         grid-template-columns: 1fr !important;
         gap: 16px;
@@ -169,7 +281,25 @@
         grid-column: span 1 !important;
     }
 
-    /* Required component assembly: 2 righe */
+    .settings-page .user-create-card {
+        padding: 18px !important;
+        overflow-x: auto;
+    }
+
+    .user-create-card table {
+        font-size: 12px;
+    }
+    .user-create-card th {
+        padding: 6px 5px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+    .user-create-card td {
+        padding: 6px 5px;
+        font-size: 12px;
+    }
+
+    /* Required component assembly */
     .required-component {
         grid-template-columns: 1fr 1fr !important;
         gap: 8px;
@@ -181,15 +311,10 @@
         font-size: 14px;
     }
 
-    .required-component .component-qr {
-        grid-column: 1;
-    }
+    .required-component .component-qr { grid-column: 1; }
+    .required-component .open-component-scanner { grid-column: 2; }
 
-    .required-component .open-component-scanner {
-        grid-column: 2;
-    }
-
-    /* Assembly selector: wrap */
+    /* Assembly selector */
     .assembly-selector {
         flex-wrap: wrap;
         gap: 10px;
@@ -201,16 +326,28 @@
         font-size: 13px;
     }
 
-    /* Filtri movimenti: 2 colonne */
+    /* ===== FILTRI MOVIMENTI: 2 colonne, Componenti su tutta la riga ===== */
     .filters {
         grid-template-columns: 1fr 1fr !important;
-        gap: 12px;
+        gap: 14px 16px;
+    }
+
+    .filter-block.component-filter {
+        grid-column: span 2 !important;
     }
 
     .filter-actions {
         grid-column: span 2 !important;
-        padding-top: 0;
-        justify-content: flex-start;
+        padding-top: 8px;
+        justify-content: flex-end;
+    }
+
+    .component-dropdown {
+        width: 100% !important;
+        min-width: unset;
+        max-width: 100% !important;
+        grid-template-columns: 1fr 1fr !important;
+        column-gap: 20px;
     }
 
     /* User form in settings: 1 colonna */
@@ -237,7 +374,7 @@
         width: 100%;
     }
 
-    /* Assembly footer: verticale */
+    /* Assembly footer */
     .assembly-footer {
         flex-direction: column;
         gap: 12px;
@@ -250,7 +387,6 @@
         justify-content: center;
     }
 
-    /* Topbar: evita compressione logo */
     .topbar-left {
         overflow: hidden;
         max-width: 45%;
@@ -261,19 +397,10 @@
         max-width: 100%;
     }
 
-    /* Delivery row */
     .delivery-row {
         grid-template-columns: 1fr 90px 40px !important;
     }
 
-    /* Dropdown componenti: non sfora */
-    .component-dropdown {
-        width: 100%;
-        min-width: unset;
-        max-width: calc(100vw - 220px); /* sidebar 170px + padding */
-    }
-
-    /* Iframe dashboard */
     iframe {
         height: 240px;
     }
@@ -283,11 +410,9 @@
 /* ============================================================
    iPad standard Portrait esatto (768px)
    Sidebar diventa overlay — già gestita in layout.css
-   Qui affiniamo solo i dettagli mancanti
    ============================================================ */
 @media only screen and (max-width: 768px) and (min-width: 481px) {
 
-    /* Assembly option: full width su portrait */
     .assembly-option {
         width: 100%;
     }
@@ -300,7 +425,6 @@
         box-sizing: border-box;
     }
 
-    /* Required component: 1 colonna */
     .required-component {
         grid-template-columns: 1fr !important;
     }
@@ -310,7 +434,6 @@
         justify-content: center;
     }
 
-    /* Assembly footer */
     .assembly-footer {
         flex-direction: column;
         gap: 10px;
@@ -322,7 +445,6 @@
         justify-content: center;
     }
 
-    /* Widget previsione */
     #widget-previsione .controls {
         flex-direction: column;
         align-items: stretch;
@@ -333,7 +455,6 @@
         width: 100%;
     }
 
-    /* Dropdown: mai fuori schermo */
     .component-dropdown {
         width: calc(100vw - 32px);
         grid-template-columns: 1fr 1fr !important;

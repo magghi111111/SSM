@@ -19,7 +19,6 @@ $ordini_mese = getOrdiniMese();
 </head>
 
 <body>
-
     <!-- MAIN CONTENT -->
     <main class="main">
 
