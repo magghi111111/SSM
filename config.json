@@ -1,7 +1,7 @@
 {
-    "db_host": "127.0.0.1",
+    "db_host": "mysql.railway.internal",
     "db_user": "root",
-    "db_password": "",
-    "db_name": "gestore_magazzino",
+    "db_password": "RGjokrnZrTubPmgpkRTXDCTWvrPISQKt",
+    "db_name": "railway",
     "allowed_origins": ["http://localhost"]
 }
